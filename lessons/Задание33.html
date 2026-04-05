@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Задание 33 — Органическая задача</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:wght@300;400;600&display=swap');
+:root {
+  --bg:#f4f0e6;--white:#fffef9;--ink:#1c1814;--muted:#7a7060;
+  --red:#b83030;--blue:#1d5fa0;--green:#237a4a;--amber:#b56e10;
+  --teal:#1a7a7a;--violet:#5b3fa0;
+  --border:#ddd5c0;--shadow:rgba(40,30,10,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);font-family:'Source Serif 4',Georgia,serif;color:var(--ink);min-height:100vh;}
+
+/* TABS */
+.tab-radio{display:none;}
+.nav{position:sticky;top:0;z-index:100;background:rgba(244,240,230,0.97);border-bottom:1.5px solid var(–border);padding:13px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;backdrop-filter:blur(6px);}
+.nav-title{font-family:‘Playfair Display’,Georgia,serif;font-size:17px;font-weight:900;letter-spacing:0.02em;}
+.nav-pills{display:flex;gap:7px;flex-wrap:wrap;}
+.tab-label{padding:6px 18px;border-radius:100px;border:1.5px solid var(–border);font-size:12.5px;cursor:pointer;color:var(–muted);font-family:‘Source Serif 4’,serif;display:inline-block;user-select:none;transition:all .2s;}
+.tab-label:hover{border-color:var(–ink);color:var(–ink);}
+#tab-theory:checked ~ * .label-theory,
+#tab-tasks:checked ~ * .label-tasks,
+#tab-summary:checked ~ * .label-summary{background:var(–ink);color:var(–white);border-color:var(–ink);}
+.section-page{display:none;}
+#tab-theory:checked ~ .main .sec-theory{display:block;}
+#tab-tasks:checked ~ .main .sec-tasks{display:block;}
+#tab-summary:checked ~ .main .sec-summary{display:block;}
+
+/* ANSWER TOGGLE */
+.answer-check{display:none;}
+.answer-toggle{width:100%;padding:12px 22px;background:rgba(50,40,20,0.03);border:none;border-top:1px solid var(–border);cursor:pointer;font-family:‘Source Serif 4’,serif;font-size:13px;color:var(–muted);text-align:left;display:flex;align-items:center;gap:8px;user-select:none;transition:background .2s;}
+.answer-toggle:hover{background:rgba(50,40,20,0.07);}
+.arrow{display:inline-block;transition:transform 0.3s;font-size:16px;}
+.show-text{display:inline;}.hide-text{display:none;}
+.answer-body{display:none;padding:18px 22px 22px;border-top:1px solid var(–border);background:rgba(244,240,230,0.55);font-size:13.5px;line-height:1.9;color:#3a3228;}
+.answer-check:checked + .answer-toggle .arrow{transform:rotate(180deg);}
+.answer-check:checked + .answer-toggle .show-text{display:none;}
+.answer-check:checked + .answer-toggle .hide-text{display:inline;}
+.answer-check:checked ~ .answer-body{display:block;}
+
+/* LAYOUT */
+.main{max-width:880px;margin:0 auto;padding:36px 16px 90px;}
+.section-header{margin-bottom:30px;}
+.section-tag{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(–muted);margin-bottom:10px;font-family:‘Source Serif 4’,serif;}
+.section-tag span{display:inline-block;width:20px;height:1.5px;background:var(–muted);}
+.section-header h2{font-family:‘Playfair Display’,Georgia,serif;font-size:clamp(24px,4.5vw,38px);font-weight:900;line-height:1.12;}
+.section-header h2 em{font-style:italic;color:var(–blue);}
+.section-header p{margin-top:9px;font-size:14px;color:var(–muted);line-height:1.7;}
+
+/* CARDS */
+.card{background:var(–white);border:1.5px solid var(–border);border-radius:16px;padding:22px;margin-bottom:14px;box-shadow:0 2px 14px var(–shadow);position:relative;overflow:hidden;}
+.card::before{content:’’;position:absolute;top:0;left:0;width:5px;height:100%;border-radius:16px 0 0 16px;}
+.card.red::before{background:var(–red);}.card.blue::before{background:var(–blue);}
+.card.green::before{background:var(–green);}.card.amber::before{background:var(–amber);}
+.card.teal::before{background:var(–teal);}.card.violet::before{background:var(–violet);}
+.card-label{font-size:10px;letter-spacing:0.28em;text-transform:uppercase;font-weight:600;margin-bottom:9px;font-family:‘Source Serif 4’,serif;}
+.card.red .card-label{color:var(–red);}.card.blue .card-label{color:var(–blue);}
+.card.green .card-label{color:var(–green);}.card.amber .card-label{color:var(–amber);}
+.card.teal .card-label{color:var(–teal);}.card.violet .card-label{color:var(–violet);}
+.card h3{font-family:‘Playfair Display’,serif;font-size:18px;font-weight:700;margin-bottom:12px;line-height:1.3;}
+.card p{font-size:14px;line-height:1.85;color:#3a3228;margin-bottom:10px;}
+.card p:last-child{margin-bottom:0;}
+
+/* FORMULA BLOCKS */
+.formula{font-family:‘Courier New’,monospace;font-size:13px;padding:11px 16px;border-radius:10px;margin:7px 0;line-height:2;}
+.formula.blue{background:rgba(29,95,160,0.07);color:#143d70;border-left:3px solid var(–blue);}
+.formula.red{background:rgba(184,48,48,0.07);color:#7a1a1a;border-left:3px solid var(–red);}
+.formula.green{background:rgba(35,122,74,0.07);color:#134d2a;border-left:3px solid var(–green);}
+.formula.amber{background:rgba(181,110,16,0.07);color:#6b3e06;border-left:3px solid var(–amber);}
+.formula.teal{background:rgba(26,122,122,0.07);color:#0d4a4a;border-left:3px solid var(–teal);}
+.formula-ans{font-family:‘Courier New’,monospace;font-size:13px;background:rgba(35,122,74,0.08);border-left:3px solid var(–green);padding:11px 16px;border-radius:9px;margin:9px 0;color:#134d2a;line-height:2;}
+
+/* GRID */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0;}
+.half-card{padding:14px;border-radius:12px;font-size:13px;line-height:1.75;}
+.half-card.blue-bg{background:rgba(29,95,160,0.07);border:1px solid rgba(29,95,160,0.18);}
+.half-card.red-bg{background:rgba(184,48,48,0.07);border:1px solid rgba(184,48,48,0.18);}
+.half-card.green-bg{background:rgba(35,122,74,0.07);border:1px solid rgba(35,122,74,0.18);}
+.half-card.amber-bg{background:rgba(181,110,16,0.07);border:1px solid rgba(181,110,16,0.18);}
+.half-card.teal-bg{background:rgba(26,122,122,0.07);border:1px solid rgba(26,122,122,0.18);}
+.half-card .hc-title{font-weight:700;font-size:13.5px;margin-bottom:7px;font-family:‘Playfair Display’,serif;}
+
+/* STEPS */
+.step-list{list-style:none;display:flex;flex-direction:column;gap:9px;margin-top:10px;}
+.step-list li{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.75;}
+.step-num{background:var(–blue);color:white;border-radius:50%;width:23px;height:23px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:2px;font-weight:700;}
+
+/* BADGES */
+.badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:600;margin:2px;font-family:‘Source Serif 4’,serif;}
+.badge.red{background:rgba(184,48,48,0.11);color:var(–red);}
+.badge.blue{background:rgba(29,95,160,0.11);color:var(–blue);}
+.badge.green{background:rgba(35,122,74,0.11);color:var(–green);}
+.badge.amber{background:rgba(181,110,16,0.11);color:var(–amber);}
+.badge.teal{background:rgba(26,122,122,0.11);color:var(–teal);}
+.diff-badge{font-size:10.5px;padding:3px 11px;border-radius:100px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;}
+.diff-badge.easy{background:rgba(35,122,74,0.12);color:var(–green);}
+.diff-badge.medium{background:rgba(181,110,16,0.12);color:var(–amber);}
+.diff-badge.hard{background:rgba(184,48,48,0.12);color:var(–red);}
+
+/* TIP / MNEMONIC */
+.tip{margin-top:12px;padding:12px 15px;border-radius:12px;background:rgba(50,40,20,0.04);border:1px dashed var(–border);font-size:13px;color:var(–muted);line-height:1.75;}
+.tip strong{color:var(–ink);}
+.mnemonic{display:flex;gap:10px;padding:14px;background:linear-gradient(135deg,rgba(29,95,160,0.06),rgba(35,122,74,0.06));border-radius:13px;border:1px solid var(–border);margin:12px 0;}
+.mnemonic-icon{font-size:26px;display:flex;align-items:center;justify-content:center;width:40px;flex-shrink:0;}
+.mnemonic-text{font-size:13.5px;line-height:1.75;}
+.m-label{font-size:10px;text-transform:uppercase;letter-spacing:0.15em;color:var(–muted);display:block;margin-bottom:3px;}
+
+/* TASK CARDS */
+.task-card{background:var(–white);border:1.5px solid var(–border);border-radius:16px;margin-bottom:14px;overflow:hidden;box-shadow:0 2px 14px var(–shadow);}
+.task-top{padding:18px 22px 14px;}
+.task-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.task-num{font-family:‘Playfair Display’,Georgia,serif;font-size:26px;font-weight:900;color:var(–border);line-height:1;}
+.task-q{font-size:14.5px;line-height:1.8;color:var(–ink);}
+.task-q .chem{font-family:‘Courier New’,monospace;background:rgba(29,95,160,0.08);color:var(–blue);padding:1px 5px;border-radius:4px;font-size:13.5px;}
+
+/* TABLE */
+.val-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;border-radius:12px;overflow:hidden;}
+.val-table th{background:var(–ink);color:var(–white);padding:9px 13px;text-align:left;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;}
+.val-table td{padding:8px 13px;border-bottom:1px solid var(–border);line-height:1.5;}
+.val-table tr:last-child td{border-bottom:none;}
+.val-table tr:nth-child(even) td{background:rgba(50,40,20,0.025);}
+.val-table td:first-child{font-weight:700;color:var(–blue);}
+
+.divider{height:1px;background:var(–border);margin:16px 0;}
+.trap-item{font-size:13px;line-height:1.75;padding:10px 14px;background:rgba(184,48,48,0.06);border-radius:10px;border-left:3px solid var(–red);margin-bottom:8px;}
+
+.footer{text-align:center;padding:36px 20px;color:var(–muted);font-size:12px;font-family:‘Source Serif 4’,serif;}
+@media(max-width:560px){.two-col,.three-col{grid-template-columns:1fr;}}
+
+/* Highlight box */
+.highlight-box{background:linear-gradient(135deg,rgba(29,95,160,0.05),rgba(35,122,74,0.05));border:1.5px solid var(–border);border-radius:13px;padding:14px 16px;margin:12px 0;font-size:13.5px;line-height:1.8;}
+</style>
+
+</head>
+<body>
+<input type="radio" name="tabs" id="tab-theory" class="tab-radio" checked>
+<input type="radio" name="tabs" id="tab-tasks" class="tab-radio">
+<input type="radio" name="tabs" id="tab-summary" class="tab-radio">
+
+<nav class="nav">
+  <div class="nav-title">⚗️ Задание 33</div>
+  <div class="nav-pills">
+    <label for="tab-theory" class="tab-label label-theory">Теория</label>
+    <label for="tab-tasks" class="tab-label label-tasks">Задания</label>
+    <label for="tab-summary" class="tab-label label-summary">Шпаргалка</label>
+  </div>
+  <span style="margin-left:auto;font-size:12px;color:var(--muted)">11 класс · ЕГЭ · 4 балла</span>
+</nav>
+
+<div class="main">
+
+<!-- ═══════════ ТЕОРИЯ ═══════════ -->
+
+<div class="section-page sec-theory">
+  <div class="section-header">
+    <div class="section-tag"><span></span> Теория <span></span></div>
+    <h2>Органическая задача —<br><em>нахождение формулы</em></h2>
+    <p>Задание 33 — самое объёмное в ЕГЭ по химии. Стоит <strong>4 первичных балла</strong>. Нужно уметь работать с продуктами сгорания и массовыми долями.</p>
+  </div>
+
+  <!-- Типы задач -->
+
+  <div class="card blue">
+    <div class="card-label">Что встречается в задании 33</div>
+    <h3>Два главных типа задач</h3>
+    <div class="two-col">
+      <div class="half-card blue-bg">
+        <div class="hc-title" style="color:var(--blue)">Тип 1 — По сгоранию</div>
+        Даны продукты горения (объёмы или массы CO₂ и H₂O), иногда плотность паров. Нужно найти молекулярную формулу.
+      </div>
+      <div class="half-card green-bg">
+        <div class="hc-title" style="color:var(--green)">Тип 2 — По массовым долям</div>
+        Даны массовые доли элементов (% C, H, O, N…). Нужно найти простейшую и истинную формулу.
+      </div>
+    </div>
+    <div class="tip"><strong>Совет:</strong> оба типа могут комбинироваться — например, сначала даны продукты сгорания, а потом нужно использовать плотность паров для нахождения истинной формулы.</div>
+  </div>
+
+  <!-- Продукты сгорания -->
+
+  <div class="card green">
+    <div class="card-label">Таблица — продукты горения по классам</div>
+    <h3>Что образуется при горении</h3>
+    <table class="val-table">
+      <tr><th>Формула</th><th>Продукты горения</th><th>Класс соединений</th></tr>
+      <tr><td>CₓHᵧ</td><td>CO₂ + H₂O</td><td>Углеводороды</td></tr>
+      <tr><td>CₓHᵧOz</td><td>CO₂ + H₂O</td><td>Кислородсодержащие</td></tr>
+      <tr><td>CₓHᵧNz</td><td>CO₂ + N₂ + H₂O</td><td>Амины</td></tr>
+      <tr><td>CₓHᵧOzNk</td><td>CO₂ + N₂ + H₂O</td><td>Аминокислоты, пептиды, нитросоед.</td></tr>
+      <tr><td>CₓHᵧClz</td><td>CO₂ + HCl + H₂O</td><td>Галогенуглеводороды</td></tr>
+      <tr><td>CₓHᵧNaМz</td><td>CO₂ + Na₂CO₃ + H₂O</td><td>Соли Na/K кислот (ацетилениды)</td></tr>
+    </table>
+  </div>
+
+  <!-- Алгоритм по сгоранию -->
+
+  <div class="card red">
+    <div class="card-label">Алгоритм · Тип 1 — По продуктам сгорания</div>
+    <h3>5 шагов к молекулярной формуле</h3>
+    <ul class="step-list">
+      <li><span class="step-num">1</span><div>Находим <strong>n(CO₂)</strong> и <strong>n(H₂O)</strong> по формулам: n = m/M или n(газа) = V/Vₘ (Vₘ = 22,4 л/моль при н.у.)</div></li>
+      <li><span class="step-num">2</span><div>Находим количество атомов: <strong>n(C) = n(CO₂)</strong>, <strong>n(H) = 2·n(H₂O)</strong>, n(N) = 2·n(N₂)</div></li>
+      <li><span class="step-num">3</span><div>Проверяем наличие кислорода: m(O) = m(исх. в-ва) − m(C) − m(H), затем n(O) = m(O)/16</div></li>
+      <li><span class="step-num">4</span><div>Находим соотношение: <strong>x : y : z = n(C) : n(H) : n(O)</strong> — делим на наименьшее, округляем до целых</div></li>
+      <li><span class="step-num">5</span><div>Если дана плотность/молярная масса → находим истинную формулу: z = M(вещества) / M(простейшего фрагмента)</div></li>
+    </ul>
+    <div class="formula red" style="margin-top:12px">Ключевые формулы:
+n(C) = n(CO₂)
+n(H) = 2·n(H₂O)
+n(O в в-ве) = [m(в-ва) − m(C) − m(H)] / 16
+M(в-ва) = D(по воздуху) × 29   или   D(по водороду) × 2</div>
+  </div>
+
+  <!-- Алгоритм по массовым долям -->
+
+  <div class="card amber">
+    <div class="card-label">Алгоритм · Тип 2 — По массовым долям</div>
+    <h3>4 шага к простейшей формуле</h3>
+    <ul class="step-list">
+      <li><span class="step-num">1</span><div>Принимаем m(вещества) = 100 г. Тогда масса каждого элемента = его массовая доля в граммах.</div></li>
+      <li><span class="step-num">2</span><div>Находим количество молей каждого элемента: n(C) = m(C)/12, n(H) = m(H)/1, n(O) = m(O)/16, n(N) = m(N)/14</div></li>
+      <li><span class="step-num">3</span><div>Делим все на <strong>наименьшее</strong> из полученных значений → получаем соотношение индексов (простейшая формула)</div></li>
+      <li><span class="step-num">4</span><div>Если дана молярная масса → находим, сколько раз простейший фрагмент входит в истинную формулу: <strong>n = M / M(прост.)</strong></div></li>
+    </ul>
+    <div class="tip"><strong>Внимание:</strong> если сумма массовых долей &lt; 100% — значит есть кислород! ω(O) = 100 − ω(C) − ω(H) − ω(N) − …</div>
+  </div>
+
+  <!-- Формулы классов -->
+
+  <div class="card teal">
+    <div class="card-label">Справка — формулы классов углеводородов</div>
+    <h3>Общие формулы по соотношению C : H</h3>
+    <table class="val-table">
+      <tr><th>Общая формула</th><th>Класс</th><th>Пример</th></tr>
+      <tr><td>CₙH₂ₙ₊₂</td><td>Алканы (насыщенные)</td><td>CH₄, C₃H₈</td></tr>
+      <tr><td>CₙH₂ₙ</td><td>Алкены, циклоалканы</td><td>C₂H₄, C₃H₆</td></tr>
+      <tr><td>CₙH₂ₙ₋₂</td><td>Алкины, алкадиены</td><td>C₂H₂, C₄H₆</td></tr>
+      <tr><td>CₙH₂ₙ₋₆</td><td>Арены (бензол и гомологи)</td><td>C₆H₆, C₇H₈</td></tr>
+      <tr><td>CₙH₂ₙO</td><td>Альдегиды, кетоны</td><td>CH₂O, C₂H₄O</td></tr>
+      <tr><td>CₙH₂ₙ₊₂O</td><td>Спирты, простые эфиры</td><td>CH₄O, C₂H₆O</td></tr>
+      <tr><td>CₙH₂ₙO₂</td><td>Карбоновые кислоты, сложные эфиры</td><td>CH₂O₂, C₂H₄O₂</td></tr>
+    </table>
+  </div>
+
+  <!-- Ловушки -->
+
+  <div class="card red">
+    <div class="card-label">Типичные ошибки в задании 33</div>
+    <h3>Ловушки, за которые снимают баллы</h3>
+    <div class="trap-item">❌ <strong>Объём воды в л делят на 22,4</strong> — НЕТ! Вода — жидкость, объём воды надо переводить через плотность (ρ = 1 г/мл), потом n = m/M.</div>
+    <div class="trap-item">❌ <strong>Забывают проверить наличие кислорода</strong> — если дана масса вещества, обязательно вычти m(C) и m(H) и проверь остаток.</div>
+    <div class="trap-item">❌ <strong>Простейшую формулу принимают за истинную</strong> — простейшая формула CH₂O может быть и уксусной кислотой C₂H₄O₂, и глюкозой C₆H₁₂O₆.</div>
+    <div class="trap-item">❌ <strong>Ошибки при округлении</strong> — если соотношение 1 : 1,5 : 2 — умножай всё на 2 (→ 2 : 3 : 4), не округляй 1,5 до 2.</div>
+    <div class="trap-item">❌ <strong>Плотность по воздуху / по водороду</strong> — не забудь: M = D(воздух) × 29 или M = D(H₂) × 2.</div>
+  </div>
+</div><!-- /sec-theory -->
+
+<!-- ═══════════ ЗАДАНИЯ ═══════════ -->
+
+<div class="section-page sec-tasks">
+  <div class="section-header">
+    <div class="section-tag"><span></span> Практика <span></span></div>
+    <h2>10 заданий<br><em>от простого к сложному</em></h2>
+    <p>Реши самостоятельно. Каждое задание — реальный ЕГЭ-формат.</p>
+  </div>
+
+  <!-- 01 -->
+
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">01</div><span class="diff-badge easy">лёгкое</span><span class="badge blue">сгорание · без кислорода</span></div>
+      <div class="task-q">При полном сгорании <span class="chem">4,4 г</span> органического вещества образовалось <span class="chem">8,8 г CO₂</span> и <span class="chem">3,6 г H₂O</span>. Молярная масса вещества равна <span class="chem">44 г/моль</span>. Установите молекулярную формулу вещества.</div>
+    </div>
+  </div>
+
+  <!-- 02 -->
+
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">02</div><span class="diff-badge easy">лёгкое</span><span class="badge green">массовые доли</span></div>
+      <div class="task-q">Органическое вещество содержит <span class="chem">85,7% C</span> и <span class="chem">14,3% H</span>. Молярная масса равна <span class="chem">42 г/моль</span>. Найдите молекулярную формулу вещества.</div>
+    </div>
+  </div>
+
+  <!-- 03 -->
+
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">03</div><span class="diff-badge easy">лёгкое</span><span class="badge amber">плотность по водороду</span></div>
+      <div class="task-q">При сгорании <span class="chem">2,24 л (н.у.)</span> газообразного углеводорода образовалось <span class="chem">4,48 л CO₂ (н.у.)</span> и <span class="chem">3,6 г H₂O</span>. Плотность углеводорода по водороду равна <span class="chem">14</span>. Установите молекулярную формулу.</div>
+    </div>
+  </div>
+
+  <!-- 04 -->
+
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">04</div><span class="diff-badge easy">лёгкое</span><span class="badge red">кислородсодержащее</span></div>
+      <div class="task-q">Одноосновная карбоновая кислота содержит <span class="chem">26,1% C</span>, <span class="chem">4,3% H</span> и кислород. При реакции с этанолом образует сложный эфир, плотность паров которого по воздуху равна <span class="chem">2,55</span>. Найдите формулу эфира.</div>
+    </div>
+  </div>
+
+  <!-- 05 -->
+
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">05</div><span class="diff-badge medium">среднее</span><span class="badge blue">алкадиен / алкин · свойства</span></div>
+      <div class="task-q">При полном сгорании углеводорода образовалось <span class="chem">8,96 л CO₂ (н.у.)</span> и <span class="chem">5,4 г H₂O</span>. Молярная масса вещества в <span class="chem">27 раз больше М(H₂)</span>. Вещество обесцвечивает бромную воду, тройных связей не содержит. Найдите молекулярную формулу и структурную формулу вещества.</div>
+    </div>
+  </div>
+
+  <!-- 06 -->
+
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">06</div><span class="diff-badge medium">среднее</span><span class="badge green">азотсодержащее</span></div>
+      <div class="task-q">При сгорании <span class="chem">4,5 г</span> аминосоединения образовалось <span class="chem">2,24 л N₂ (н.у.)</span>, <span class="chem">6,6 г CO₂</span> и <span class="chem">4,5 г H₂O</span>. Найдите молекулярную формулу вещества.</div>
+    </div>
+  </div>
+
+  <!-- 07 -->
+
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">07</div><span class="diff-badge medium">среднее</span><span class="badge teal">спирт · вывод класса</span></div>
+      <div class="task-q">Органическое вещество содержит <span class="chem">52,2% C</span>, <span class="chem">13,0% H</span>, остальное — кислород. Молярная масса равна <span class="chem">46 г/моль</span>. Вещество реагирует с металлическим натрием с выделением газа. Найдите молекулярную формулу и структурную формулу.</div>
+    </div>
+  </div>
+
+  <!-- 08 -->
+
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">08</div><span class="diff-badge medium">среднее</span><span class="badge amber">объём воды-жидкости · ловушка</span></div>
+      <div class="task-q">При сгорании <span class="chem">5,8 г</span> вещества получили <span class="chem">8,96 л CO₂ (н.у.)</span> и <span class="chem">7,2 мл воды</span> (плотность воды 1 г/мл). Молярная масса вещества равна <span class="chem">58 г/моль</span>. Найдите молекулярную формулу.</div>
+    </div>
+  </div>
+
+  <!-- 09 -->
+
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">09</div><span class="diff-badge hard">сложное · ЕГЭ</span><span class="badge red">аминокислота · N и O</span></div>
+      <div class="task-q">Аминокислота содержит <span class="chem">32,0% C</span>, <span class="chem">6,7% H</span>, <span class="chem">18,7% N</span>. Молярная масса равна <span class="chem">75 г/моль</span>. Напишите молекулярную и структурную формулу, составьте уравнение реакции этого вещества с HCl.</div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">10</div><span class="diff-badge hard">сложное · ЕГЭ</span><span class="badge violet">полный ЕГЭ-формат</span></div>
+      <div class="task-q">При полном сгорании <span class="chem">9,2 г</span> одноатомного предельного спирта образовалось <span class="chem">8,96 л CO₂ (н.у.)</span> и <span class="chem">10,8 г H₂O</span>. <br>1) Произведите вычисления и установите молекулярную формулу спирта.<br>2) Составьте структурную формулу.<br>3) Напишите уравнение реакции с бромоводородом.<br>4) Назовите вещество по ИЮПАК.</div>
+    </div>
+  </div>
+
+</div><!-- /sec-tasks -->
+
+<!-- ═══════════ ШПАРГАЛКА ═══════════ -->
+
+<div class="section-page sec-summary">
+  <div class="section-header">
+    <div class="section-tag"><span></span> Шпаргалка <span></span></div>
+    <h2>Всё самое важное<br><em>на одной странице</em></h2>
+    <p>Сохрани перед ЕГЭ — 4 балла у тебя в кармане.</p>
+  </div>
+
+  <div class="card blue">
+    <div class="card-label">Ключевые формулы — выучить наизусть!</div>
+    <h3>Связь продуктов сгорания и состава</h3>
+    <div class="formula blue" style="line-height:2.5">
+<strong>n(C) = n(CO₂)</strong>
+<strong>n(H) = 2 · n(H₂O)</strong>
+<strong>n(N) = 2 · n(N₂)</strong>
+<strong>n(Cl) = n(HCl)</strong>
+<strong>m(O в в-ве) = m(в-ва) − m(C) − m(H)</strong>
+<strong>M(в-ва) = D(воздух) × 29</strong>
+<strong>M(в-ва) = D(H₂) × 2</strong>
+<strong>M(в-ва) = ρ × Vₘ (22,4 л/моль)</strong>
+    </div>
+  </div>
+
+  <div class="card amber">
+    <div class="card-label">Алгоритм · По продуктам сгорания</div>
+    <h3>5 шагов</h3>
+    <ul class="step-list">
+      <li><span class="step-num">1</span><div>Найти n(CO₂) и n(H₂O) → из них n(C) и n(H)</div></li>
+      <li><span class="step-num">2</span><div>Найти m(O) = m(в-ва) − m(C) − m(H) → n(O)</div></li>
+      <li><span class="step-num">3</span><div>Соотношение C : H : O → делить на наименьшее</div></li>
+      <li><span class="step-num">4</span><div>Написать простейшую формулу, найти M(прост.)</div></li>
+      <li><span class="step-num">5</span><div>n = M(вещества) / M(прост.) → истинная формула</div></li>
+    </ul>
+  </div>
+
+  <div class="card green">
+    <div class="card-label">Алгоритм · По массовым долям</div>
+    <h3>4 шага</h3>
+    <ul class="step-list">
+      <li><span class="step-num">1</span><div>Принять m(в-ва) = 100 г → массы элементов = их доли (г)</div></li>
+      <li><span class="step-num">2</span><div>Найти n каждого элемента: n = m/M</div></li>
+      <li><span class="step-num">3</span><div>Разделить все n на наименьшее → соотношение (простейшая формула)</div></li>
+      <li><span class="step-num">4</span><div>Использовать M для нахождения истинной формулы</div></li>
+    </ul>
+    <div class="tip"><strong>Если сумма долей &lt; 100%</strong> → ω(O) = 100 − сумма остальных!</div>
+  </div>
+
+  <div class="card teal">
+    <div class="card-label">Общие формулы классов — выучить!</div>
+    <h3>Как узнать класс по формуле</h3>
+    <div class="formula teal" style="line-height:2.4">
+CₙH₂ₙ₊₂         → алканы
+CₙH₂ₙ           → алкены, циклоалканы
+CₙH₂ₙ₋₂         → алкины, алкадиены
+CₙH₂ₙ₋₆         → арены (бензол и гомологи)
+CₙH₂ₙ₊₂O        → одноатомные предельные спирты
+CₙH₂ₙO₂         → карбоновые кислоты и сложные эфиры
+CₙH₂ₙ₊₃N        → первичные амины
+CₙH₂ₙ₊₁NO₂      → аминокислоты (простейший тип)
+    </div>
+  </div>
+
+  <div class="card red">
+    <div class="card-label">Ловушки ЕГЭ — не попадись!</div>
+    <h3>Типичные ошибки</h3>
+    <div class="trap-item">❌ <strong>Вода в мл ≠ вода в л!</strong> Сначала m(H₂O) = V(мл) × 1, потом n = m/18.</div>
+    <div class="trap-item">❌ <strong>Простейшая ≠ истинная.</strong> CH₂O → уксусная кислота (×2) или глюкоза (×6).</div>
+    <div class="trap-item">❌ <strong>Не округляй 1,5 до 2!</strong> Соотношение 1 : 1,5 → умножай на 2 → 2 : 3.</div>
+    <div class="trap-item">❌ <strong>Не забывай O.</strong> Если даны только %C и %H → обязательно проверь наличие кислорода.</div>
+    <div class="trap-item">❌ <strong>D(воздух) × 29, D(H₂) × 2.</strong> Не перепутай множитель!</div>
+  </div>
+
+  <div class="card violet">
+    <div class="card-label">Что требует ЕГЭ-2026 в задании 33</div>
+    <h3>Полный список пунктов задания</h3>
+    <div class="highlight-box">
+      Задание 33 на ЕГЭ обычно требует выполнить <strong>4 пункта</strong>:<br><br>
+      <strong>1.</strong> Произвести вычисления (показать работу с формулами) — <em>1 балл</em><br>
+      <strong>2.</strong> Написать молекулярную формулу — <em>1 балл</em><br>
+      <strong>3.</strong> Написать структурную формулу (однозначно отражает порядок связей) — <em>1 балл</em><br>
+      <strong>4.</strong> Написать уравнение реакции (из условия) с правильными коэффициентами — <em>1 балл</em><br><br>
+      <strong>Итого: 4 первичных балла</strong>
+    </div>
+  </div>
+</div><!-- /sec-summary -->
+
+</div><!-- /main -->
+<div class="footer">⚗️ Химия · ЕГЭ · 11 класс · Задание 33</div>
+</body>
+</html>
