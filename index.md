@@ -1,12 +1,12 @@
 ---
-layout: default
-title: Files
 ---
 
-## Файлы репозитория
+## Уроки
 
 <ul>
 {% for file in site.static_files %}
-  <li><a href="{{ file.path }}">{{ file.path }}</a></li>
+  {% if file.path contains '/lessons/' %}
+    <li><a href="{{ file.path }}">{{ file.name }}</a></li>
+  {% endif %}
 {% endfor %}
 </ul>
