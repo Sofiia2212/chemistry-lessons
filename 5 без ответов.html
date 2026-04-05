@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Задание 5 Классификация веществ (без ответов)</title>
+<style>
+:root{--bg:#f5f0e8;--white:#fffdf8;--ink:#1a1814;--muted:#7a7060;--red:#c94040;--blue:#2a6db5;--green:#2a8a5a;--amber:#c47c1a;--border:#e0d8c8;--shadow:rgba(60,50,30,0.1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:var(--ink);min-height:100vh}
+.tab-radio{display:none}
+.nav{position:sticky;top:0;z-index:100;background:rgba(245,240,232,0.97);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.nav-title{font-family:Georgia,serif;font-size:17px;font-weight:600}
+.nav-pills{display:flex;gap:8px;flex-wrap:wrap}
+.tab-label{padding:7px 18px;border-radius:100px;border:1.5px solid var(--border);font-size:13px;cursor:pointer;color:var(--muted);display:inline-block;user-select:none;-webkit-tap-highlight-color:transparent}
+#tab-theory:checked ~ .nav .label-theory,#tab-tasks:checked ~ .nav .label-tasks,#tab-summary:checked ~ .nav .label-summary{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.section-page{display:none}
+#tab-theory:checked ~ .main .sec-theory,#tab-tasks:checked ~ .main .sec-tasks,#tab-summary:checked ~ .main .sec-summary{display:block}
+.main{max-width:860px;margin:0 auto;padding:32px 16px 80px}
+.section-header{margin-bottom:26px}
+.section-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.section-tag span{display:inline-block;width:22px;height:1.5px;background:var(--muted)}
+.section-header h2{font-family:Georgia,serif;font-size:clamp(22px,4vw,34px);font-weight:900;line-height:1.15}
+.section-header h2 em{font-style:italic;color:var(--blue)}
+.section-header p{margin-top:8px;font-size:14px;color:var(--muted);line-height:1.7}
+.card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:22px;margin-bottom:12px;box-shadow:0 2px 12px var(--shadow);position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;width:5px;height:100%;border-radius:18px 0 0 18px}
+.card.red::before{background:var(--red)}.card.blue::before{background:var(--blue)}.card.green::before{background:var(--green)}.card.amber::before{background:var(--amber)}
+.card-label{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;font-weight:500;margin-bottom:8px}
+.card.red .card-label{color:var(--red)}.card.blue .card-label{color:var(--blue)}.card.green .card-label{color:var(--green)}.card.amber .card-label{color:var(--amber)}
+.card h3{font-family:Georgia,serif;font-size:18px;font-weight:700;margin-bottom:12px;line-height:1.3}
+.card p{font-size:14px;line-height:1.8;color:#3a3530;margin-bottom:10px}
+.card p:last-child{margin-bottom:0}
+.rxn{font-family:'Courier New',monospace;font-size:13px;padding:10px 14px;border-radius:10px;margin:6px 0;line-height:1.9}
+.rxn.red{background:rgba(201,64,64,0.07);color:#a02020;border-left:3px solid var(--red)}
+.rxn.blue{background:rgba(42,109,181,0.07);color:#1a4d8a;border-left:3px solid var(--blue)}
+.rxn.green{background:rgba(42,138,90,0.07);color:#1a6040;border-left:3px solid var(--green)}
+.rxn.amber{background:rgba(196,124,26,0.07);color:#8a5010;border-left:3px solid var(--amber)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0}
+.half-card{padding:14px;border-radius:14px;font-size:13px;line-height:1.7}
+.half-card.blue-bg{background:rgba(42,109,181,0.07);border:1px solid rgba(42,109,181,0.2)}
+.half-card.red-bg{background:rgba(201,64,64,0.07);border:1px solid rgba(201,64,64,0.2)}
+.half-card.green-bg{background:rgba(42,138,90,0.07);border:1px solid rgba(42,138,90,0.2)}
+.half-card.amber-bg{background:rgba(196,124,26,0.07);border:1px solid rgba(196,124,26,0.2)}
+.hc-title{font-weight:600;font-size:14px;margin-bottom:6px}
+.mnemonic{display:flex;gap:10px;padding:14px;background:linear-gradient(135deg,rgba(42,109,181,0.06),rgba(201,64,64,0.06));border-radius:14px;border:1px solid var(--border);margin:12px 0}
+.mnemonic-icon{font-size:26px;display:flex;align-items:center;justify-content:center;width:42px;flex-shrink:0}
+.mnemonic-text{font-size:14px;line-height:1.7}
+.m-label{font-size:10px;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);display:block;margin-bottom:2px}
+.divider{height:1px;background:var(--border);margin:18px 0}
+.badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:500;margin:2px}
+.badge.red{background:rgba(201,64,64,0.12);color:var(--red)}
+.badge.blue{background:rgba(42,109,181,0.12);color:var(--blue)}
+.badge.green{background:rgba(42,138,90,0.12);color:var(--green)}
+.badge.amber{background:rgba(196,124,26,0.12);color:var(--amber)}
+.diff-badge{font-size:10px;padding:3px 10px;border-radius:100px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase}
+.diff-badge.easy{background:rgba(42,138,90,0.12);color:var(--green)}
+.diff-badge.medium{background:rgba(196,124,26,0.12);color:var(--amber)}
+.diff-badge.hard{background:rgba(201,64,64,0.12);color:var(--red)}
+.task-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;margin-bottom:12px;overflow:hidden;box-shadow:0 2px 12px var(--shadow)}
+.task-top{padding:18px 22px 30px}
+.task-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.task-num{font-family:Georgia,serif;font-size:24px;font-weight:900;color:var(--border);line-height:1}
+.task-q{font-size:15px;line-height:1.75;color:var(--ink)}
+.task-q .chem{font-family:'Courier New',monospace;background:rgba(42,109,181,0.08);color:var(--blue);padding:1px 5px;border-radius:4px;font-size:14px}
+.tip{margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(60,50,30,0.04);border:1px dashed var(--border);font-size:13px;color:var(--muted);line-height:1.7}
+.tip strong{color:var(--ink)}
+.trap-item{font-size:13px;line-height:1.7;padding:10px 14px;background:rgba(201,64,64,0.06);border-radius:10px;border-left:3px solid var(--red);margin-bottom:8px}
+.val-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;border-radius:12px;overflow:hidden}
+.val-table th{background:var(--ink);color:var(--white);padding:9px 12px;text-align:left;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600}
+.val-table td{padding:8px 12px;border-bottom:1px solid var(--border);line-height:1.5}
+.val-table tr:last-child td{border-bottom:none}
+.val-table tr:nth-child(even) td{background:rgba(60,50,30,0.02)}
+.val-table td:first-child{font-weight:700;color:var(--blue)}
+@media(max-width:560px){.two-col,.three-col{grid-template-columns:1fr}}
+.footer{text-align:center;padding:36px 20px;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<input type="radio" name="tabs" id="tab-theory" class="tab-radio" checked>
+<input type="radio" name="tabs" id="tab-tasks" class="tab-radio">
+<input type="radio" name="tabs" id="tab-summary" class="tab-radio">
+
+<nav class="nav">
+  <div class="nav-title">Задание 5</div>
+  <div class="nav-pills">
+    <label for="tab-theory" class="tab-label label-theory">Теория</label>
+    <label for="tab-tasks" class="tab-label label-tasks">Задания</label>
+    <label for="tab-summary" class="tab-label label-summary">Шпаргалка</label>
+  </div>
+  <span style="margin-left:auto; font-size:12px; color:var(--muted)">11 класс ЕГЭ</span>
+</nav>
+
+<div class="main">
+
+  <!-- ТЕОРИЯ -->
+  <div class="section-page sec-theory">
+    <div class="section-header">
+      <div class="section-tag"><span></span> Теория <span></span></div>
+      <h2>Классификация<br><em>неорганических веществ</em></h2>
+      <p>Оксиды, кислоты, основания и соли. Рабочая тетрадь без ответов.</p>
+    </div>
+
+    <!-- Оксиды -->
+    <div class="card blue">
+      <div class="card-label">Часть 1 • Оксиды</div>
+      <h3>Как определить тип оксида</h3>
+      <div class="tip" style="margin-bottom:12px"><strong>Оксиды</strong> — бинарные соединения, где кислород стоит на втором месте в степени окисления -2. (Пероксиды H2O2 или фторид кислорода OF2 оксидами не являются!)</div>
+      <table class="val-table">
+        <tr><th>Тип оксида</th><th>Признаки</th><th>Примеры</th></tr>
+        <tr><td><strong>Несолеобразующие</strong></td><td>Неметаллы в СО +1, +2. Их нужно выучить наизусть.</td><td>N2O, NO, CO, SiO</td></tr>
+        <tr><td><strong>Кислотные</strong></td><td>Неметаллы (СО > +2) и Металлы в высоких СО (+5, +6, +7).</td><td>SO2, CO2, P2O5, CrO3, Mn2O7</td></tr>
+        <tr><td><strong>Основные</strong></td><td>Только Металлы в СО +1, +2 (кроме амфотерных).</td><td>Na2O, CaO, CuO, FeO</td></tr>
+        <tr><td><strong>Амфотерные</strong></td><td>Металлы в СО +3, +4, а также исключения (Be, Zn, Pb, Sn) в +2.</td><td>Al2O3, Fe2O3, ZnO, BeO</td></tr>
+      </table>
+    </div>
+
+    <!-- Соли -->
+    <div class="card green">
+      <div class="card-label">Часть 2 • Соли</div>
+      <h3>Классификация солей</h3>
+      <div class="two-col">
+        <div class="half-card green-bg">
+          <div class="hc-title" style="color:var(--green)">Средние (нормальные)</div>
+          Только катион металла и анион кислотного остатка. Нет «лишних» атомов H или OH.<br>
+          <span style="font-size:12px; color:var(--muted)">K2SO4, NaCl, Ca3(PO4)2</span>
+        </div>
+        <div class="half-card red-bg">
+          <div class="hc-title" style="color:var(--red)">Кислые соли</div>
+          Между металлом и кислотным остатком «застрял» водород (остаток не до конца замещен).<br>
+          <span style="font-size:12px; color:var(--muted)">NaHCO3, KHSO4, Ca(H2PO4)2</span>
+        </div>
+        <div class="half-card blue-bg">
+          <div class="hc-title" style="color:var(--blue)">Основные соли</div>
+          Между металлом и кислотным остатком «застряла» гидроксогруппа OH.<br>
+          <span style="font-size:12px; color:var(--muted)">Cu(OH)Cl, Al(OH)2NO3</span>
+        </div>
+        <div class="half-card amber-bg">
+          <div class="hc-title" style="color:var(--amber)">Комплексные соли</div>
+          Есть квадратные скобки. Центральный атом окружен лигандами.<br>
+          <span style="font-size:12px; color:var(--muted)">Na[Al(OH)4], K3[Fe(CN)6]</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="two-col">
+        <div class="half-card amber-bg">
+          <div class="hc-title" style="color:var(--amber)">Двойные соли</div>
+          Два разных катиона металла и один кислотный остаток.<br>
+          <span style="font-size:12px; color:var(--muted)">KAl(SO4)2 (квасцы)</span>
+        </div>
+        <div class="half-card amber-bg">
+          <div class="hc-title" style="color:var(--amber)">Смешанные соли</div>
+          Один металл и два разных кислотных остатка.<br>
+          <span style="font-size:12px; color:var(--muted)">CaOCl2 (хлорид-гипохлорит)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ЗАДАНИЯ -->
+  <div class="section-page sec-tasks">
+    <div class="section-header">
+      <div class="section-tag"><span></span> Практика <span></span></div>
+      <h2>Задания<br><em>в формате ЕГЭ</em></h2>
+      <p>Рабочая тетрадь: запиши свои ответы рядом с заданиями.</p>
+    </div>
+
+    <!-- Задание 1 -->
+    <div class="task-card">
+      <div class="task-top">
+        <div class="task-meta"><div class="task-num">01</div><span class="diff-badge easy">Базовое</span><span class="badge blue">Оксиды</span></div>
+        <div class="task-q">Установите соответствие между формулой вещества и классом, к которому оно принадлежит:<br><br>
+        <strong>ФОРМУЛА ВЕЩЕСТВА:</strong> А) <span class="chem">N2O</span> Б) <span class="chem">N2O3</span> В) <span class="chem">FeO</span><br>
+        <strong>КЛАСС:</strong> 1) кислотный оксид 2) основный оксид 3) несолеобразующий 4) амфотерный оксид</div>
+        <div style="margin-top:20px; border-bottom: 1.5px dashed var(--border); width: 100px;">Ответ: </div>
+      </div>
+    </div>
+
+    <!-- Задание 2 -->
+    <div class="task-card">
+      <div class="task-top">
+        <div class="task-meta"><div class="task-num">02</div><span class="diff-badge medium">Среднее</span><span class="badge green">Соли</span></div>
+        <div class="task-q">Установите соответствие между формулой соли и ее типом:<br><br>
+        <strong>ФОРМУЛА СОЛИ:</strong> А) <span class="chem">NaHCO3</span> Б) <span class="chem">K4[Fe(CN)6]</span> В) <span class="chem">Cu(OH)Cl</span><br>
+        <strong>ТИП:</strong> 1) средняя 2) кислая 3) основная 4) комплексная</div>
+        <div style="margin-top:20px; border-bottom: 1.5px dashed var(--border); width: 100px;">Ответ: </div>
+      </div>
+    </div>
+
+    <!-- Задание 3 -->
+    <div class="task-card">
+      <div class="task-top">
+        <div class="task-meta"><div class="task-num">03</div><span class="diff-badge medium">Среднее</span><span class="badge amber">Тривиальные названия</span></div>
+        <div class="task-q">Установите соответствие между тривиальным названием вещества и его формулой:<br><br>
+        <strong>НАЗВАНИЕ:</strong> А) веселящий газ Б) угарный газ В) железная окалина<br>
+        <strong>ФОРМУЛА:</strong> 1) <span class="chem">Fe3O4</span> 2) <span class="chem">CO2</span> 3) <span class="chem">CO</span> 4) <span class="chem">N2O</span></div>
+        <div style="margin-top:20px; border-bottom: 1.5px dashed var(--border); width: 100px;">Ответ: </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ШПАРГАЛКА -->
+  <div class="section-page sec-summary">
+    <div class="section-header">
+      <div class="section-tag"><span></span> Шпаргалка <span></span></div>
+      <h2>Сложные названия<br><em>для 5 задания</em></h2>
+    </div>
+
+    <div class="card red">
+      <div class="card-label">Тривиальная номенклатура</div>
+      <h3>Газы и оксиды</h3>
+      <div class="trap-item"><strong>Угарный газ</strong> — CO (несолеобразующий)</div>
+      <div class="trap-item"><strong>Углекислый газ (сухой лед)</strong> — CO2 (кислотный)</div>
+      <div class="trap-item"><strong>Веселящий газ</strong> — N2O (несолеобразующий)</div>
+      <div class="trap-item"><strong>Бурый газ (лисий хвост)</strong> — NO2 (кислотный, образует 2 кислоты: HNO2 и HNO3)</div>
+      <div class="trap-item"><strong>Сернистый газ</strong> — SO2 (кислотный)</div>
+      <div class="trap-item"><strong>Железная окалина</strong> — Fe3O4 (смешанный)</div>
+      <div class="trap-item"><strong>Кремнезем, кварц, песок</strong> — SiO2 (кислотный)</div>
+    </div>
+  </div>
+</div>
+<div class="footer">Химия ЕГЭ 11 класс • Задание 5</div>
+</body>
+</html>
+
