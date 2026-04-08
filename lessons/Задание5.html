@@ -1,0 +1,861 @@
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Задание 5 — Классификация неорганических веществ (Полная версия)</title>
+<style>
+:root {
+  --bg:#f5f0e8;--white:#fffdf8;--ink:#1a1814;--muted:#7a7060;
+  --red:#c94040;--blue:#2a6db5;--green:#2a8a5a;--amber:#c47c1a;
+  --violet:#7b3fa0;
+  --border:#e0d8c8;--shadow:rgba(60,50,30,0.1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:var(--ink);min-height:100vh;}
+.tab-radio{display:none;}
+.nav{position:sticky;top:0;z-index:100;background:rgba(245,240,232,0.97);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.nav-title{font-family:Georgia,serif;font-size:17px;font-weight:600;}
+.nav-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.tab-label{padding:7px 18px;border-radius:100px;border:1.5px solid var(--border);font-size:13px;cursor:pointer;color:var(--muted);display:inline-block;user-select:none;}
+#tab-theory:checked ~ * .label-theory,
+#tab-tasks:checked ~ * .label-tasks,
+#tab-summary:checked ~ * .label-summary{background:var(--ink);color:var(--white);border-color:var(--ink);}
+.section-page{display:none;}
+#tab-theory:checked ~ .main .sec-theory{display:block;}
+#tab-tasks:checked ~ .main .sec-tasks{display:block;}
+#tab-summary:checked ~ .main .sec-summary{display:block;}
+.main{max-width:860px;margin:0 auto;padding:32px 16px 80px;}
+.section-header{margin-bottom:26px;}
+.section-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.section-tag span{display:inline-block;width:22px;height:1.5px;background:var(--muted);}
+.section-header h2{font-family:Georgia,serif;font-size:clamp(22px,4vw,34px);font-weight:900;line-height:1.15;}
+.section-header h2 em{font-style:italic;color:var(--blue);}
+.section-header p{margin-top:8px;font-size:14px;color:var(--muted);line-height:1.7;}
+.card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:22px;margin-bottom:12px;box-shadow:0 2px 12px var(--shadow);position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;width:5px;height:100%;border-radius:18px 0 0 18px;}
+.card.red::before{background:var(--red);}.card.blue::before{background:var(--blue);}
+.card.green::before{background:var(--green);}.card.amber::before{background:var(--amber);}
+.card.violet::before{background:var(--violet);}
+.card-label{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;font-weight:500;margin-bottom:8px;}
+.card.red .card-label{color:var(--red);}.card.blue .card-label{color:var(--blue);}
+.card.green .card-label{color:var(--green);}.card.amber .card-label{color:var(--amber);}
+.card.violet .card-label{color:var(--violet);}
+.card h3{font-family:Georgia,serif;font-size:18px;font-weight:700;margin-bottom:12px;line-height:1.3;}
+.card p{font-size:14px;line-height:1.8;color:#3a3530;margin-bottom:10px;}
+.card p:last-child{margin-bottom:0;}
+.rxn{font-family:'Courier New',monospace;font-size:13px;padding:10px 14px;border-radius:10px;margin:6px 0;line-height:1.9;}
+.rxn.red{background:rgba(201,64,64,0.07);color:#a02020;border-left:3px solid var(--red);}
+.rxn.blue{background:rgba(42,109,181,0.07);color:#1a4d8a;border-left:3px solid var(--blue);}
+.rxn.green{background:rgba(42,138,90,0.07);color:#1a6040;border-left:3px solid var(--green);}
+.rxn.amber{background:rgba(196,124,26,0.07);color:#8a5010;border-left:3px solid var(--amber);}
+.rxn.violet{background:rgba(123,63,160,0.07);color:#5a2080;border-left:3px solid var(--violet);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0;}
+.four-col{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin:12px 0;}
+.half-card{padding:14px;border-radius:14px;font-size:13px;line-height:1.7;}
+.half-card.blue-bg{background:rgba(42,109,181,0.07);border:1px solid rgba(42,109,181,0.2);}
+.half-card.red-bg{background:rgba(201,64,64,0.07);border:1px solid rgba(201,64,64,0.2);}
+.half-card.green-bg{background:rgba(42,138,90,0.07);border:1px solid rgba(42,138,90,0.2);}
+.half-card.amber-bg{background:rgba(196,124,26,0.07);border:1px solid rgba(196,124,26,0.2);}
+.half-card.violet-bg{background:rgba(123,63,160,0.07);border:1px solid rgba(123,63,160,0.2);}
+.half-card .hc-title{font-weight:600;font-size:14px;margin-bottom:6px;}
+.mnemonic{display:flex;gap:10px;padding:14px;background:linear-gradient(135deg,rgba(42,109,181,0.06),rgba(201,64,64,0.06));border-radius:14px;border:1px solid var(--border);margin:12px 0;}
+.mnemonic-icon{font-size:26px;display:flex;align-items:center;justify-content:center;width:42px;flex-shrink:0;}
+.mnemonic-text{font-size:14px;line-height:1.7;}
+.m-label{font-size:10px;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);display:block;margin-bottom:2px;}
+.divider{height:1px;background:var(--border);margin:18px 0;}
+.badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:500;margin:2px;}
+.badge.red{background:rgba(201,64,64,0.12);color:var(--red);}
+.badge.blue{background:rgba(42,109,181,0.12);color:var(--blue);}
+.badge.green{background:rgba(42,138,90,0.12);color:var(--green);}
+.badge.amber{background:rgba(196,124,26,0.12);color:var(--amber);}
+.badge.violet{background:rgba(123,63,160,0.12);color:var(--violet);}
+.diff-badge{font-size:10px;padding:3px 10px;border-radius:100px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;}
+.diff-badge.easy{background:rgba(42,138,90,0.12);color:var(--green);}
+.diff-badge.medium{background:rgba(196,124,26,0.12);color:var(--amber);}
+.diff-badge.hard{background:rgba(201,64,64,0.12);color:var(--red);}
+.task-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;margin-bottom:12px;overflow:hidden;box-shadow:0 2px 12px var(--shadow);}
+.task-top{padding:18px 22px 22px;}
+.task-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.task-num{font-family:Georgia,serif;font-size:24px;font-weight:900;color:var(--border);line-height:1;}
+.task-q{font-size:15px;line-height:1.75;color:var(--ink);}
+.task-q .chem{font-family:'Courier New',monospace;background:rgba(42,109,181,0.08);color:var(--blue);padding:1px 5px;border-radius:4px;font-size:14px;}
+.answer-box{margin-top:16px;min-height:80px;border:1.5px dashed var(--border);border-radius:12px;padding:14px;background:rgba(60,50,30,0.02);font-size:13px;color:var(--muted);display:flex;align-items:flex-start;}
+.answer-box-label{font-size:10px;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);margin-bottom:4px;display:block;}
+.tip{margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(60,50,30,0.04);border:1px dashed var(--border);font-size:13px;color:var(--muted);line-height:1.7;}
+.tip strong{color:var(--ink);}
+.trap-item{font-size:13px;line-height:1.7;padding:10px 14px;background:rgba(201,64,64,0.06);border-radius:10px;border-left:3px solid var(--red);margin-bottom:8px;}
+.step-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.step-list li{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.7;}
+.step-num{background:var(--blue);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:2px;font-weight:600;}
+.table-wrapper{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:12px 0;padding-bottom:4px;}
+.val-table{width:100%;min-width:540px;border-collapse:collapse;font-size:13px;border-radius:12px;overflow:hidden;}
+.val-table th{background:var(--ink);color:var(--white);padding:9px 12px;text-align:left;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;}
+.val-table td{padding:10px 12px;border-bottom:1px solid var(--border);line-height:1.5;}
+.val-table tr:last-child td{border-bottom:none;}
+.val-table tr:nth-child(even) td{background:rgba(60,50,30,0.02);}
+.val-table td:first-child{font-weight:700;color:var(--blue);}
+
+/* Новые стили для жесткой сетки структурных формул */
+.struct-grid { display: inline-grid; grid-template-columns: 1fr max-content 1fr; gap: 2px 0; align-items: center; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1; }
+.sg-l { text-align: right; padding-right: 2px; }
+.sg-c { text-align: center; }
+.sg-r { text-align: left; padding-left: 2px; }
+
+@media(max-width:560px){.two-col,.three-col,.four-col{grid-template-columns:1fr;}}
+.footer{text-align:center;padding:36px 20px;color:var(--muted);font-size:12px;}
+</style>
+</head>
+<body>
+<input type="radio" name="tabs" id="tab-theory" class="tab-radio" checked="">
+<input type="radio" name="tabs" id="tab-tasks" class="tab-radio">
+<input type="radio" name="tabs" id="tab-summary" class="tab-radio">
+
+<nav class="nav">
+  <div class="nav-title">🧪 Задание 5</div>
+  <div class="nav-pills">
+    <label for="tab-theory" class="tab-label label-theory">Теория</label>
+    <label for="tab-tasks" class="tab-label label-tasks">Задания</label>
+    <label for="tab-summary" class="tab-label label-summary">Шпаргалка</label>
+  </div>
+  <span style="margin-left:auto;font-size:12px;color:var(--muted)">10-11 класс · ЕГЭ · Без ответов</span>
+</nav>
+
+<div class="main">
+
+<!-- ═══════════════ ТЕОРИЯ ═══════════════ -->
+
+<div class="section-page sec-theory">
+  <div class="section-header">
+    <div class="section-tag"><span></span> Теория <span></span></div>
+    <h2>Классификация<br><em>неорганических веществ</em></h2>
+    <p>Оксиды, кислоты, основания и соли. Задание 5 ЕГЭ — строго на знание классификации.</p>
+  </div>
+
+  <!-- Обзор классов -->
+
+  <div class="card blue">
+    <div class="card-label">Часть 1 · Четыре главных класса</div>
+    <h3>Что такое класс неорганических веществ</h3>
+    <p>Все неорганические вещества делятся на четыре основных класса. Ключ к определению класса — <strong>состав и строение формулы</strong>.</p>
+    <div class="four-col">
+      <div class="half-card blue-bg">
+        <div class="hc-title" style="color:var(--blue)">Кислоты</div>
+        Начинаются с <strong>H</strong><br>
+        <span style="font-size:12px;color:var(--muted)">HCl, H₂SO₄, HNO₃</span>
+      </div>
+      <div class="half-card green-bg">
+        <div class="hc-title" style="color:var(--green)">Гидроксиды</div>
+        Заканчиваются на <strong>OH</strong><br>
+        <span style="font-size:12px;color:var(--muted)">KOH, Ca(OH)₂</span>
+      </div>
+      <div class="half-card amber-bg">
+        <div class="hc-title" style="color:var(--amber)">Соли</div>
+        Металл (NH₄⁺) + кислотный остаток<br>
+        <span style="font-size:12px;color:var(--muted)">NaCl, Na₂SO₄</span>
+      </div>
+      <div class="half-card red-bg">
+        <div class="hc-title" style="color:var(--red)">Оксиды</div>
+        Элемент + <strong>O</strong><br>
+        <span style="font-size:12px;color:var(--muted)">K₂O, SO₂, Fe₂O₃</span>
+      </div>
+    </div>
+    <div class="tip"><strong>Исключение для оксидов:</strong> OF₂ — это фторид кислорода, а не оксид! Фтор электроотрицательнее кислорода, поэтому называется по-другому.</div>
+  </div>
+
+  <!-- Кислоты -->
+
+  <div class="card red">
+    <div class="card-label">Часть 2 · Кислоты</div>
+    <h3>Классификация кислот</h3>
+    <div class="two-col">
+      <div class="half-card red-bg">
+        <div class="hc-title" style="color:var(--red)">По силе</div>
+        <strong>Сильные:</strong> см. алгоритм в Лайфхаке ниже!<br><br>
+        <strong>Слабые:</strong> HF, H₂S, H₂SO₃, HNO₂, H₃PO₄, H₂CO₃, H₂SiO₃, HClO₂, HClO
+      </div>
+      <div class="half-card blue-bg">
+        <div class="hc-title" style="color:var(--blue)">По кислородсодержанию</div>
+        <strong>Кислородсодержащие:</strong> H₂SO₄, HNO₃, H₃PO₄<br><br>
+        <strong>Бескислородные:</strong> HCl, HF, HBr, HI, H₂S
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="half-card green-bg">
+        <div class="hc-title" style="color:var(--green)">По основности (Правило!)</div>
+        В большинстве кислот основность равна <strong>количеству атомов H</strong>.<br><br>
+        <strong>Одноосновные:</strong> HCl, HNO₃<br>
+        <strong>Двухосновные:</strong> H₂SO₄, H₂CO₃<br>
+        <strong>Трёхосновные:</strong> H₃AsO₄
+      </div>
+      <div class="half-card amber-bg">
+        <div class="hc-title" style="color:var(--amber)">По устойчивости</div>
+        <strong>Неустойчивые</strong> (распадаются):<br>H₂CO₃ → H₂O + CO₂<br>H₂SO₃ → H₂O + SO₂<br><br>
+        <strong>Устойчивые:</strong> все остальные
+      </div>
+    </div>
+    <div class="rxn red">Нерастворимая кислота: H₂SiO₃ (кремниевая) — выпадает в осадок!
+Все остальные кислоты — растворимы.</div>
+  </div>
+
+  <!-- НОВЫЙ БЛОК: Лайфхак по силе кислот -->
+  <div class="card amber">
+    <div class="card-label">Лайфхак для ЕГЭ 😉</div>
+    <h3>Как определить силу кислоты?</h3>
+    <p>Один из классных лайфхаков, про которые я рассказываю на занятиях: как определить силу кислоты, и <strong>не учить при этом все кислоты наизусть</strong>.</p>
+    
+    <div class="two-col">
+      <!-- Бескислородные -->
+      <div class="half-card blue-bg">
+        <div class="hc-title" style="color:var(--blue)">1. Бескислородные кислоты</div>
+        Из бескислородных кислот-бинарных соединений, которые могут встретиться на ЕГЭ, к сильным относятся <strong>только три</strong>:<br>
+        <div class="rxn blue" style="text-align: center; font-size: 16px; font-weight: bold; margin: 8px 0;">HCl, HBr, HI</div>
+        Как правило, <strong>остальные</strong> бескислородные кислоты — <strong style="color:var(--red)">слабые</strong>.
+      </div>
+      
+      <!-- Кислородсодержащие -->
+      <div class="half-card red-bg">
+        <div class="hc-title" style="color:var(--red)">2. Кислородсодержащие (H<sub>x</sub>ЭO<sub>y</sub>)</div>
+        Используем простой прием <strong>(Правило Полинга)</strong>: мы вычитаем из числа атомов кислорода (O) число атомов водорода (H).<br>
+        <ul class="step-list" style="margin-top: 8px;">
+          <li style="align-items: center;"><span class="step-num" style="background:var(--red);">≥2</span><div>Если <strong>y − x = 2 или 3</strong> → <strong style="color:var(--red)">Сильная</strong></div></li>
+          <li style="align-items: center;"><span class="step-num" style="background:var(--blue);"><2</span><div>Если <strong>y − x = 0 или 1</strong> → <strong style="color:var(--blue)">Слабая</strong></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Таблица примеров Полинга -->
+    <div class="table-wrapper">
+      <table class="val-table">
+        <tbody>
+          <tr><th>Пример кислоты</th><th>Расчет по правилу (O − H)</th><th>Результат</th></tr>
+          <tr><td>Хромовая (H₂CrO₄)</td><td>4 − 2 = <strong>2</strong></td><td><strong style="color:var(--red)">Сильная</strong></td></tr>
+          <tr><td>Хлорная (HClO₄)</td><td>4 − 1 = <strong>3</strong></td><td><strong style="color:var(--red)">Сильная</strong></td></tr>
+          <tr><td>Хлористая (HClO₂)</td><td>2 − 1 = <strong>1</strong></td><td><strong style="color:var(--blue)">Слабая</strong></td></tr>
+          <tr><td>Хлорноватистая (HClO)</td><td>1 − 1 = <strong>0</strong></td><td><strong style="color:var(--blue)">Слабая</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Важное исключение про кислоты фосфора -->
+  <div class="card violet">
+    <div class="card-label">Критично для ЕГЭ!</div>
+    <h3>Исключения: Кислоты фосфора</h3>
+    <p>Основность кислородсодержащих кислот равна <strong>числу ОН-групп</strong>, а не общему числу атомов водорода в молекуле. Водород, связанный напрямую с фосфором (связь P—H, <span style="color:var(--red); font-weight:bold;">выделена красным</span>), не способен отрываться и замещаться на металл. Эту таблицу нужно <strong>выучить наизусть</strong>:</p>
+    
+    <div class="table-wrapper">
+      <table class="val-table">
+        <tbody>
+          <tr><th>Формула</th><th>Название</th><th style="text-align:center;">Структура</th><th>Основность</th><th>Соли</th></tr>
+          
+          <!-- H3PO4 -->
+          <tr>
+            <td><strong>H₃PO₄</strong></td>
+            <td>Ортофосфорная</td>
+            <td style="text-align:center;">
+              <div class="struct-grid">
+                <div class="sg-l"></div><div class="sg-c">O</div><div class="sg-r"></div>
+                <div class="sg-l"></div><div class="sg-c">||</div><div class="sg-r"></div>
+                <div class="sg-l">HO-</div><div class="sg-c">P</div><div class="sg-r">-OH</div>
+                <div class="sg-l"></div><div class="sg-c">|</div><div class="sg-r"></div>
+                <div class="sg-l"></div><div class="sg-c">OH</div><div class="sg-r"></div>
+              </div>
+            </td>
+            <td>3 (трехосновная)</td>
+            <td>Ортофосфаты<br>(Na₃PO₄, Na₂HPO₄, NaH₂PO₄)</td>
+          </tr>
+
+          <!-- H3PO3 -->
+          <tr>
+            <td><strong>H₃PO₃</strong></td>
+            <td>Фосфористая</td>
+            <td style="text-align:center;">
+              <div class="struct-grid">
+                <div class="sg-l"></div><div class="sg-c">O</div><div class="sg-r"></div>
+                <div class="sg-l"></div><div class="sg-c">||</div><div class="sg-r"></div>
+                <div class="sg-l"><span style="color:var(--red); font-weight:bold;">H</span>-</div><div class="sg-c">P</div><div class="sg-r">-OH</div>
+                <div class="sg-l"></div><div class="sg-c">|</div><div class="sg-r"></div>
+                <div class="sg-l"></div><div class="sg-c">OH</div><div class="sg-r"></div>
+              </div>
+            </td>
+            <td><strong style="color:var(--red);">2 (двухосновная)</strong></td>
+            <td>Фосфиты<br>(<strong style="color:var(--red);">Na₂HPO₃</strong> — средняя соль!)</td>
+          </tr>
+
+          <!-- H3PO2 -->
+          <tr>
+            <td><strong>H₃PO₂</strong></td>
+            <td>Фосфорноватистая</td>
+            <td style="text-align:center;">
+              <div class="struct-grid">
+                <div class="sg-l"></div><div class="sg-c">O</div><div class="sg-r"></div>
+                <div class="sg-l"></div><div class="sg-c">||</div><div class="sg-r"></div>
+                <div class="sg-l"><span style="color:var(--red); font-weight:bold;">H</span>-</div><div class="sg-c">P</div><div class="sg-r">-<span style="color:var(--red); font-weight:bold;">H</span></div>
+                <div class="sg-l"></div><div class="sg-c">|</div><div class="sg-r"></div>
+                <div class="sg-l"></div><div class="sg-c">OH</div><div class="sg-r"></div>
+              </div>
+            </td>
+            <td><strong style="color:var(--red);">1 (одноосновная)</strong></td>
+            <td>Гипофосфиты<br>(<strong style="color:var(--red);">NaH₂PO₂</strong> — средняя соль!)</td>
+          </tr>
+
+          <!-- HPO3 -->
+          <tr>
+            <td><strong>HPO₃</strong></td>
+            <td>Метафосфорная</td>
+            <td style="text-align:center;">
+              <div class="struct-grid">
+                <div class="sg-l"></div><div class="sg-c">O</div><div class="sg-r"></div>
+                <div class="sg-l"></div><div class="sg-c">||</div><div class="sg-r"></div>
+                <div class="sg-l">O=</div><div class="sg-c">P</div><div class="sg-r">-OH</div>
+              </div>
+            </td>
+            <td>1 (одноосновная)</td>
+            <td>Метафосфаты<br>(NaPO₃)</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <div class="tip"><strong>Запомни:</strong> В солях Na₂HPO₃ и NaH₂PO₂ водород "прячется" в кислотном остатке и не делает соль кислой. Это нормальные, <strong>средние</strong> соли!</div>
+  </div>
+
+  <!-- Гидроксиды -->
+
+  <div class="card green">
+    <div class="card-label">Часть 3 · Гидроксиды</div>
+    <h3>Классификация гидроксидов</h3>
+    <p>Гидроксиды делятся на три группы по кислотно-основному характеру:</p>
+    <div class="three-col">
+      <div class="half-card green-bg">
+        <div class="hc-title" style="color:var(--green)">Основания</div>
+        Реагируют с <strong>кислотами</strong>, не реагируют со щелочами.<br>
+        Металл <strong>I или II</strong> группы (кроме Zn, Pb, Be)<br>
+        <span style="font-size:12px;color:var(--muted)">NaOH, KOH, Ca(OH)₂, Fe(OH)₂</span>
+      </div>
+      <div class="half-card amber-bg">
+        <div class="hc-title" style="color:var(--amber)">Амфотерные гидроксиды</div>
+        Реагируют и с <strong>кислотами</strong>, и с <strong>щелочами</strong>.<br>
+        Металл <strong>III, IV</strong> группы + Zn, Be, Pb<br>
+        <span style="font-size:12px;color:var(--muted)">Al(OH)₃, Zn(OH)₂, Fe(OH)₃, Cr(OH)₃, Be(OH)₂, Pb(OH)₂</span>
+      </div>
+      <div class="half-card red-bg">
+        <div class="hc-title" style="color:var(--red)">Кислоты (кислотные гидроксиды)</div>
+        Реагируют с <strong>основаниями</strong>, не реагируют с кислотами.<br>
+        Металл <strong>V+ группы</strong> + все кислородсодержащие кислоты<br>
+        <span style="font-size:12px;color:var(--muted)">HMnO₄, H₂CrO₄, H₂SO₄, HNO₃</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="two-col">
+      <div class="half-card green-bg">
+        <div class="hc-title" style="color:var(--green)">По силе</div>
+        <strong>Сильные (щёлочи):</strong><br>
+        Щелочные металлы: LiOH, NaOH, KOH, RbOH, CsOH<br>
+        Щелочноземельные: Ca(OH)₂, Sr(OH)₂, Ba(OH)₂, Ra(OH)₂<br><br>
+        <strong>Слабые:</strong> все остальные (Cu(OH)₂, Fe(OH)₃, Al(OH)₃...)
+      </div>
+      <div class="half-card blue-bg">
+        <div class="hc-title" style="color:var(--blue)">По растворимости</div>
+        <strong>Растворимые (щёлочи):</strong> гидроксиды щелочных и щелочноземельных металлов + NH₄OH<br><br>
+        <strong>Нерастворимые:</strong> все остальные<br>
+        <span style="font-size:12px;color:var(--muted)">Cu(OH)₂, Fe(OH)₃, Al(OH)₃, Mg(OH)₂...</span>
+      </div>
+    </div>
+    <div class="mnemonic">
+      <div class="mnemonic-icon">💡</div>
+      <div class="mnemonic-text">
+        <span class="m-label">Запомни</span>
+        <strong>Щелочноземельные — НЕ все II группы!</strong><br>
+        <span style="color:var(--muted)">Только Ca, Sr, Ba, Ra. Магний (Mg) и бериллий (Be) — НЕ щелочноземельные в химическом смысле!</span>
+      </div>
+    </div>
+    <div class="tip"><strong>Неустойчивые гидроксиды:</strong> NH₄OH → NH₃ + H₂O; AgOH → Ag₂O + H₂O</div>
+  </div>
+
+  <!-- Соли -->
+
+  <div class="card amber">
+    <div class="card-label">Часть 4 · Соли</div>
+    <h3>Классификация солей</h3>
+    <div class="three-col">
+      <div class="half-card amber-bg">
+        <div class="hc-title" style="color:var(--amber)">Средние</div>
+        Катион металла (NH₄⁺) + кислотный остаток (нет «лишних» H или OH)<br>
+        <span style="font-size:12px;color:var(--muted)">NaCl, BaSO₄, K₃PO₄</span>
+      </div>
+      <div class="half-card blue-bg">
+        <div class="hc-title" style="color:var(--blue)">Кислые</div>
+        Средняя соль + H в середине (остаток не до конца замещен)<br>
+        <span style="font-size:12px;color:var(--muted)">NaHCO₃, KH₂PO₄, NaHSO₄</span>
+      </div>
+      <div class="half-card green-bg">
+        <div class="hc-title" style="color:var(--green)">Основные</div>
+        Средняя соль + OH в середине<br>
+        <span style="font-size:12px;color:var(--muted)">BaOHCl, Al(OH)₂NO₃</span>
+      </div>
+    </div>
+    <div class="four-col">
+      <div class="half-card violet-bg">
+        <div class="hc-title" style="color:var(--violet)">Комплексные</div>
+        Квадратные скобки! Центральный атом окружен лигандами.<br>
+        <span style="font-size:12px;color:var(--muted)">Na[Al(OH)₄], K₃[Fe(CN)₆]</span>
+      </div>
+      <div class="half-card red-bg">
+        <div class="hc-title" style="color:var(--red)">Двойные</div>
+        <strong>2 разных катиона металла</strong> + 1 кислотный остаток<br>
+        <span style="font-size:12px;color:var(--muted)">KAl(SO₄)₂ — квасцы</span>
+      </div>
+      <div class="half-card blue-bg">
+        <div class="hc-title" style="color:var(--blue)">Смешанные</div>
+        <strong>1 катион</strong> + <strong>2 разных кислотных остатка</strong><br>
+        <span style="font-size:12px;color:var(--muted)">Ca(OCl)Cl — хлорная известь</span>
+      </div>
+      <div class="half-card amber-bg">
+        <div class="hc-title" style="color:var(--amber)">Кристаллогидраты</div>
+        Соль + вода<br>
+        <span style="font-size:12px;color:var(--muted)">CuSO₄·5H₂O — медный купорос</span>
+      </div>
+    </div>
+    <div class="tip"><strong>Ловушка:</strong> NH₄Cl — средняя соль, не кислая! H входит в состав катиона NH₄⁺, а не как кислотный водород. Также SF₆ и NaH — не соли, а бинарные соединения!<br><br>
+    <strong>Двойные vs Смешанные:</strong> двойные — 2 катиона (KAl(SO₄)₂), смешанные — 2 аниона (Ca(OCl)Cl). Оба класса редкие, но встречаются в ЕГЭ!</div>
+  </div>
+
+  <!-- Оксиды -->
+
+  <div class="card blue" style="background-color: var(--white); border-color: var(--blue);">
+    <div class="card-label" style="color: var(--blue);">Часть 5 · Оксиды</div>
+    <h3>Классификация оксидов</h3>
+    <div class="tip" style="margin-bottom:12px"><strong>Оксиды</strong> — бинарные соединения, где кислород стоит на втором месте в степени окисления -2. (Пероксиды H₂O₂ или фторид кислорода OF₂ оксидами не являются!)</div>
+    
+    <div class="table-wrapper">
+      <table class="val-table">
+        <tbody>
+          <tr><th>Тип оксида</th><th>Признаки (Степень Окисления)</th><th>Примеры</th></tr>
+          <tr><td><strong>Несолеобразующие</strong></td><td>Неметаллы в СО +1, +2. Их нужно выучить наизусть.</td><td>N₂O, NO, CO, SiO</td></tr>
+          <tr><td><strong>Кислотные</strong></td><td>Неметаллы (СО > +2) и Металлы в высоких СО (+5, +6, +7).</td><td>SO₂, CO₂, P₂O₅, CrO₃, Mn₂O₇</td></tr>
+          <tr><td><strong>Основные</strong></td><td>Только Металлы в СО +1, +2 (кроме амфотерных).</td><td>Na₂O, CaO, CuO, FeO</td></tr>
+          <tr><td><strong>Амфотерные</strong></td><td>Металлы в СО +3, +4, а также исключения (Be, Zn, Pb, Sn) в +2.</td><td>Al₂O₃, Fe₂O₃, ZnO, BeO</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two-col">
+      <div class="half-card violet-bg">
+        <div class="hc-title" style="color:var(--violet)">Несолеобразующие</div>
+        Не образуют солей при реакциях:<br>
+        <span style="font-family:'Courier New',monospace;font-size:12px">CO, NO, N₂O, SiO</span><br>
+        <span style="font-size:12px;color:var(--muted)">Запомни этот список наизусть!</span>
+      </div>
+      <div class="half-card blue-bg">
+        <div class="hc-title" style="color:var(--blue)">Солеобразующие</div>
+        При реакциях образуют соли.<br>
+        Делятся на три подтипа: Основные, Амфотерные и Кислотные.
+      </div>
+    </div>
+    
+    <div class="tip" style="margin-top: 10px;"><strong>Двойные оксиды:</strong> Fe₃O₄ = FeO + Fe₂O₃; Pb₃O₄ = PbO + PbO₂ — не вписываются в обычную классификацию.<br><br>
+    <strong>Пероксиды</strong> — отдельный класс: H₂O₂, Na₂O₂, K₂O₂, BaO₂, CaO₂. Содержат ион O₂²⁻. Не путай PbO₂ с пероксидами — это оксид свинца(IV)!</div>
+  </div>
+
+</div><!-- /sec-theory -->
+
+<!-- ═══════════════ ЗАДАНИЯ ═══════════════ -->
+
+<div class="section-page sec-tasks">
+  <div class="section-header">
+    <div class="section-tag"><span></span> Практика <span></span></div>
+    <h2>23 задания<br><em>от простого к сложному</em></h2>
+    <p>Реши самостоятельно — запишите ответы в поле ниже каждого задания.</p>
+  </div>
+
+  <!-- 01 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">01</div><span class="diff-badge easy">лёгкое</span><span class="badge blue">определение класса</span></div>
+      <div class="task-q">К какому классу относятся вещества: <span class="chem">NaCl, H₂SO₄, KOH, CO₂</span>? Укажи класс для каждого.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 02 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">02</div><span class="diff-badge easy">лёгкое</span><span class="badge green">сильные и слабые кислоты</span></div>
+      <div class="task-q">Распредели кислоты на сильные и слабые: <span class="chem">HCl, HF, H₂SO₄, H₂S, HNO₃, H₃PO₄, HBr, H₂CO₃</span>.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 03 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">03</div><span class="diff-badge easy">лёгкое</span><span class="badge red">виды солей</span></div>
+      <div class="task-q">Определи вид соли (средняя, кислая, основная): <span class="chem">Na₂SO₄, NaHSO₄, BaOHCl, K₃PO₄, NaHCO₃</span>.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 04 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">04</div><span class="diff-badge easy">лёгкое</span><span class="badge amber">типы оксидов</span></div>
+      <div class="task-q">Определи тип оксида (основный, кислотный, амфотерный, несолеобразующий): <span class="chem">Na₂O, SO₃, Al₂O₃, NO, ZnO</span>.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 05 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">05</div><span class="diff-badge easy">лёгкое</span><span class="badge blue">основания: щёлочи</span></div>
+      <div class="task-q">Выбери из списка все щёлочи (растворимые сильные основания): <span class="chem">NaOH, Cu(OH)₂, KOH, Fe(OH)₃, Ba(OH)₂, Mg(OH)₂, LiOH, Al(OH)₃</span>.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 06 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">06</div><span class="diff-badge easy">лёгкое</span><span class="badge green">кислоты по числу H</span></div>
+      <div class="task-q">Раздели кислоты по числу атомов водорода на одно-, двух- и трёхосновные: <span class="chem">HNO₃, H₂SO₄, H₃PO₄, HCl, H₂S, HF, H₂CO₃, H₃BO₃</span>.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 07 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">07</div><span class="diff-badge medium">среднее</span><span class="badge red">амфотерные гидроксиды</span></div>
+      <div class="task-q">Какие из следующих гидроксидов являются амфотерными? <span class="chem">NaOH, Al(OH)₃, Ca(OH)₂, Zn(OH)₂, Fe(OH)₃, Cr(OH)₃, Be(OH)₂, Pb(OH)₂</span>.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 08 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">08</div><span class="diff-badge medium">среднее</span><span class="badge amber">амфотерные оксиды</span></div>
+      <div class="task-q">Найди все амфотерные оксиды в списке: <span class="chem">CaO, Al₂O₃, Fe₂O₃, ZnO, MgO, Cr₂O₃, BeO, PbO, CuO</span>.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 09 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">09</div><span class="diff-badge medium">среднее</span><span class="badge blue">пероксиды vs оксиды</span></div>
+      <div class="task-q">Распредели вещества по классам — оксиды или пероксиды: <span class="chem">H₂O₂, Na₂O, Na₂O₂, BaO₂, PbO₂, K₂O, CaO₂</span>.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">10</div><span class="diff-badge medium">среднее</span><span class="badge green">ЕГЭ-формат · выбор</span></div>
+      <div class="task-q">Установи соответствие: формула — класс.<br>
+      1) H₂SiO₃ &nbsp; 2) K₂O &nbsp; 3) Fe(OH)₂ &nbsp; 4) Na₂SO₃ &nbsp; 5) N₂O<br>
+      А) несолеобразующий оксид &nbsp; Б) нерастворимая кислота &nbsp; В) основный оксид &nbsp; Г) средняя соль &nbsp; Д) нерастворимое основание</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>1 — &nbsp;&nbsp; 2 — &nbsp;&nbsp; 3 — &nbsp;&nbsp; 4 — &nbsp;&nbsp; 5 —</div></div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">11</div><span class="diff-badge medium">среднее</span><span class="badge red">неустойчивые соединения</span></div>
+      <div class="task-q">Какие из веществ являются неустойчивыми и самопроизвольно разлагаются? <span class="chem">H₂CO₃, H₂SO₄, H₂SO₃, NH₄OH, AgOH, KOH, NH₄NO₂</span> (при нагревании). Напиши уравнение разложения для каждого.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">12</div><span class="diff-badge medium">среднее</span><span class="badge violet">бинарные соединения</span></div>
+      <div class="task-q">Определи, к какому классу (соль, оксид, бинарное соединение) относятся: <span class="chem">NaH, SF₆, CaF₂, PCl₃, Na₂O, NH₃, H₂O</span>.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 13 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">13</div><span class="diff-badge medium">среднее</span><span class="badge blue">ЕГЭ-формат · соответствие</span></div>
+      <div class="task-q">Установи соответствие между веществом и его классификацией по кислотно-основному характеру:<br>
+      1) CrO₃ &nbsp; 2) Cr₂O₃ &nbsp; 3) CrO<br>
+      А) основный оксид &nbsp; Б) амфотерный оксид &nbsp; В) кислотный оксид</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>1 — &nbsp;&nbsp; 2 — &nbsp;&nbsp; 3 —</div></div>
+    </div>
+  </div>
+
+  <!-- 14 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">14</div><span class="diff-badge medium">среднее</span><span class="badge amber">кислоты-окислители</span></div>
+      <div class="task-q">Из списка выбери кислоты-окислители: <span class="chem">HCl, HNO₃, H₂SO₄ (конц.), H₃PO₄, HClO, H₂S, HClO₂, HBr</span>.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 15 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">15</div><span class="diff-badge hard">сложное · ЕГЭ</span><span class="badge green">двойные оксиды</span></div>
+      <div class="task-q">Как классифицируются двойные оксиды <span class="chem">Fe₃O₄</span> и <span class="chem">Pb₃O₄</span>? Представь их как смесь двух оксидов и определи тип каждого слагаемого.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 16 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">16</div><span class="diff-badge hard">сложное · ЕГЭ</span><span class="badge red">верно/неверно</span></div>
+      <div class="task-q">Верны ли утверждения?<br>
+      А) H₂SiO₃ — нерастворимая кислота.<br>
+      Б) Mg(OH)₂ — щёлочь.<br>
+      В) NH₄Cl — кислая соль.<br>
+      Г) CO — несолеобразующий оксид.<br>
+      Д) Na₂O₂ — оксид натрия.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>А — &nbsp;&nbsp; Б — &nbsp;&nbsp; В — &nbsp;&nbsp; Г — &nbsp;&nbsp; Д —</div></div>
+    </div>
+  </div>
+
+  <!-- 17 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">17</div><span class="diff-badge hard">сложное · ЕГЭ</span><span class="badge blue">комплексные соли</span></div>
+      <div class="task-q">Определи классы следующих веществ: <span class="chem">Na[Al(OH)₄], K₂[PtCl₄], [Cu(NH₃)₄]SO₄, CuSO₄·5H₂O</span>. Что общего у всех этих соединений?</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 18 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">18</div><span class="diff-badge hard">сложное · ЕГЭ</span><span class="badge amber">марганец и хром: оксиды</span></div>
+      <div class="task-q">Определи тип оксидов: <span class="chem">MnO, MnO₂, Mn₂O₇, CrO, Cr₂O₃, CrO₃</span>. Какая закономерность прослеживается?</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 19 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">19</div><span class="diff-badge hard">сложное · ЕГЭ</span><span class="badge violet">ЕГЭ-формат · множественный выбор</span></div>
+      <div class="task-q">Выбери ВСЕ верные утверждения:<br>
+      1) Все оксиды неметаллов — кислотные.<br>
+      2) Все щёлочи растворимы в воде.<br>
+      3) Кислые соли содержат водород в кислотном остатке.<br>
+      4) H₂SO₄ — кислота-окислитель только в концентрированном виде.<br>
+      5) Все амфотерные оксиды реагируют и с кислотами, и с щелочами.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Верные утверждения: ___</div></div>
+    </div>
+  </div>
+
+  <!-- 20 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">20</div><span class="diff-badge hard">сложное · ЕГЭ</span><span class="badge red">полная классификация</span></div>
+      <div class="task-q">Для каждого вещества из списка укажи класс и подкласс (максимально подробно): <span class="chem">HNO₂, Ba(OH)₂, Al₂O₃, NaHSO₄, Mn₂O₇, NH₄NO₂, H₂O₂</span>.</div>
+      <div class="answer-box"><div><span class="answer-box-label">Мой ответ:</span>Запиши ответ здесь...</div></div>
+    </div>
+  </div>
+
+  <!-- 21 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">21</div><span class="diff-badge easy">Базовое</span><span class="badge blue">Доп · Оксиды</span></div>
+      <div class="task-q">Установите соответствие между формулой вещества и классом, к которому оно принадлежит:<br><br>
+      <strong>ФОРМУЛА ВЕЩЕСТВА:</strong> А) <span class="chem">N₂O</span> Б) <span class="chem">N₂O₃</span> В) <span class="chem">FeO</span><br>
+      <strong>КЛАСС:</strong> 1) кислотный оксид 2) основный оксид 3) несолеобразующий 4) амфотерный оксид</div>
+      <div class="answer-box"><div><span class="answer-box-label">Ответ:</span>А — &nbsp;&nbsp; Б — &nbsp;&nbsp; В — </div></div>
+    </div>
+  </div>
+
+  <!-- 22 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">22</div><span class="diff-badge medium">Среднее</span><span class="badge green">Доп · Соли</span></div>
+      <div class="task-q">Установите соответствие между формулой соли и ее типом:<br><br>
+      <strong>ФОРМУЛА СОЛИ:</strong> А) <span class="chem">NaHCO₃</span> Б) <span class="chem">K₄[Fe(CN)₆]</span> В) <span class="chem">Cu(OH)Cl</span><br>
+      <strong>ТИП:</strong> 1) средняя 2) кислая 3) основная 4) комплексная</div>
+      <div class="answer-box"><div><span class="answer-box-label">Ответ:</span>А — &nbsp;&nbsp; Б — &nbsp;&nbsp; В — </div></div>
+    </div>
+  </div>
+
+  <!-- 23 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta"><div class="task-num">23</div><span class="diff-badge medium">Среднее</span><span class="badge amber">Доп · Тривиальные названия</span></div>
+      <div class="task-q">Установите соответствие между тривиальным названием вещества и его формулой:<br><br>
+      <strong>НАЗВАНИЕ:</strong> А) веселящий газ Б) угарный газ В) железная окалина<br>
+      <strong>ФОРМУЛА:</strong> 1) <span class="chem">Fe₃O₄</span> 2) <span class="chem">CO₂</span> 3) <span class="chem">CO</span> 4) <span class="chem">N₂O</span></div>
+      <div class="answer-box"><div><span class="answer-box-label">Ответ:</span>А — &nbsp;&nbsp; Б — &nbsp;&nbsp; В — </div></div>
+    </div>
+  </div>
+
+</div><!-- /sec-tasks -->
+
+<!-- ═══════════════ ШПАРГАЛКА ═══════════════ -->
+
+<div class="section-page sec-summary">
+  <div class="section-header">
+    <div class="section-tag"><span></span> Шпаргалка <span></span></div>
+    <h2>Всё самое важное<br><em>на одной странице</em></h2>
+    <p>Сохрани для повторения перед ЕГЭ.</p>
+  </div>
+
+  <!-- НОВАЯ КАРТОЧКА: ТАБЛИЦА ВСЕХ КИСЛОТ -->
+  <div class="card blue" style="background-color: var(--white); border-color: var(--blue);">
+    <div class="card-label">Таблица для заучивания</div>
+    <h3>Формулы и названия всех кислот и их остатков</h3>
+    
+    <div class="table-wrapper">
+      <table class="val-table" style="min-width: 600px;">
+        <tbody>
+          <tr><th>Формула</th><th>Название кислоты</th><th>Остаток</th><th>Название остатка</th></tr>
+          <!-- Галогеноводороды -->
+          <tr><td><strong>HF</strong></td><td>Фтороводородная (плавиковая)</td><td>F⁻</td><td>Фторид</td></tr>
+          <tr><td><strong>HCl</strong></td><td>Хлороводородная (соляная)</td><td>Cl⁻</td><td>Хлорид</td></tr>
+          <tr><td><strong>HBr</strong></td><td>Бромоводородная</td><td>Br⁻</td><td>Бромид</td></tr>
+          <tr><td><strong>HI</strong></td><td>Иодоводородная</td><td>I⁻</td><td>Иодид</td></tr>
+          
+          <!-- Халькогеноводороды -->
+          <tr><td><strong>H₂S</strong></td><td>Сероводородная</td><td>S²⁻</td><td>Сульфид</td></tr>
+          
+          <!-- Углерод и кремний -->
+          <tr><td><strong>H₂CO₃</strong></td><td>Угольная</td><td>CO₃²⁻</td><td>Карбонат</td></tr>
+          <tr><td><strong>H₂SiO₃</strong></td><td>Кремниевая</td><td>SiO₃²⁻</td><td>Силикат</td></tr>
+          
+          <!-- Азот -->
+          <tr><td><strong>HNO₃</strong></td><td>Азотная</td><td>NO₃⁻</td><td>Нитрат</td></tr>
+          <tr><td><strong>HNO₂</strong></td><td>Азотистая</td><td>NO₂⁻</td><td>Нитрит</td></tr>
+          
+          <!-- Фосфор -->
+          <tr><td><strong>H₃PO₄</strong></td><td>(Орто)фосфорная</td><td>PO₄³⁻</td><td>(Орто)фосфат</td></tr>
+          <tr><td><strong>H₃PO₃</strong></td><td>Фосфористая</td><td>HPO₃²⁻</td><td>Фосфит</td></tr>
+          <tr><td><strong>H₃PO₂</strong></td><td>Фосфорноватистая</td><td>H₂PO₂⁻</td><td>Гипофосфит</td></tr>
+          <tr><td><strong>HPO₃</strong></td><td>Метафосфорная</td><td>PO₃⁻</td><td>Метафосфат</td></tr>
+          
+          <!-- Сера -->
+          <tr><td><strong>H₂SO₄</strong></td><td>Серная</td><td>SO₄²⁻</td><td>Сульфат</td></tr>
+          <tr><td><strong>H₂SO₃</strong></td><td>Сернистая</td><td>SO₃²⁻</td><td>Сульфит</td></tr>
+          
+          <!-- Хром -->
+          <tr><td><strong>H₂CrO₄</strong></td><td>Хромовая</td><td>CrO₄²⁻</td><td>Хромат</td></tr>
+          <tr><td><strong>H₂Cr₂O₇</strong></td><td>Дихромовая</td><td>Cr₂O₇²⁻</td><td>Дихромат</td></tr>
+          
+          <!-- Хлор (кислородсодержащие) -->
+          <tr><td><strong>HClO</strong></td><td>Хлорноватистая</td><td>ClO⁻</td><td>Гипохлорит</td></tr>
+          <tr><td><strong>HClO₂</strong></td><td>Хлористая</td><td>ClO₂⁻</td><td>Хлорит</td></tr>
+          <tr><td><strong>HClO₃</strong></td><td>Хлорноватая</td><td>ClO₃⁻</td><td>Хлорат</td></tr>
+          <tr><td><strong>HClO₄</strong></td><td>Хлорная</td><td>ClO₄⁻</td><td>Перхлорат</td></tr>
+          
+          <!-- Марганец -->
+          <tr><td><strong>H₂MnO₄</strong></td><td>Марганцовистая</td><td>MnO₄²⁻</td><td>Манганат</td></tr>
+          <tr><td><strong>HMnO₄</strong></td><td>Марганцовая</td><td>MnO₄⁻</td><td>Перманганат</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card blue">
+    <div class="card-label">Главный алгоритм определения класса</div>
+    <h3>3 вопроса для определения класса</h3>
+    <ul class="step-list">
+      <li><span class="step-num">1</span><div>Начинается с <strong>H</strong> и имеет кислотный остаток? → <strong>Кислота</strong></div></li>
+      <li><span class="step-num">2</span><div>Заканчивается на <strong>OH</strong>? → <strong>Гидроксид (основание)</strong></div></li>
+      <li><span class="step-num">3</span><div>Состоит из <strong>двух элементов</strong>, второй — <strong>кислород</strong>? → <strong>Оксид</strong> (если не пероксид!)</div></li>
+      <li><span class="step-num">4</span><div>Катион металла (или NH₄⁺) + кислотный остаток без H и OH в середине? → <strong>Соль</strong></div></li>
+    </ul>
+  </div>
+
+  <!-- Тривиальная номенклатура -->
+  <div class="card red" style="background-color: var(--white); border-color: var(--red);">
+    <div class="card-label">Тривиальная номенклатура (Задание 5)</div>
+    <h3>Сложные названия газов и оксидов</h3>
+    <div class="trap-item"><strong>Угарный газ</strong> — CO (несолеобразующий)</div>
+    <div class="trap-item"><strong>Углекислый газ (сухой лед)</strong> — CO₂ (кислотный)</div>
+    <div class="trap-item"><strong>Веселящий газ</strong> — N₂O (несолеобразующий)</div>
+    <div class="trap-item"><strong>Бурый газ (лисий хвост)</strong> — NO₂ (кислотный, образует 2 кислоты: HNO₂ и HNO₃)</div>
+    <div class="trap-item"><strong>Сернистый газ</strong> — SO₂ (кислотный)</div>
+    <div class="trap-item"><strong>Железная окалина</strong> — Fe₃O₄ (смешанный / двойной оксид)</div>
+    <div class="trap-item"><strong>Кремнезем, кварц, песок</strong> — SiO₂ (кислотный)</div>
+  </div>
+
+  <div class="card red">
+    <div class="card-label">Ловушки ЕГЭ — Задание 5</div>
+    <h3>Типичные ошибки</h3>
+    <div class="trap-item">❌ <strong>NaH₂PO₂ и Na₂HPO₃ — кислые соли</strong> — НЕТ! Это <strong>средние</strong> соли (гипофосфит и фосфит натрия). В них нет способных к замещению атомов водорода.</div>
+    <div class="trap-item">❌ <strong>NH₄Cl — кислая соль</strong> — НЕТ! Средняя соль. H входит в NH₄⁺, а не в кислотный остаток.</div>
+    <div class="trap-item">❌ <strong>Mg(OH)₂ — щёлочь</strong> — НЕТ! Mg — не щелочноземельный. Щёлочноземельные: Ca, Sr, Ba, Ra.</div>
+    <div class="trap-item">❌ <strong>PbO₂ — пероксид</strong> — НЕТ! Оксид свинца(IV). Пероксиды: H₂O₂, Na₂O₂, BaO₂, CaO₂, K₂O₂.</div>
+    <div class="trap-item">❌ <strong>Все оксиды неметаллов — кислотные</strong> — НЕТ! CO, NO, N₂O, SiO — несолеобразующие.</div>
+    <div class="trap-item">❌ <strong>NaH и SF₆ — соли</strong> — НЕТ! Бинарные соединения (нет соответствующего гидроксида).</div>
+  </div>
+
+  <div class="card green">
+    <div class="card-label">Несолеобразующие оксиды — выучить!</div>
+    <h3>Список несолеобразующих оксидов</h3>
+    <div class="rxn green" style="line-height:2.5;font-size:15px;text-align:center">
+      <strong>CO &nbsp;&nbsp; NO &nbsp;&nbsp; N₂O &nbsp;&nbsp; SiO</strong>
+    </div>
+    <div class="tip">Запомни как аббревиатуру: <strong>«Со Но N₂о Сио»</strong> — только эти четыре!</div>
+  </div>
+
+  <div class="card amber">
+    <div class="card-label">Амфотерные вещества — выучить!</div>
+    <h3>Амфотерные оксиды и гидроксиды</h3>
+    <div class="two-col">
+      <div class="half-card amber-bg">
+        <div class="hc-title" style="color:var(--amber)">Амфотерные оксиды</div>
+        <span style="font-family:'Courier New',monospace;font-size:12px;line-height:2">
+          Al₂O₃, ZnO, BeO, PbO<br>
+          Cr₂O₃, MnO₂, SnO₂<br>
+          Fe₂O₃
+        </span>
+      </div>
+      <div class="half-card blue-bg">
+        <div class="hc-title" style="color:var(--blue)">Амфотерные гидроксиды</div>
+        <span style="font-family:'Courier New',monospace;font-size:12px;line-height:2">
+          Al(OH)₃, Zn(OH)₂, Be(OH)₂<br>
+          Pb(OH)₂, Cr(OH)₃, Sn(OH)₂<br>
+          Fe(OH)₃
+        </span>
+      </div>
+    </div>
+    <div class="tip"><strong>Правило:</strong> металл III, IV группы → амфотерный. Плюс исключения из II группы: Zn, Be, Pb.</div>
+  </div>
+
+  <div class="card violet">
+    <div class="card-label">Таблица: типы солей</div>
+    <h3>Как отличить виды солей</h3>
+    <div class="table-wrapper">
+      <table class="val-table">
+        <tbody><tr><th>Вид соли</th><th>Признак</th><th>Пример</th></tr>
+        <tr><td>Средняя</td><td>Металл/NH₄⁺ + кислотный остаток</td><td>NaCl, K₂SO₄</td></tr>
+        <tr><td>Кислая</td><td>H в кислотном остатке</td><td>NaHCO₃, KH₂PO₄</td></tr>
+        <tr><td>Основная</td><td>OH в составе</td><td>BaOHCl, Al(OH)₂NO₃</td></tr>
+        <tr><td>Двойная</td><td>2 катиона металла + 1 анион</td><td>KAl(SO₄)₂</td></tr>
+        <tr><td>Смешанная</td><td>1 катион + 2 разных аниона</td><td>Ca(OCl)Cl — хлорная известь</td></tr>
+        <tr><td>Комплексная</td><td>Квадратные скобки [ ]</td><td>Na[Al(OH)₄]</td></tr>
+        <tr><td>Кристаллогидрат</td><td>·nH₂O в формуле</td><td>CuSO₄·5H₂O</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+</div><!-- /sec-summary -->
+
+</div><!-- /main -->
+<div class="footer">🧪 Химия · ЕГЭ · 10-11 класс · Задание 5 · Финальная версия</div>
+
+</body>
+</html>
+
+
+```
