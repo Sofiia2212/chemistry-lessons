@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Неорганическая химия — Полный конспект</title>
+<style>
+:root {
+--bg:#f5f0e8;--white:#fffdf8;--ink:#1a1814;--muted:#7a7060;
+--red:#c94040;--blue:#2a6db5;--green:#2a8a5a;--amber:#c47c1a;
+--violet:#7c5cbf;
+--border:#e0d8c8;--shadow:rgba(60,50,30,0.1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:var(--ink);min-height:100vh;}
+.tab-radio{display:none;}
+.nav{position:sticky;top:0;z-index:100;background:rgba(245,240,232,0.97);border-bottom:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+.nav-title{font-family:Georgia,serif;font-size:16px;font-weight:600;}
+.nav-pills{display:flex;gap:6px;flex-wrap:wrap;}
+.tab-label{padding:6px 14px;border-radius:100px;border:1.5px solid var(--border);font-size:12px;cursor:pointer;color:var(--muted);display:inline-block;-webkit-tap-highlight-color:transparent;user-select:none;white-space:nowrap;}
+#tab-oxides:checked ~ * .label-oxides,
+#tab-hydrox:checked ~ * .label-hydrox,
+#tab-acids:checked ~ * .label-acids,
+#tab-salts:checked ~ * .label-salts,
+#tab-ampho:checked ~ * .label-ampho,
+#tab-scheme:checked ~ * .label-scheme{background:var(--ink);color:var(--white);border-color:var(--ink);}
+.section-page{display:none;}
+#tab-oxides:checked ~ .main .sec-oxides{display:block;}
+#tab-hydrox:checked ~ .main .sec-hydrox{display:block;}
+#tab-acids:checked ~ .main .sec-acids{display:block;}
+#tab-salts:checked ~ .main .sec-salts{display:block;}
+#tab-ampho:checked ~ .main .sec-ampho{display:block;}
+#tab-scheme:checked ~ .main .sec-scheme{display:block;}
+.answer-check{display:none;}
+.answer-toggle{width:100%;padding:13px 24px;background:rgba(60,50,30,0.03);border:none;border-top:1px solid var(--border);cursor:pointer;font-family:inherit;font-size:13px;color:var(--muted);text-align:left;display:flex;align-items:center;gap:8px;-webkit-tap-highlight-color:transparent;user-select:none;}
+.answer-toggle:active{background:rgba(60,50,30,0.08);}
+.arrow{display:inline-block;transition:transform 0.3s;}
+.show-text{display:inline;}.hide-text{display:none;}
+.answer-body{display:none;padding:18px 24px 22px;border-top:1px solid var(--border);background:rgba(245,240,232,0.5);font-size:13.5px;line-height:1.85;color:#3a3530;}
+.answer-check:checked + .answer-toggle .arrow{transform:rotate(180deg);}
+.answer-check:checked + .answer-toggle .show-text{display:none;}
+.answer-check:checked + .answer-toggle .hide-text{display:inline;}
+.answer-check:checked ~ .answer-body{display:block;}
+.main{max-width:860px;margin:0 auto;padding:32px 16px 80px;}
+.section-header{margin-bottom:26px;}
+.section-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.section-tag span{display:inline-block;width:22px;height:1.5px;background:var(--muted);}
+.section-header h2{font-family:Georgia,serif;font-size:clamp(22px,4vw,34px);font-weight:900;line-height:1.15;}
+.section-header h2 em{font-style:italic;color:var(--blue);}
+.section-header p{margin-top:8px;font-size:14px;color:var(--muted);line-height:1.7;}
+.card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:22px;margin-bottom:12px;box-shadow:0 2px 12px var(--shadow);position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;width:5px;height:100%;border-radius:18px 0 0 18px;}
+.card.red::before{background:var(--red);}.card.blue::before{background:var(--blue);}
+.card.green::before{background:var(--green);}.card.amber::before{background:var(--amber);}
+.card.violet::before{background:var(--violet);}
+.card-label{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;font-weight:500;margin-bottom:8px;}
+.card.red .card-label{color:var(--red);}.card.blue .card-label{color:var(--blue);}
+.card.green .card-label{color:var(--green);}.card.amber .card-label{color:var(--amber);}
+.card.violet .card-label{color:var(--violet);}
+.card h3{font-family:Georgia,serif;font-size:18px;font-weight:700;margin-bottom:12px;line-height:1.3;}
+.card p{font-size:14px;line-height:1.8;color:#3a3530;margin-bottom:10px;}
+.card p:last-child{margin-bottom:0;}
+.rxn{font-family:'Courier New',monospace;font-size:13px;padding:10px 14px;border-radius:10px;margin:6px 0;line-height:1.9;white-space:pre-wrap;}
+.rxn.red{background:rgba(201,64,64,0.07);color:#a02020;border-left:3px solid var(--red);}
+.rxn.blue{background:rgba(42,109,181,0.07);color:#1a4d8a;border-left:3px solid var(--blue);}
+.rxn.green{background:rgba(42,138,90,0.07);color:#1a6040;border-left:3px solid var(--green);}
+.rxn.amber{background:rgba(196,124,26,0.07);color:#8a5010;border-left:3px solid var(--amber);}
+.rxn.violet{background:rgba(124,92,191,0.07);color:#5a3a9a;border-left:3px solid var(--violet);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0;}
+.half-card{padding:14px;border-radius:14px;font-size:13px;line-height:1.7;}
+.half-card.blue-bg{background:rgba(42,109,181,0.07);border:1px solid rgba(42,109,181,0.2);}
+.half-card.red-bg{background:rgba(201,64,64,0.07);border:1px solid rgba(201,64,64,0.2);}
+.half-card.green-bg{background:rgba(42,138,90,0.07);border:1px solid rgba(42,138,90,0.2);}
+.half-card.amber-bg{background:rgba(196,124,26,0.07);border:1px solid rgba(196,124,26,0.2);}
+.half-card.violet-bg{background:rgba(124,92,191,0.07);border:1px solid rgba(124,92,191,0.2);}
+.half-card .hc-title{font-weight:600;font-size:14px;margin-bottom:6px;}
+.mnemonic{display:flex;gap:10px;padding:14px;background:linear-gradient(135deg,rgba(42,109,181,0.06),rgba(201,64,64,0.06));border-radius:14px;border:1px solid var(--border);margin:12px 0;}
+.mnemonic-icon{font-size:26px;display:flex;align-items:center;justify-content:center;width:42px;flex-shrink:0;}
+.mnemonic-text{font-size:14px;line-height:1.7;}
+.m-label{font-size:10px;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);display:block;margin-bottom:2px;}
+.divider{height:1px;background:var(--border);margin:18px 0;}
+.badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:500;margin:2px;}
+.badge.red{background:rgba(201,64,64,0.12);color:var(--red);}
+.badge.blue{background:rgba(42,109,181,0.12);color:var(--blue);}
+.badge.green{background:rgba(42,138,90,0.12);color:var(--green);}
+.badge.amber{background:rgba(196,124,26,0.12);color:var(--amber);}
+.trap-item{font-size:13px;line-height:1.7;padding:10px 14px;background:rgba(201,64,64,0.06);border-radius:10px;border-left:3px solid var(--red);margin-bottom:8px;}
+.tip{margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(60,50,30,0.04);border:1px dashed var(--border);font-size:13px;color:var(--muted);line-height:1.7;}
+.tip strong{color:var(--ink);}
+.val-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;border-radius:12px;overflow:hidden;}
+.val-table th{background:var(--ink);color:var(--white);padding:9px 12px;text-align:left;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;}
+.val-table td{padding:8px 12px;border-bottom:1px solid var(--border);line-height:1.5;}
+.val-table tr:last-child td{border-bottom:none;}
+.val-table tr:nth-child(even) td{background:rgba(60,50,30,0.02);}
+.val-table td:first-child{font-weight:700;color:var(--blue);}
+.step-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.step-list li{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.7;}
+.step-num{background:var(--blue);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:2px;font-weight:600;}
+/* Scheme styles */
+.scheme-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:16px 0;position:relative;}
+.scheme-box{padding:16px;text-align:center;font-size:13px;line-height:1.7;border:1px solid var(--border);}
+.scheme-box h4{font-family:Georgia,serif;font-size:15px;margin-bottom:6px;}
+.scheme-arrow{font-size:12px;color:var(--muted);padding:4px 8px;background:var(--bg);display:inline-block;border-radius:8px;}
+@media(max-width:560px){.two-col,.three-col{grid-template-columns:1fr;}}
+.footer{text-align:center;padding:36px 20px;color:var(--muted);font-size:12px;}
+</style>
+</head>
+<body>
+<input type="radio" name="tabs" id="tab-oxides" class="tab-radio" checked>
+<input type="radio" name="tabs" id="tab-hydrox" class="tab-radio">
+<input type="radio" name="tabs" id="tab-acids" class="tab-radio">
+<input type="radio" name="tabs" id="tab-salts" class="tab-radio">
+<input type="radio" name="tabs" id="tab-ampho" class="tab-radio">
+<input type="radio" name="tabs" id="tab-scheme" class="tab-radio">
+
+<nav class="nav">
+<div class="nav-title">🧪 Неорганика</div>
+<div class="nav-pills">
+<label for="tab-oxides" class="tab-label label-oxides">Оксиды</label>
+<label for="tab-hydrox" class="tab-label label-hydrox">Основания</label>
+<label for="tab-acids" class="tab-label label-acids">Кислоты</label>
+<label for="tab-salts" class="tab-label label-salts">Соли</label>
+<label for="tab-ampho" class="tab-label label-ampho">Амфотерность</label>
+<label for="tab-scheme" class="tab-label label-scheme">Схема связей</label>
+</div>
+</nav>
+
+<div class="main">
+
+<!-- ═══════════════ ОКСИДЫ ═══════════════ -->
+
+<div class="section-page sec-oxides">
+<div class="section-header">
+<div class="section-tag"><span></span> Тема 4 <span></span></div>
+<h2>Оксиды<br><em>Получение и химические свойства</em></h2>
+<p>Оксиды — бинарные соединения, содержащие кислород со степенью окисления −2. Атомы кислорода связаны только с атомами другого элемента (нет пероксидной связи −O−O−).</p>
+</div>
+
+<!-- Классификация -->
+
+<div class="card blue">
+<div class="card-label">Часть 1 · Классификация</div>
+<h3>Виды оксидов</h3>
+<p>Все оксиды делятся на <strong>солеобразующие</strong> и <strong>несолеобразующие</strong>.</p>
+
+<div class="half-card red-bg" style="margin-bottom:12px">
+<div class="hc-title" style="color:var(--red)">Несолеобразующие оксиды</div>
+N₂O, NO, CO, SiO — им нельзя поставить в соответствие ни кислоту, ни основание.
+</div>
+
+<p>Солеобразующие делятся на три группы:</p>
+<div class="three-col">
+<div class="half-card blue-bg">
+<div class="hc-title" style="color:var(--blue)">Основные</div>
+Оксиды <strong>металлов</strong> со степенью окисления +1 и +2 (кроме ZnO, BeO и нескольких других).<br>
+<strong>Примеры:</strong> Na₂O, FeO, CaO, BaO, Li₂O, K₂O
+</div>
+<div class="half-card violet-bg">
+<div class="hc-title" style="color:var(--violet)">Амфотерные</div>
+Оксиды металлов со степенями окисления +3 и +4 (реже +2: ZnO, BeO).<br>
+<strong>Запомни:</strong> ZnO, BeO, Al₂O₃, Cr₂O₃, Fe₂O₃
+</div>
+<div class="half-card green-bg">
+<div class="hc-title" style="color:var(--green)">Кислотные</div>
+Оксиды неметаллов (не относящихся к несолеобразующим) и оксиды металлов в высоких степенях окисления +5, +6, +7.<br>
+<strong>Примеры:</strong> CO₂, CrO₃, Cl₂O₇, SO₃, P₂O₅
+</div>
+</div>
+
+<div class="mnemonic">
+<div class="mnemonic-icon">🔑</div>
+<div class="mnemonic-text">
+<span class="m-label">Алгоритм классификации</span>
+<strong>Неметалл?</strong> → кислотный или несолеобразующий (проверь список). <strong>Металл?</strong> → смотри степень окисления: +1, +2 = основный; +3, +4 = амфотерный; +5, +6, +7 = кислотный. Исключения: ZnO и BeO — амфотерные, хотя степень +2.
+</div>
+</div>
+</div>
+
+<!-- Соответствие оксид ↔ гидроксид -->
+
+<div class="card green">
+<div class="card-label">Часть 2 · Оксид ↔ Гидроксид</div>
+<h3>Каждому солеобразующему оксиду соответствует гидроксид</h3>
+<p>Центральный элемент имеет <strong>одну и ту же степень окисления</strong> в паре «оксид ↔ гидроксид».</p>
+
+<div class="two-col">
+<div class="half-card blue-bg">
+<div class="hc-title" style="color:var(--blue)">Основный оксид → Основание</div>
+Na₂O → NaOH<br>
+CaO → Ca(OH)₂<br>
+CrO → Cr(OH)₂
+</div>
+<div class="half-card green-bg">
+<div class="hc-title" style="color:var(--green)">Кислотный оксид → Кислота</div>
+SO₂ + H₂O → H₂SO₃<br>
+SO₃ + H₂O → H₂SO₄<br>
+CrO₃ + H₂O → H₂CrO₄<br>
+P₂O₅ + H₂O → сначала HPO₃, затем H₃PO₄
+</div>
+</div>
+
+<div class="half-card violet-bg" style="margin-top:12px">
+<div class="hc-title" style="color:var(--violet)">Амфотерный оксид → Амфотерный гидроксид</div>
+ZnO → Zn(OH)₂ &nbsp;&nbsp;|&nbsp;&nbsp; Al₂O₃ → Al(OH)₃ &nbsp;&nbsp;|&nbsp;&nbsp; Cr₂O₃ → Cr(OH)₃ &nbsp;&nbsp;|&nbsp;&nbsp; Fe₂O₃ → Fe(OH)₃
+</div>
+
+<div class="tip"><strong>Особые случаи:</strong> NO₂ соответствуют две кислоты: HNO₂ и HNO₃. Fe₃O₄ (или FeO · Fe₂O₃) соответствуют два гидроксида: Fe(OH)₂ и Fe(OH)₃.</div>
+</div>
+
+<!-- Получение оксидов -->
+
+<div class="card red">
+<div class="card-label">Часть 3 · Получение оксидов</div>
+<h3>Способы получения</h3>
+
+<div class="half-card blue-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--blue)">[1] Из простых веществ и кислорода</div>
+С кислородом реагируют все простые вещества, <strong>кроме галогенов, инертных газов и благородных металлов</strong> (Au, Ag, Pt).
+</div>
+<div class="rxn red">Металлы:                         Неметаллы:
+4Li + O₂ = 2Li₂O                 H₂ + O₂ → нет (нужна искра!)
+2Zn + O₂ = 2ZnO                  C + O₂ = CO₂
+4Al + 3O₂ = 2Al₂O₃               S + O₂ = SO₂
+⚠ Na + O₂ = Na₂O₂ (пероксид!)    4P + 5O₂ = 2P₂O₅
+⚠ Fe + O₂ = Fe₃O₄ (не Fe₂O₃!)   N₂ + O₂ ⇌ 2NO (только при ⚡)</div>
+
+<div class="half-card green-bg" style="margin:10px 0">
+<div class="hc-title" style="color:var(--green)">[2] Из сложных веществ и кислорода</div>
+Сульфиды, карбиды, водородные соединения (PH₃, H₂S, SiH₄…) при сгорании дают смесь оксидов элементов:
+</div>
+<div class="rxn red">CH₄ + 2O₂ = CO₂ + 2H₂O
+2H₂S + 3O₂ = 2SO₂ + 2H₂O
+SiC + 2O₂ = SiO₂ + CO₂
+⚠ 4FeS₂ + 11O₂ = 2Fe₂O₃ + 8SO₂</div>
+
+<div class="half-card amber-bg" style="margin:10px 0">
+<div class="hc-title" style="color:var(--amber)">[3] Разложение сложных веществ</div>
+Нерастворимые гидроксиды и некоторые кислоты разлагаются при нагревании:
+</div>
+<div class="rxn red">Ca(OH)₂ = CaO + H₂O    (при t°)
+2Al(OH)₃ = Al₂O₃ + 3H₂O (при t°)
+H₂SiO₃ = SiO₂ + H₂O
+CaCO₃ = CaO + CO₂↑      (при t°)</div>
+</div>
+
+<!-- Химические свойства оксидов -->
+
+<div class="card amber">
+<div class="card-label">Часть 4 · Химические свойства</div>
+<h3>Свойства оксидов — полная таблица</h3>
+
+<div class="half-card blue-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--blue)">[1] Взаимодействие с водой</div>
+<strong>Кислотный оксид + вода = кислота</strong> (кроме SiO₂!)<br>
+<strong>Оксид щелочного/щелочноземельного металла + вода = щёлочь</strong><br>
+Амфотерные, несолеобразующие оксиды и SiO₂ с водой НЕ реагируют.
+</div>
+<div class="rxn amber">CO₂ + H₂O = H₂CO₃        SO₃ + H₂O = H₂SO₄
+P₂O₅ + 3H₂O = 2H₃PO₄     CaO + H₂O = Ca(OH)₂
+Na₂O + H₂O = 2NaOH        BaO + H₂O = Ba(OH)₂
+SiO₂ + H₂O ≠              CuO + H₂O ≠</div>
+
+<div class="divider"></div>
+
+<div class="half-card green-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--green)">[2] Оксид + оксид (противоположные по свойствам)</div>
+<strong>Основный + кислотный = соль</strong><br>
+<strong>Амфотерный + кислотный = соль</strong><br>
+<strong>Основный (щел./щ.-з.) + амфотерный = соль</strong><br>
+Реагируют только CO₂ и SO₃ с оксидами металлов IA и IIA групп.
+</div>
+<div class="rxn amber">Na₂O + SO₃ = Na₂SO₄
+CuO + N₂O₅ = Cu(NO₃)₂
+Li₂O + ZnO = Li₂ZnO₂     (при сплавлении)</div>
+
+<div class="divider"></div>
+
+<div class="half-card red-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--red)">[3] Основные и амфотерные оксиды + кислоты</div>
+<strong>Основный/амфотерный оксид + кислота = соль + вода</strong><br>
+Берём сильные кислоты (HCl, H₂SO₄…) или кислоты средней силы (H₃PO₄, HF). Кремниевая кислота с оксидами НЕ реагирует.
+</div>
+<div class="rxn amber">CaO + 2HCl = CaCl₂ + H₂O
+ZnO + H₂SO₄ = ZnSO₄ + H₂O
+Fe₂O₃ + 6HCl = 2FeCl₃ + 3H₂O
+Na₂O + 2HCl = 2NaCl + H₂O</div>
+
+<div class="divider"></div>
+
+<div class="half-card violet-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--violet)">[4] Кислотные и амфотерные оксиды + основания</div>
+<strong>Кислотный оксид + основание = соль + вода</strong><br>
+Со щелочами реагируют все кислотные и амфотерные оксиды.
+</div>
+<div class="rxn amber">SO₃ + 2KOH = K₂SO₄ + H₂O
+CO₂ + 2NaOH = Na₂CO₃ + H₂O
+ZnO + 2NaOH(сплавл.) = Na₂ZnO₂ + H₂O
+Al₂O₃ + 2NaOH(сплавл.) = 2NaAlO₂ + H₂O</div>
+
+<div class="divider"></div>
+
+<div class="half-card amber-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--amber)">[5] Восстановление оксидов металлов</div>
+Металлы правее Al в ряду активности восстанавливаются из оксидов под действием H₂, C, CO, Al.
+</div>
+<div class="rxn amber">CuO + H₂ = Cu + H₂O             (при t°)
+Fe₂O₃ + 2Al = 2Fe + Al₂O₃       (алюмотермия)
+FeO + C = Fe + CO                (при t°)
+ZnO + CO = Zn + CO₂             (при t°)
+⚠ Fe₂O₃ → Fe₃O₄ → FeO → Fe (поcтадийно с H₂ и CO)</div>
+
+<div class="divider"></div>
+
+<div class="half-card green-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--green)">[6] Взаимодействие с кислородом</div>
+Оксиды с промежуточной степенью окисления элемента могут окисляться кислородом до высшего оксида.
+</div>
+<div class="rxn amber">4FeO + O₂ = 2Fe₂O₃
+2SO₂ + O₂ ⇌ 2SO₃       (кат. V₂O₅)
+2CO + O₂ = 2CO₂
+⚠ Только NO из оксидов азота реагирует с O₂: 2NO + O₂ = 2NO₂</div>
+
+<div class="divider"></div>
+
+<div class="half-card blue-bg">
+<div class="hc-title" style="color:var(--blue)">[7] Сплавление с карбонатами</div>
+Амфотерные оксиды с карбонатами щелочных/щелочноземельных металлов при сплавлении дают новую соль и CO₂.
+</div>
+<div class="rxn amber">CaCO₃ + SiO₂ = CaSiO₃ + CO₂↑
+Na₂CO₃ + ZnO = Na₂ZnO₂ + CO₂↑
+⚠ ZnO + 2NaCl = Na₂O + ZnCl₂ — это НЕВЕРНО! Нельзя «обменять» кислотный остаток на атомы кислорода.</div>
+
+<div class="tip"><strong>Важно про SiO₂:</strong> При высокой температуре SiO₂ реагирует с основными и амфотерными оксидами. Также SiO₂ растворяется в плавиковой кислоте: SiO₂ + 4HF = SiF₄ + 2H₂O.</div>
+</div>
+</div><!-- /sec-oxides -->
+
+<!-- ═══════════════ ОСНОВАНИЯ ═══════════════ -->
+
+<div class="section-page sec-hydrox">
+<div class="section-header">
+<div class="section-tag"><span></span> Тема 5.1 <span></span></div>
+<h2>Основания<br><em>Классификация, свойства и получение</em></h2>
+<p>Гидроксиды — сложные вещества, содержащие одну или несколько гидроксогрупп (OH). Они делятся на основания, амфотерные гидроксиды и кислородсодержащие кислоты.</p>
+</div>
+
+<div class="card blue">
+<div class="card-label">Часть 1 · Классификация</div>
+<h3>Три группы гидроксидов</h3>
+
+<div class="three-col">
+<div class="half-card blue-bg">
+<div class="hc-title" style="color:var(--blue)">Основания</div>
+Гидроксиды металлов со ст. ок. +1 и +2 (кроме Be(OH)₂, Zn(OH)₂).<br>
+<strong>Примеры:</strong> NaOH, KOH, Fe(OH)₂, Ba(OH)₂, Ca(OH)₂
+</div>
+<div class="half-card violet-bg">
+<div class="hc-title" style="color:var(--violet)">Амфотерные гидроксиды</div>
+Гидроксиды металлов со ст. ок. +3 и +4, а также Be(OH)₂ и Zn(OH)₂.<br>
+<strong>Запомни:</strong> Be(OH)₂, Zn(OH)₂, Al(OH)₃, Cr(OH)₃, Fe(OH)₃
+</div>
+<div class="half-card green-bg">
+<div class="hc-title" style="color:var(--green)">Кислородсодерж. кислоты</div>
+Все гидроксиды неметаллов, гидроксиды металлов со ст. ок. +5, +6, +7.<br>
+<strong>Примеры:</strong> HClO, H₂SO₄, HMnO₄, H₂CrO₄
+</div>
+</div>
+
+<div class="divider"></div>
+<p><strong>Щёлочи</strong> — это гидроксиды щелочных и щелочноземельных металлов (Li, Na, K, Rb, Cs + Ca, Sr, Ba). Они <strong>растворимы</strong> в воде.</p>
+<p><strong>Нерастворимые основания</strong> — все остальные (Fe(OH)₂, Cu(OH)₂, Mg(OH)₂…).</p>
+
+<div class="mnemonic">
+<div class="mnemonic-icon">⚠️</div>
+<div class="mnemonic-text">
+<span class="m-label">Не путай!</span>
+<strong>Растворимость ≠ сила электролита.</strong> Ca(OH)₂ и Sr(OH)₂ малорастворимы, но являются щелочами, потому что хорошо диссоциируют.
+</div>
+</div>
+
+<p><strong>Неустойчивые основания</strong> (самопроизвольно разлагаются при попытке получить):</p>
+<div class="rxn blue">2AgOH = Ag₂O↓ + H₂O       (тёмно-коричневый осадок)
+2CuOH = Cu₂O↓ + H₂O       (кирпично-красный осадок)
+Hg(OH)₂ = HgO + H₂O       (жёлто-оранжевый осадок)</div>
+</div>
+
+<!-- Свойства оснований -->
+
+<div class="card green">
+<div class="card-label">Часть 2 · Химические свойства оснований</div>
+<h3>Реакции оснований</h3>
+
+<div class="half-card red-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--red)">[1] С кислотами — реакция нейтрализации</div>
+<strong>Основание + кислота = соль + вода</strong><br>
+Для нерастворимых оснований берём сильные кислоты или кислоты средней силы.
+</div>
+<div class="rxn green">2NaOH + H₂SO₄ = Na₂SO₄ + 2H₂O
+Al(OH)₃ + 3HCl = AlCl₃ + 3H₂O
+Cu(OH)₂ + 2HNO₃ = Cu(NO₃)₂ + 2H₂O
+NH₃ + HCl = NH₄Cl         (аммиак — бескислородное основание)</div>
+
+<div class="divider"></div>
+
+<div class="half-card green-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--green)">[2] С кислотными и амфотерными оксидами</div>
+<strong>Кислотный/амфотерный оксид + основание = соль + вода</strong>
+</div>
+<div class="rxn green">2NaOH + CO₂ = Na₂CO₃ + H₂O
+2NaOH + ZnO = Na₂ZnO₂ + H₂O  (сплавление)
+2KOH + SO₃ = K₂SO₄ + H₂O
+⚠ 2NaOH + SiO₂ = Na₂SiO₃ + H₂O (нераств. кремниевая кислота реагирует со щелочами!)</div>
+
+<div class="divider"></div>
+
+<div class="half-card amber-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--amber)">[3] С солями (реакция обмена)</div>
+<strong>Растворимое основание + растворимая соль = соль + гидроксид</strong><br>
+Реакция идёт, если оба реагента растворимы и в продуктах образуется осадок, газ или слабое основание.
+</div>
+<div class="rxn green">2NaOH + FeSO₄ = Na₂SO₄ + Fe(OH)₂↓    (осадок)
+NH₄Cl + KOH = KCl + NH₃↑ + H₂O       (газ)
+LiOH + KF = LiF↓ + KOH                (осадок)
+⚠ Ca(OH)₂ + FeS ≠  (FeS нерастворим — реакция не идёт)
+⚠ Cu(OH)₂ + K₂CO₃ ≠ (Cu(OH)₂ нерастворим — реакция не идёт)</div>
+
+<div class="divider"></div>
+
+<div class="half-card blue-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--blue)">[4] Термическое разложение</div>
+<strong>Нерастворимый гидроксид = оксид + вода</strong> (при нагревании)
+</div>
+<div class="rxn green">Ca(OH)₂ = CaO + H₂O         (при t°)
+2Al(OH)₃ = Al₂O₃ + 3H₂O     (при t°)
+Cu(OH)₂ = CuO + H₂O          (при t°)
+⚠ Щёлочи (NaOH, KOH…) НЕ разлагаются при нагревании!</div>
+
+<div class="divider"></div>
+
+<div class="half-card violet-bg">
+<div class="hc-title" style="color:var(--violet)">[5] Окисление Fe(OH)₂</div>
+Гидроксид железа(II) легко окисляется на воздухе:
+</div>
+<div class="rxn green">4Fe(OH)₂ + O₂ + 2H₂O = 4Fe(OH)₃
+(осадок меняет цвет с серо-зелёного на бурый)</div>
+</div>
+
+<!-- Получение оснований -->
+
+<div class="card amber">
+<div class="card-label">Часть 3 · Получение оснований</div>
+<h3>Способы получения</h3>
+
+<div class="two-col">
+<div class="half-card blue-bg">
+<div class="hc-title" style="color:var(--blue)">[1] Щёлочи: металл/оксид + вода</div>
+Щелочной/щ.-з. металл + вода = щёлочь + H₂↑<br>
+Оксид щелочного/щ.-з. металла + вода = щёлочь<br><br>
+2Na + 2H₂O = 2NaOH + H₂↑<br>
+Na₂O + H₂O = 2NaOH<br>
+CaO + H₂O = Ca(OH)₂
+</div>
+<div class="half-card green-bg">
+<div class="hc-title" style="color:var(--green)">[2] Нерастворимые: реакция обмена</div>
+Соль + щёлочь = новая соль + гидроксид↓<br><br>
+CuCl₂ + 2NaOH = Cu(OH)₂↓ + 2NaCl<br>
+FeSO₄ + 2KOH = Fe(OH)₂↓ + K₂SO₄<br>
+⚠ CaCl₂ + NH₃ + H₂O ≠ (Ca(OH)₂ — сильное основание, не осаждается аммиаком!)
+</div>
+</div>
+</div>
+</div><!-- /sec-hydrox -->
+
+<!-- ═══════════════ КИСЛОТЫ ═══════════════ -->
+
+<div class="section-page sec-acids">
+<div class="section-header">
+<div class="section-tag"><span></span> Тема 5.2 <span></span></div>
+<h2>Кислоты<br><em>Классификация и свойства</em></h2>
+<p>Кислоты — сложные вещества, которые в растворе диссоциируют на катионы водорода H⁺ и кислотный остаток.</p>
+</div>
+
+<div class="card blue">
+<div class="card-label">Часть 1 · Классификация кислот</div>
+<h3>Виды кислот</h3>
+
+<div class="two-col">
+<div class="half-card red-bg">
+<div class="hc-title" style="color:var(--red)">Сильные кислоты</div>
+<strong>Бескислородные:</strong> HCl, HBr, HI<br>
+<strong>Кислородсодержащие:</strong> HNO₃, H₂SO₄, HClO₃, HClO₄, HMnO₄ и другие, у которых число атомов O и H различается на 2 или 3.
+</div>
+<div class="half-card amber-bg">
+<div class="hc-title" style="color:var(--amber)">Слабые кислоты</div>
+<strong>Бескислородные:</strong> HF, H₂S<br>
+<strong>Кислородсодержащие:</strong> HNO₂, H₂SO₃, HClO, H₂CO₃, H₃PO₄, H₂SiO₃ и большинство органических кислот.
+</div>
+</div>
+
+<div class="tip"><strong>На ЕГЭ</strong> все кислоты делятся только на <strong>сильные и слабые</strong>. Понятие «кислота средней силы» не применяется.</div>
+
+<div class="divider"></div>
+<p><strong>По основности</strong> (числу атомов H, способных замещаться на металл):</p>
+<p><strong>Одноосновные:</strong> HCl, HBr, HNO₃, HPO₃ &nbsp;|&nbsp; <strong>Двухосновные:</strong> H₂SO₄, H₂CO₃, H₂S &nbsp;|&nbsp; <strong>Трёхосновные:</strong> H₃PO₄</p>
+
+<div class="mnemonic">
+<div class="mnemonic-icon">⚠️</div>
+<div class="mnemonic-text">
+<span class="m-label">Неустойчивые кислоты</span>
+<strong>H₂CO₃ → H₂O + CO₂↑</strong> и <strong>H₂SO₃ → H₂O + SO₂↑</strong> — разлагаются на оксид и воду. В продуктах ионного обмена записываем как «CO₂ + H₂O», а не H₂CO₃.
+</div>
+</div>
+</div>
+
+<!-- Свойства кислот -->
+
+<div class="card red">
+<div class="card-label">Часть 2 · Химические свойства кислот</div>
+<h3>Реакции кислот</h3>
+
+<div class="half-card blue-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--blue)">[1] С металлами</div>
+<strong>Устойчивая растворимая кислота + металл (левее H₂) = соль + H₂↑</strong><br>
+Ряд активности: Li Rb K Ba Sr Ca Na Mg Al Mn Zn Cr Fe Cd Co Ni Sn Pb [H₂] Sb Bi Cu Hg Ag Pt Au
+</div>
+<div class="rxn red">Zn + 2HCl = ZnCl₂ + H₂↑
+Fe + H₂SO₄(разб.) = FeSO₄ + H₂↑   (получаем соли Fe²⁺!)
+⚠ Al + H₂SiO₃ ≠  (нераств. кислота — реакция не идёт!)
+⚠ Cu + HCl ≠  (Cu правее H₂)
+⚠ Pt + H₂SO₄(разб.) ≠</div>
+
+<div class="divider"></div>
+
+<div class="half-card green-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--green)">[2] С основными и амфотерными оксидами</div>
+<strong>Оксид + кислота = соль + вода</strong> (см. раздел «Оксиды»)
+</div>
+<div class="rxn red">CaO + 2HCl = CaCl₂ + H₂O
+ZnO + H₂SO₄ = ZnSO₄ + H₂O
+CuO + 2HNO₃ = Cu(NO₃)₂ + H₂O</div>
+
+<div class="divider"></div>
+
+<div class="half-card amber-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--amber)">[3] С основаниями и амфотерными гидроксидами</div>
+<strong>Кислота + основание = соль + вода</strong> (реакция нейтрализации)
+</div>
+<div class="rxn red">NaOH + HCl = NaCl + H₂O
+Al(OH)₃ + 3HCl = AlCl₃ + 3H₂O
+NH₃ + HBr = NH₄Br</div>
+
+<div class="divider"></div>
+
+<div class="half-card violet-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--violet)">[4] С солями других кислот</div>
+<strong>Растворимая кислота + соль (растворимая в кислотах) = кислота + соль</strong><br>
+Реакция идёт, если образуется осадок, газ или более слабая кислота.
+</div>
+<div class="rxn red">AgNO₃ + HCl = AgCl↓ + HNO₃       (осадок)
+CaCO₃ + 2HCl = CaCl₂ + CO₂↑ + H₂O  (газ)
+Na₂SiO₃ + 2HCl = 2NaCl + H₂SiO₃↓    (осадок)
+⚠ Более сильная кислота вытесняет более слабую!
+Ряд: сильные > H₃PO₄, HCOOH, CH₃COOH, H₂SO₃, HF… > H₂CO₃ > H₂S > H₂SiO₃</div>
+
+<div class="tip"><strong>Кремниевая кислота</strong> — самая слабая из изучаемых неорганических кислот. Её можно вытеснить, пропуская CO₂ или H₂S через раствор силикатов: Na₂SiO₃ + CO₂ + H₂O = 2NaHCO₃ + H₂SiO₃↓</div>
+</div>
+
+<!-- Получение кислот -->
+
+<div class="card green">
+<div class="card-label">Часть 3 · Получение кислот</div>
+<h3>Способы получения</h3>
+<div class="two-col">
+<div class="half-card blue-bg">
+<div class="hc-title" style="color:var(--blue)">Кислородсодержащие</div>
+Кислотный оксид + вода = кислота<br>
+SO₃ + H₂O = H₂SO₄<br>
+P₂O₅ + 3H₂O = 2H₃PO₄<br>
+⚠ SiO₂ + H₂O ≠ (нельзя получить H₂SiO₃ так!)
+</div>
+<div class="half-card green-bg">
+<div class="hc-title" style="color:var(--green)">Бескислородные</div>
+Из простых веществ:<br>
+H₂ + Cl₂ = 2HCl<br>
+H₂ + S = H₂S
+</div>
+</div>
+<div class="half-card amber-bg" style="margin-top:12px">
+<div class="hc-title" style="color:var(--amber)">Нелетучая конц. кислота вытесняет летучую из твёрдой соли</div>
+NaCl(тв) + H₂SO₄(конц) = NaHSO₄ + HCl↑<br>
+NaF(тв) + H₂SO₄(конц) = NaHSO₄ + HF↑
+</div>
+</div>
+</div><!-- /sec-acids -->
+
+<!-- ═══════════════ СОЛИ ═══════════════ -->
+
+<div class="section-page sec-salts">
+<div class="section-header">
+<div class="section-tag"><span></span> Темы 6.1–6.2 <span></span></div>
+<h2>Соли<br><em>Классификация, гидролиз, свойства</em></h2>
+<p>Соли — сложные вещества, состоящие из атомов металла (или катиона аммония) и кислотного остатка.</p>
+</div>
+
+<!-- Классификация солей -->
+
+<div class="card blue">
+<div class="card-label">Часть 1 · Классификация</div>
+<h3>Виды солей</h3>
+<table class="val-table">
+<tr><th>Тип</th><th>Описание</th><th>Примеры</th></tr>
+<tr><td>Средние</td><td>Полное замещение H в кислоте на металл</td><td>NaCl, K₂SO₄, Ca₃(PO₄)₂</td></tr>
+<tr><td>Кислые</td><td>Неполное замещение H</td><td>NaHCO₃, KHSO₄, KH₂PO₄</td></tr>
+<tr><td>Основные</td><td>Неполное замещение OH в основании</td><td>Mg(OH)Cl, (CuOH)₂CO₃</td></tr>
+<tr><td>Комплексные</td><td>Сложный анион/катион в [ ]</td><td>Na[Al(OH)₄], K₃[Fe(CN)₆]</td></tr>
+<tr><td>Двойные</td><td>Два разных катиона</td><td>KAl(SO₄)₂</td></tr>
+<tr><td>Кристаллогидраты</td><td>Молекулы воды в кристаллической решётке</td><td>CuSO₄·5H₂O</td></tr>
+</table>
+
+<div class="tip"><strong>К солям НЕ относят:</strong> гидриды (NaH, CaH₂), бинарные соединения неметаллов (CS₂, PCl₅), нитриды, фосфиды, карбиды, силициды.</div>
+</div>
+
+<!-- Гидролиз -->
+
+<div class="card amber">
+<div class="card-label">Часть 2 · Гидролиз солей</div>
+<h3>Определение среды раствора соли</h3>
+<p>Среда раствора соли зависит от силы соответствующих ей кислоты и основания.</p>
+
+<table class="val-table">
+<tr><th>Соль образована</th><th>Гидролиз</th><th>Среда</th><th>pH</th></tr>
+<tr><td>Сильн. основ. + сильн. кислота</td><td>Не гидролизуется</td><td>Нейтральная</td><td>= 7</td></tr>
+<tr><td>Сильн. основ. + слаб. кислота</td><td>По аниону</td><td>Щелочная</td><td>&gt; 7</td></tr>
+<tr><td>Слаб. основ. + сильн. кислота</td><td>По катиону</td><td>Кислая</td><td>&lt; 7</td></tr>
+<tr><td>Слаб. основ. + слаб. кислота</td><td>По катиону и аниону</td><td>≈ нейтральная (по справ.)</td><td>≈ 7</td></tr>
+</table>
+
+<div class="rxn amber">Гидролиз по аниону (NaHS — сильн. основ. + слаб. кислота):
+NaHS + H₂O ⇌ H₂S + NaOH     — среда щелочная
+
+Гидролиз по катиону (AlCl₃ — слаб. основ. + сильн. кислота):
+AlCl₃ + H₂O ⇌ Al(OH)Cl₂ + HCl — среда кислая
+
+⚠ В обычных условиях гидролиз идёт только по ПЕРВОЙ ступени!
+⚠ AlCl₃ + 3H₂O = Al(OH)₃ + 3HCl — так писать НЕ НАДО!</div>
+
+<div class="mnemonic">
+<div class="mnemonic-icon">🔑</div>
+<div class="mnemonic-text">
+<span class="m-label">Необратимый (совместный) гидролиз</span>
+Если у соли в таблице растворимости стоит «?» или «–», она необратимо гидролизуется в водном растворе (по катиону И по аниону):<br>
+<strong>Al₂S₃ + 6H₂O = 2Al(OH)₃↓ + 3H₂S↑</strong>
+</div>
+</div>
+
+<div class="divider"></div>
+<p><strong>Индикаторы:</strong></p>
+<table class="val-table">
+<tr><th>Среда</th><th>Лакмус</th><th>Фенолфталеин</th><th>Метилоранж</th></tr>
+<tr><td>Кислая</td><td style="color:var(--red);font-weight:700">Красный</td><td>Бесцветный</td><td style="color:var(--red);font-weight:700">Розово-красный</td></tr>
+<tr><td>Нейтральная</td><td style="color:var(--violet);font-weight:700">Фиолетовый</td><td>Бесцветный</td><td style="color:var(--amber);font-weight:700">Оранжевый</td></tr>
+<tr><td>Щелочная</td><td style="color:var(--blue);font-weight:700">Синий</td><td style="color:var(--red);font-weight:700">Малиновый</td><td style="font-weight:700;color:#c4a020">Жёлтый</td></tr>
+</table>
+</div>
+
+<!-- Химические свойства солей -->
+
+<div class="card green">
+<div class="card-label">Часть 3 · Химические свойства солей</div>
+<h3>Реакции солей</h3>
+
+<div class="half-card red-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--red)">[1] С кислотами</div>
+</div>
+<div class="rxn green">Na₂CO₃ + 2HCl = 2NaCl + CO₂↑ + H₂O
+AgNO₃ + HCl = AgCl↓ + HNO₃
+Na₂SiO₃ + 2HCl = 2NaCl + H₂SiO₃↓
+⚠ Сильная кислота вытесняет более слабую</div>
+
+<div class="half-card green-bg" style="margin:10px 0">
+<div class="hc-title" style="color:var(--green)">[2] Со щелочами</div>
+</div>
+<div class="rxn green">CuCl₂ + 2NaOH = Cu(OH)₂↓ + 2NaCl
+NH₄Cl + KOH = KCl + NH₃↑ + H₂O
+FeSO₄ + 2NaOH = Fe(OH)₂↓ + Na₂SO₄</div>
+
+<div class="half-card amber-bg" style="margin:10px 0">
+<div class="hc-title" style="color:var(--amber)">[3] С солями (обмен)</div>
+<strong>Р. соль + Р. соль = соль + соль</strong> — идёт, если выпадает осадок.
+</div>
+<div class="rxn green">Na₂S + FeSO₄ = Na₂SO₄ + FeS↓
+BaCl₂ + K₂SO₄ = BaSO₄↓ + 2KCl
+⚠ Cu(NO₃)₂ + KCl ≠ (нет осадка, газа)</div>
+
+<div class="half-card blue-bg" style="margin:10px 0">
+<div class="hc-title" style="color:var(--blue)">[4] С металлами</div>
+<strong>Металл₁ + растворимая соль₂ = металл₂ + растворимая соль₁</strong><br>
+Более активный металл вытесняет менее активный из раствора соли.
+</div>
+<div class="rxn green">Fe + CuSO₄ = Cu↓ + FeSO₄
+Zn + 2AgNO₃ = 2Ag↓ + Zn(NO₃)₂
+⚠ Ag + ZnCl₂ ≠ (Ag менее активен, чем Zn)
+⚠ Щелочные и щ.-з. металлы НЕ используют — они реагируют с водой!</div>
+
+<div class="half-card violet-bg" style="margin:10px 0">
+<div class="hc-title" style="color:var(--violet)">[5] Разложение при нагревании</div>
+</div>
+<div class="rxn green">Нитраты (продукты зависят от положения металла в ряду активности):
+Li–Na: 2NaNO₃ = 2NaNO₂ + O₂        (нитрит + O₂)
+Mg–Cu: 2Cu(NO₃)₂ = 2CuO + 4NO₂ + O₂ (оксид + NO₂ + O₂)
+Hg–Au: 2AgNO₃ = 2Ag + 2NO₂ + O₂    (металл + NO₂ + O₂)
+
+Карбонаты: CaCO₃ = CaO + CO₂↑
+Гидрокарбонаты: 2NaHCO₃ = Na₂CO₃ + CO₂ + H₂O
+Карбонат/гидрокарбонат аммония: NH₄HCO₃ = NH₃ + CO₂ + H₂O</div>
+
+</div>
+
+<!-- Кислые соли -->
+
+<div class="card violet">
+<div class="card-label">Часть 4 · Кислые соли</div>
+<h3>Свойства кислых солей</h3>
+<p>Кислые соли в 90% случаев реагируют по тем же принципам, что и обычные средние соли. Но есть важные особенности:</p>
+
+<div class="half-card blue-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--blue)">С одноимённой щёлочью → средняя соль</div>
+Щёлочь реагирует с атомом H кислой соли:
+</div>
+<div class="rxn violet">NaHCO₃ + NaOH = Na₂CO₃ + H₂O
+KHSO₄ + KOH = K₂SO₄ + H₂O
+KH₂PO₄ + 2KOH = K₃PO₄ + 2H₂O</div>
+
+<div class="half-card green-bg" style="margin:10px 0">
+<div class="hc-title" style="color:var(--green)">С другой щёлочью</div>
+При недостатке щёлочи: NaHCO₃ + Ba(OH)₂ = BaCO₃↓ + Na₂CO₃ + H₂O<br>
+При избытке щёлочи: NaHCO₃ + Ba(OH)₂ = BaCO₃↓ + NaOH + H₂O
+</div>
+
+<div class="half-card amber-bg" style="margin:10px 0">
+<div class="hc-title" style="color:var(--amber)">Получение кислых солей</div>
+Средняя соль + одноимённая кислота = кислая соль:<br>
+Na₂SO₄ + H₂SO₄ = 2NaHSO₄<br>
+Щёлочь + избыток кислотного оксида/кислоты:<br>
+NaOH + CO₂(изб.) = NaHCO₃
+</div>
+
+<div class="half-card red-bg" style="margin:10px 0">
+<div class="hc-title" style="color:var(--red)">Особенности гидросульфатов</div>
+Растворы NaHSO₄ имеют <strong>кислую среду</strong> (HSO₄⁻ → SO₄²⁻ + H⁺). Их можно считать смесью Na₂SO₄ и H₂SO₄:<br>
+2NaHSO₄ + Mg = Na₂SO₄ + MgSO₄ + H₂↑<br>
+2NaHSO₄ + BaCl₂ = Na₂SO₄ + BaSO₄↓ + 2HCl
+</div>
+</div>
+</div><!-- /sec-salts -->
+
+<!-- ═══════════════ АМФОТЕРНОСТЬ ═══════════════ -->
+
+<div class="section-page sec-ampho">
+<div class="section-header">
+<div class="section-tag"><span></span> Тема 8 <span></span></div>
+<h2>Амфотерность<br><em>Свойства гидроксокомплексов</em></h2>
+<p>Амфотерность — способность вещества проявлять и кислотные, и основные свойства. Амфотерные оксиды и гидроксиды образуют бериллий, цинк и металлы в степенях окисления +3 и +4.</p>
+</div>
+
+<div class="card blue">
+<div class="card-label">Часть 1 · Амфотерные оксиды</div>
+<h3>Двойственная природа</h3>
+
+<div class="two-col">
+<div class="half-card red-bg">
+<div class="hc-title" style="color:var(--red)">Кислотные свойства (реагирует как кислотный оксид)</div>
+[1] С оксидами щелочных/щ.-з. металлов:<br>
+ZnO + Na₂O = Na₂ZnO₂ (при сплавл.)<br><br>
+[2] Со щелочами:<br>
+ZnO + 2NaOH(сплавл.) = Na₂ZnO₂ + H₂O<br>
+ZnO + 2NaOH(р-р) + H₂O = Na₂[Zn(OH)₄]<br><br>
+[3] Сплавление с карбонатами:<br>
+ZnO + Na₂CO₃ = Na₂ZnO₂ + CO₂↑
+</div>
+<div class="half-card green-bg">
+<div class="hc-title" style="color:var(--green)">Основные свойства (реагирует как основный оксид)</div>
+[1] С кислотными оксидами:<br>
+ZnO + SO₃ = ZnSO₄<br><br>
+[2] С кислотами (если соль существует):<br>
+ZnO + H₂SO₄ = ZnSO₄ + H₂O<br>
+Al₂O₃ + 6HCl = 2AlCl₃ + 3H₂O
+</div>
+</div>
+</div>
+
+<div class="card green">
+<div class="card-label">Часть 2 · Амфотерные гидроксиды</div>
+<h3>Свойства Zn(OH)₂, Al(OH)₃, Cr(OH)₃, Be(OH)₂, Fe(OH)₃</h3>
+
+<div class="two-col">
+<div class="half-card red-bg">
+<div class="hc-title" style="color:var(--red)">Кислотные свойства</div>
+[1] Со щелочами:<br>
+Zn(OH)₂ + 2NaOH(сплавл.) = Na₂ZnO₂ + 2H₂O<br>
+Zn(OH)₂ + 2NaOH(р-р) = Na₂[Zn(OH)₄]<br><br>
+[2] С оксидами щелочных/щ.-з. металлов:<br>
+Zn(OH)₂ + BaO = BaZnO₂ + H₂O
+</div>
+<div class="half-card green-bg">
+<div class="hc-title" style="color:var(--green)">Основные свойства</div>
+[1] С кислотами:<br>
+Zn(OH)₂ + H₂SO₄ = ZnSO₄ + 2H₂O<br>
+Al(OH)₃ + 3HCl = AlCl₃ + 3H₂O<br><br>
+[2] С высшими оксидами (если соль существует):<br>
+Zn(OH)₂ + SO₃ = ZnSO₄ + H₂O
+</div>
+</div>
+
+<div class="tip"><strong>Осаждение щелочами:</strong> при действии щёлочи на растворы солей Al, Zn, Be, Cr — сначала выпадает осадок амфотерного гидроксида, а при дальнейшем добавлении щёлочи он растворяется:<br>
+AlCl₃ + 3NaOH = 3NaCl + Al(OH)₃↓<br>
+Al(OH)₃ + NaOH = Na[Al(OH)₄]<br>
+<strong>Суммарно (избыток щёлочи):</strong> AlCl₃ + 4NaOH = 3NaCl + Na[Al(OH)₄]</div>
+</div>
+
+<!-- Комплексы -->
+
+<div class="card amber">
+<div class="card-label">Часть 3 · Гидроксокомплексы</div>
+<h3>Комплексные соли амфотерных металлов</h3>
+
+<p>При взаимодействии амфотерных гидроксидов с растворами щелочей образуются <strong>комплексные соли</strong>:</p>
+<div class="rxn amber">Na[Al(OH)₄] — тетрагидроксоалюминат натрия
+K₂[Zn(OH)₄] — тетрагидроксоцинкат калия
+K₃[Cr(OH)₆] — гексагидроксохромат(III) калия</div>
+
+<div class="divider"></div>
+<p><strong>Свойства гидроксокомплексов:</strong></p>
+
+<div class="half-card red-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--red)">[1] Разложение при нагревании → оксосоли</div>
+Na[Al(OH)₄] = NaAlO₂ + 2H₂O (при t°)<br>
+Na₂[Zn(OH)₄] = Na₂ZnO₂ + 2H₂O (при t°)
+</div>
+
+<div class="half-card blue-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--blue)">[2] С недостатком сильной кислоты / газами SO₂, CO₂, H₂S</div>
+Гидроксокомплекс + кислота (нед.) или газы = соль + амфотерный гидроксид (+ вода)
+</div>
+<div class="rxn amber">Na[Al(OH)₄] + HCl(нед.) = NaCl + Al(OH)₃↓ + H₂O
+Na[Al(OH)₄] + CO₂ = NaHCO₃ + Al(OH)₃↓
+K₂[Zn(OH)₄] + 2H₂S = 2KHS + ZnS↓ + 2H₂O
+⚠ При пропускании H₂S через тетрагидроксоцинкаты образуются ДВЕ соли + вода</div>
+
+<div class="half-card green-bg" style="margin-bottom:10px">
+<div class="hc-title" style="color:var(--green)">[3] С избытком сильной кислоты → 2 соли + вода</div>
+Осадок амфотерного гидроксида полностью растворяется:
+</div>
+<div class="rxn amber">Na[Al(OH)₄] + 4HCl(изб.) = NaCl + AlCl₃ + 4H₂O
+K₂[Zn(OH)₄] + 4HBr(изб.) = 2KBr + ZnBr₂ + 4H₂O</div>
+
+<div class="mnemonic">
+<div class="mnemonic-icon">🔑</div>
+<div class="mnemonic-text">
+<span class="m-label">Особенности Al и Zn</span>
+Алюминий и цинк реагируют и с растворами, и с расплавами щелочей:<br>
+<strong>2Al + 2NaOH(р-р) + 6H₂O = 2Na[Al(OH)₄] + 3H₂↑</strong><br>
+<strong>Zn + 2NaOH(р-р) + 2H₂O = Na₂[Zn(OH)₄] + H₂↑</strong><br>
+При сплавлении: 2Al + 6NaOH = 2NaAlO₂ + 2Na₂O + 3H₂↑
+</div>
+</div>
+</div>
+
+<!-- Оксосоли -->
+
+<div class="card violet">
+<div class="card-label">Часть 4 · Оксосоли</div>
+<h3>Na₂ZnO₂, NaAlO₂, NaCrO₂, NaFeO₂</h3>
+<p>Алюминаты, цинкаты, ферриты и хромиты существуют <strong>только в сухом виде</strong>. В воде или растворах кислот они разлагаются.</p>
+
+<div class="rxn violet">NaAlO₂ + 2H₂O = Na[Al(OH)₄]    (гидролиз → комплексная соль)
+NaFeO₂ + 2H₂O = NaOH + Fe(OH)₃↓  (гидролиз с осадком)
+NaFeO₂ + 4HCl(изб.) = NaCl + FeCl₃ + 2H₂O  (с избытком кислоты)</div>
+
+<div class="tip"><strong>Для Fe(OH)₃:</strong> кислотные свойства проявляются как правило только <strong>при сплавлении</strong>. Гидроксокомплексы железа в разбавленных растворах НЕ образуются:<br>
+Fe(OH)₃ + NaOH(разб.) ≠<br>
+Fe(OH)₃ + 3NaOH(конц., кипячение) = Na₃[Fe(OH)₆]</div>
+</div>
+</div><!-- /sec-ampho -->
+
+<!-- ═══════════════ СХЕМА СВЯЗЕЙ ═══════════════ -->
+
+<div class="section-page sec-scheme">
+<div class="section-header">
+<div class="section-tag"><span></span> Обобщение <span></span></div>
+<h2>Схема генетических связей<br><em>между классами неорганических веществ</em></h2>
+<p>Эта схема показывает, как все классы веществ связаны друг с другом через химические реакции. Выучи её — и ты всегда будешь знать, что с чем реагирует.</p>
+</div>
+
+<!-- Визуальная схема — SVG -->
+
+<div class="card blue" style="padding:12px 8px;">
+<div class="card-label" style="padding-left:14px">Центральная схема генетических связей</div>
+<h3 style="padding-left:14px;margin-bottom:4px">Взаимосвязь классов неорганических веществ</h3>
+<p style="padding-left:14px;font-size:12px;color:var(--muted);margin-bottom:8px">Стрелки показывают продукты реакций между классами</p>
+
+<svg viewBox="0 0 760 700" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+<defs>
+<marker id="ah" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5" fill="#9a9080"/></marker>
+</defs>
+
+<rect width="760" height="700" rx="14" fill="#fffdf8"/>
+
+<!-- ══════ BOXES ══════ -->
+
+<rect x="110" y="24" width="150" height="50" rx="10" fill="#d4eaf7" stroke="#7ab8d9" stroke-width="2"/>
+<text x="185" y="55" text-anchor="middle" font-size="15" font-weight="700" fill="#2a6db5">Металл</text>
+
+<rect x="500" y="24" width="150" height="50" rx="10" fill="#d4eaf7" stroke="#7ab8d9" stroke-width="2"/>
+<text x="575" y="55" text-anchor="middle" font-size="15" font-weight="700" fill="#2a6db5">Неметалл</text>
+
+<rect x="70" y="190" width="180" height="56" rx="10" fill="#b8d8f0" stroke="#5a9ec4" stroke-width="2"/>
+<text x="160" y="214" text-anchor="middle" font-size="14" font-weight="700" fill="#1a4d8a">Основный</text>
+<text x="160" y="234" text-anchor="middle" font-size="14" font-weight="700" fill="#1a4d8a">оксид</text>
+
+<rect x="510" y="190" width="180" height="56" rx="10" fill="#b8e8d0" stroke="#4aaa7a" stroke-width="2"/>
+<text x="600" y="214" text-anchor="middle" font-size="14" font-weight="700" fill="#1a6040">Кислотный</text>
+<text x="600" y="234" text-anchor="middle" font-size="14" font-weight="700" fill="#1a6040">оксид</text>
+
+<rect x="70" y="400" width="180" height="50" rx="10" fill="#f0d4e8" stroke="#c47aaa" stroke-width="2"/>
+<text x="160" y="431" text-anchor="middle" font-size="15" font-weight="700" fill="#8a2a6a">Основание</text>
+
+<rect x="510" y="400" width="180" height="50" rx="10" fill="#f8f0b8" stroke="#c4aa4a" stroke-width="2"/>
+<text x="600" y="431" text-anchor="middle" font-size="15" font-weight="700" fill="#8a6a10">Кислота</text>
+
+<rect x="70" y="610" width="180" height="50" rx="10" fill="#e8f0e0" stroke="#7aaa5a" stroke-width="2"/>
+<text x="160" y="641" text-anchor="middle" font-size="15" font-weight="700" fill="#3a6a2a">Соль</text>
+
+<rect x="510" y="610" width="180" height="50" rx="10" fill="#e8f0e0" stroke="#7aaa5a" stroke-width="2"/>
+<text x="600" y="641" text-anchor="middle" font-size="15" font-weight="700" fill="#3a6a2a">Соль</text>
+
+<!-- ══════ ВЕРТИКАЛЬНЫЕ СТРЕЛКИ ══════ -->
+
+<!-- Металл → Осн. оксид -->
+
+<line x1="185" y1="74" x2="165" y2="188" stroke="#9a9080" stroke-width="1.3" marker-end="url(#ah)"/>
+<text x="148" y="136" font-size="12" fill="#7a7060" font-weight="500">+ O₂</text>
+
+<!-- Неметалл → Кисл. оксид -->
+
+<line x1="575" y1="74" x2="595" y2="188" stroke="#9a9080" stroke-width="1.3" marker-end="url(#ah)"/>
+<text x="600" y="136" font-size="12" fill="#7a7060" font-weight="500">+ O₂</text>
+
+<!-- Осн. оксид → Основание -->
+
+<line x1="140" y1="246" x2="140" y2="398" stroke="#9a9080" stroke-width="1.3" marker-end="url(#ah)"/>
+<text x="92" y="328" font-size="12" fill="#7a7060" font-weight="500">+ H₂O</text>
+
+<!-- Кисл. оксид → Кислота -->
+
+<line x1="620" y1="246" x2="620" y2="398" stroke="#9a9080" stroke-width="1.3" marker-end="url(#ah)"/>
+<text x="636" y="328" font-size="12" fill="#7a7060" font-weight="500">+ H₂O</text>
+
+<!-- Основание → Соль (левая), 2 стрелки -->
+
+<line x1="115" y1="450" x2="115" y2="608" stroke="#9a9080" stroke-width="1.2" marker-end="url(#ah)"/>
+<text x="30" y="518" font-size="11" fill="#7a7060">+ кислотный</text>
+<text x="30" y="532" font-size="11" fill="#7a7060">оксид</text>
+
+<line x1="185" y1="450" x2="185" y2="608" stroke="#9a9080" stroke-width="1.2" marker-end="url(#ah)"/>
+<text x="192" y="525" font-size="11" fill="#7a7060">+ кислота</text>
+
+<!-- Кислота → Соль (правая), 2 стрелки -->
+
+<line x1="570" y1="450" x2="570" y2="608" stroke="#9a9080" stroke-width="1.2" marker-end="url(#ah)"/>
+<text x="492" y="525" font-size="11" fill="#7a7060">+ основание</text>
+
+<line x1="645" y1="450" x2="645" y2="608" stroke="#9a9080" stroke-width="1.2" marker-end="url(#ah)"/>
+<text x="652" y="518" font-size="11" fill="#7a7060">+ основный</text>
+<text x="652" y="532" font-size="11" fill="#7a7060">оксид</text>
+
+<!-- ══════ ГОРИЗОНТАЛЬНЫЕ СВЯЗИ ══════ -->
+
+<!-- Металл ↔ Неметалл -->
+
+<line x1="260" y1="49" x2="498" y2="49" stroke="#9a9080" stroke-width="1.2" stroke-dasharray="5,3"/>
+<rect x="340" y="36" width="80" height="26" rx="13" fill="#fffdf8" stroke="#9a9080" stroke-width="1"/>
+<text x="380" y="54" text-anchor="middle" font-size="12" font-weight="600" fill="#7a7060">соль</text>
+
+<!-- Осн. оксид ↔ Кисл. оксид -->
+
+<line x1="250" y1="218" x2="508" y2="218" stroke="#5a9ec4" stroke-width="1.5" stroke-dasharray="5,3"/>
+<rect x="335" y="205" width="90" height="26" rx="13" fill="#fffdf8" stroke="#5a9ec4" stroke-width="1"/>
+<text x="380" y="223" text-anchor="middle" font-size="12" font-weight="600" fill="#1a4d8a">соль</text>
+
+<!-- Основание ↔ Кислота -->
+
+<line x1="250" y1="425" x2="508" y2="425" stroke="#c94040" stroke-width="1.5" stroke-dasharray="5,3"/>
+<rect x="318" y="412" width="125" height="26" rx="13" fill="#fffdf8" stroke="#c94040" stroke-width="1"/>
+<text x="380" y="430" text-anchor="middle" font-size="12" font-weight="600" fill="#a02020">соль + H₂O</text>
+
+<!-- Соль ↔ Соль -->
+
+<line x1="250" y1="635" x2="508" y2="635" stroke="#3a6a2a" stroke-width="1.5" stroke-dasharray="5,3"/>
+<rect x="318" y="622" width="125" height="26" rx="13" fill="#fffdf8" stroke="#3a6a2a" stroke-width="1"/>
+<text x="380" y="640" text-anchor="middle" font-size="12" font-weight="600" fill="#3a6a2a">соль + соль</text>
+
+<!-- ══════ ДИАГОНАЛЬНЫЕ (крест в центре) ══════ -->
+
+<!-- Осн. оксид → Кислота -->
+
+<line x1="250" y1="240" x2="508" y2="405" stroke="#c47c1a" stroke-width="1.3" opacity="0.5"/>
+<!-- Кисл. оксид → Основание -->
+<line x1="250" y1="405" x2="508" y2="240" stroke="#7c5cbf" stroke-width="1.3" opacity="0.5"/>
+
+<!-- Labels for cross in center — stacked vertically -->
+
+<rect x="325" y="285" width="110" height="26" rx="13" fill="#fffdf8" stroke="#c47c1a" stroke-width="1"/>
+<text x="380" y="303" text-anchor="middle" font-size="11" font-weight="600" fill="#8a5010">соль + H₂O</text>
+
+<rect x="325" y="318" width="110" height="26" rx="13" fill="#fffdf8" stroke="#7c5cbf" stroke-width="1"/>
+<text x="380" y="336" text-anchor="middle" font-size="11" font-weight="600" fill="#5a3a9a">соль + H₂O</text>
+
+<rect x="325" y="351" width="110" height="26" rx="13" fill="#fffdf8" stroke="#c94040" stroke-width="1"/>
+<text x="380" y="369" text-anchor="middle" font-size="11" font-weight="600" fill="#a02020">соль + H₂O</text>
+
+<!-- ══════ ДИАГОНАЛЬНЫЕ К СОЛЯМ (X в нижней части) ══════ -->
+
+<!-- Основание ↘ Соль правая -->
+
+<line x1="230" y1="450" x2="520" y2="615" stroke="#7a7060" stroke-width="1" opacity="0.4"/>
+<!-- Кислота ↙ Соль левая -->
+<line x1="530" y1="450" x2="240" y2="615" stroke="#7a7060" stroke-width="1" opacity="0.4"/>
+
+<!-- Labels for bottom cross -->
+
+<rect x="310" y="545" width="140" height="24" rx="12" fill="#fffdf8" stroke="#7a7060" stroke-width="0.8"/>
+<text x="380" y="562" text-anchor="middle" font-size="10" font-weight="600" fill="#7a7060">соль + кислота</text>
+
+<rect x="310" y="572" width="140" height="24" rx="12" fill="#fffdf8" stroke="#7a7060" stroke-width="0.8"/>
+<text x="380" y="589" text-anchor="middle" font-size="10" font-weight="600" fill="#7a7060">соль + основание</text>
+
+<!-- ══════ БОКОВЫЕ (Металл/Неметалл → Соль) ══════ -->
+
+<line x1="120" y1="74" x2="105" y2="608" stroke="#9a9080" stroke-width="0.8" opacity="0.3" stroke-dasharray="4,3"/>
+<text x="57" y="350" font-size="10" fill="#9a9080" transform="rotate(-90,57,350)">соль + металл</text>
+
+<line x1="640" y1="74" x2="655" y2="608" stroke="#9a9080" stroke-width="0.8" opacity="0.3" stroke-dasharray="4,3"/>
+<text x="706" y="350" font-size="10" fill="#9a9080" transform="rotate(90,706,350)">соль + H₂</text>
+
+</svg>
+</div>
+
+<!-- Таблица взаимодействий -->
+
+<div class="card green">
+<div class="card-label">Кто с кем реагирует — сводная таблица</div>
+<h3>Перекрёстные реакции классов</h3>
+
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -8px;padding:0 8px;">
+<table class="val-table" style="min-width:620px;">
+<tr><th></th><th>Осн. оксид</th><th>Кисл. оксид</th><th>Амф. оксид</th><th>Основание</th><th>Кислота</th><th>Соль</th></tr>
+<tr><td>Осн. оксид</td><td>—</td><td style="color:var(--green);font-weight:700">✓ соль</td><td style="color:var(--green);font-weight:700">✓ соль*</td><td>—</td><td style="color:var(--green);font-weight:700">✓ соль+H₂O</td><td>— (искл.)</td></tr>
+<tr><td>Кисл. оксид</td><td style="color:var(--green);font-weight:700">✓ соль</td><td>—</td><td style="color:var(--green);font-weight:700">✓ соль</td><td style="color:var(--green);font-weight:700">✓ соль+H₂O</td><td>—</td><td>— (искл.)</td></tr>
+<tr><td>Основание</td><td>—</td><td style="color:var(--green);font-weight:700">✓</td><td style="color:var(--green);font-weight:700">✓</td><td>—</td><td style="color:var(--green);font-weight:700">✓ нейтрализ.</td><td style="color:var(--green);font-weight:700">✓ обмен</td></tr>
+<tr><td>Кислота</td><td style="color:var(--green);font-weight:700">✓</td><td>—</td><td style="color:var(--green);font-weight:700">✓</td><td style="color:var(--green);font-weight:700">✓ нейтрализ.</td><td>—</td><td style="color:var(--green);font-weight:700">✓ обмен</td></tr>
+<tr><td>Соль</td><td>— (искл.)</td><td>— (искл.)</td><td>—</td><td style="color:var(--green);font-weight:700">✓ обмен</td><td style="color:var(--green);font-weight:700">✓ обмен</td><td style="color:var(--green);font-weight:700">✓ обмен</td></tr>
+</table>
+</div>
+<div class="tip"><strong>* Основный + амфотерный</strong> — только оксиды щелочных/щ.-з. металлов. <strong>Искл. (соль + оксид)</strong> — сплавление карбонатов с SiO₂, Al₂O₃, ZnO, Cr₂O₃, Fe₂O₃.</div>
+</div>
+
+<!-- Правила обмена -->
+
+<div class="card red">
+<div class="card-label">Условия протекания реакций обмена</div>
+<h3>Когда реакция обмена идёт?</h3>
+<p>Реакция ионного обмена протекает до конца, если образуется хотя бы один из продуктов:</p>
+
+<div class="two-col">
+<div class="half-card green-bg">
+<div class="hc-title" style="color:var(--green)">Реакция ИДЁТ ✓</div>
+• <strong>Осадок↓</strong> (нерастворимое вещество)<br>
+• <strong>Газ↑</strong> (CO₂, SO₂, H₂S, NH₃…)<br>
+• <strong>Вода</strong> (слабый электролит)<br>
+• <strong>Слабый электролит</strong> (слабая кислота, NH₃·H₂O)
+</div>
+<div class="half-card red-bg">
+<div class="hc-title" style="color:var(--red)">Реакция НЕ ИДЁТ ✗</div>
+• Оба реагента нерастворимы<br>
+• Все продукты растворимы и являются сильными электролитами<br>
+• Нет осадка, нет газа, нет воды
+</div>
+</div>
+
+<div class="mnemonic">
+<div class="mnemonic-icon">🔑</div>
+<div class="mnemonic-text">
+<span class="m-label">Совместный гидролиз</span>
+Если в растворе встречаются трёхзарядный катион (Al³⁺, Fe³⁺, Cr³⁺) и анион некоторых слабых кислот (CO₃²⁻, HCO₃⁻, S²⁻, HS⁻, SO₃²⁻, HSO₃⁻), реакция идёт необратимо:<br>
+<strong>3Na₂S + 2AlCl₃ + 6H₂O = 6NaCl + 2Al(OH)₃↓ + 3H₂S↑</strong>
+</div>
+</div>
+</div>
+
+<!-- Ключевые формулы -->
+
+<div class="card amber">
+<div class="card-label">Шпаргалка</div>
+<h3>Все ключевые типы реакций — одной таблицей</h3>
+<div class="rxn amber" style="line-height:2.2"><strong>Осн. оксид + кисл. оксид = соль</strong>
+<strong>Осн. оксид + кислота = соль + H₂O</strong>
+<strong>Осн. оксид + H₂O = щёлочь</strong> (только щел./щ.-з.)
+<strong>Кисл. оксид + щёлочь = соль + H₂O</strong>
+<strong>Кисл. оксид + H₂O = кислота</strong> (кроме SiO₂)
+<strong>Основание + кислота = соль + H₂O</strong>
+<strong>Щёлочь + амф. гидроксид = комплексная соль</strong>
+<strong>Щёлочь + соль = новая соль + новый гидроксид</strong> (если ↓ или ↑)
+<strong>Кислота + соль = новая кислота + новая соль</strong> (если ↓ или ↑)
+<strong>Соль + соль = две новые соли</strong> (если ↓)
+<strong>Металл + соль = новый металл + новая соль</strong> (активность!)
+<strong>Металл + кислота = соль + H₂↑</strong> (ряд активности!)
+<strong>Кислая соль + щёлочь = средняя соль + H₂O</strong>
+<strong>Средняя соль + кислота = кислая соль</strong> (при избытке)</div>
+</div>
+
+</div><!-- /sec-scheme -->
+
+</div><!-- /main -->
+
+<div class="footer">🧪 Неорганическая химия · Полный конспект</div>
+</body>
+</html>
