@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Задание 1 — Электронная конфигурация</title>
+<style>
+:root {
+  --bg: #f5f0e8; --white: #fffdf8; --ink: #1a1814; --muted: #7a7060;
+  --red: #c94040; --blue: #2a6db5; --green: #2a8a5a; --amber: #c47c1a;
+  --border: #e0d8c8; --shadow: rgba(60,50,30,0.1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; color:var(--ink); min-height:100vh; }
+
+.tab-radio { display:none; }
+
+.nav { position:sticky; top:0; z-index:100; background:rgba(245,240,232,0.97); border-bottom:1px solid var(--border); padding:14px 20px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.nav-title { font-family:Georgia,serif; font-size:17px; font-weight:600; }
+.nav-pills { display:flex; gap:8px; flex-wrap:wrap; }
+.tab-label { padding:7px 18px; border-radius:100px; border:1.5px solid var(--border); font-size:13px; cursor:pointer; color:var(--muted); display:inline-block; -webkit-tap-highlight-color:transparent; user-select:none; }
+.tab-label:active { opacity:0.7; }
+
+#tab-theory:checked ~ * .label-theory,
+#tab-tasks:checked ~ * .label-tasks,
+#tab-summary:checked ~ * .label-summary { background:var(--ink); color:var(--white); border-color:var(--ink); }
+
+.section-page { display:none; }
+#tab-theory:checked ~ .main .sec-theory { display:block; }
+#tab-tasks:checked ~ .main .sec-tasks { display:block; }
+#tab-summary:checked ~ .main .sec-summary { display:block; }
+
+.answer-check { display:none; }
+.answer-toggle { width:100%; padding:13px 24px; background:rgba(60,50,30,0.03); border:none; border-top:1px solid var(--border); cursor:pointer; font-family:inherit; font-size:13px; color:var(--muted); text-align:left; display:flex; align-items:center; gap:8px; -webkit-tap-highlight-color:transparent; user-select:none; }
+.answer-toggle:active { background:rgba(60,50,30,0.08); }
+.arrow { display:inline-block; transition:transform 0.3s; }
+.show-text { display:inline; }
+.hide-text { display:none; }
+.answer-body { display:none; padding:18px 24px 22px; border-top:1px solid var(--border); background:rgba(245,240,232,0.5); font-size:13.5px; line-height:1.85; color:#3a3530; }
+.answer-check:checked + .answer-toggle .arrow { transform:rotate(180deg); }
+.answer-check:checked + .answer-toggle .show-text { display:none; }
+.answer-check:checked + .answer-toggle .hide-text { display:inline; }
+.answer-check:checked ~ .answer-body { display:block; }
+
+.main { max-width:860px; margin:0 auto; padding:32px 16px 80px; }
+.section-header { margin-bottom:26px; }
+.section-tag { display:inline-flex; align-items:center; gap:6px; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+.section-tag span { display:inline-block; width:22px; height:1.5px; background:var(--muted); }
+.section-header h2 { font-family:Georgia,serif; font-size:clamp(22px,4vw,34px); font-weight:900; line-height:1.15; }
+.section-header h2 em { font-style:italic; color:var(--blue); }
+.section-header p { margin-top:8px; font-size:14px; color:var(--muted); line-height:1.7; }
+
+.card { background:var(--white); border:1.5px solid var(--border); border-radius:18px; padding:22px 22px; margin-bottom:12px; box-shadow:0 2px 12px var(--shadow); position:relative; overflow:hidden; }
+.card::before { content:''; position:absolute; top:0; left:0; width:5px; height:100%; border-radius:18px 0 0 18px; }
+.card.red::before { background:var(--red); }
+.card.blue::before { background:var(--blue); }
+.card.green::before { background:var(--green); }
+.card.amber::before { background:var(--amber); }
+.card-label { font-size:10px; letter-spacing:0.25em; text-transform:uppercase; font-weight:500; margin-bottom:8px; }
+.card.red .card-label { color:var(--red); }
+.card.blue .card-label { color:var(--blue); }
+.card.green .card-label { color:var(--green); }
+.card.amber .card-label { color:var(--amber); }
+.card h3 { font-family:Georgia,serif; font-size:18px; font-weight:700; margin-bottom:12px; line-height:1.3; }
+.card p { font-size:14px; line-height:1.8; color:#3a3530; margin-bottom:10px; }
+.card p:last-child { margin-bottom:0; }
+
+.rxn { font-family:'Courier New',monospace; font-size:13px; padding:10px 14px; border-radius:10px; margin:6px 0; line-height:1.8; }
+.rxn.red   { background:rgba(201,64,64,0.07);   color:#a02020; border-left:3px solid var(--red); }
+.rxn.blue  { background:rgba(42,109,181,0.07);  color:#1a4d8a; border-left:3px solid var(--blue); }
+.rxn.green { background:rgba(42,138,90,0.07);   color:#1a6040; border-left:3px solid var(--green); }
+.rxn.amber { background:rgba(196,124,26,0.07);  color:#8a5010; border-left:3px solid var(--amber); }
+.rxn-ans { font-family:'Courier New',monospace; font-size:13px; background:rgba(42,138,90,0.07); border-left:3px solid var(--green); padding:10px 14px; border-radius:8px; margin:8px 0; color:#1a6040; line-height:1.9; }
+
+.row-table { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:12px 0; }
+.row-cell { border-radius:12px; padding:12px; text-align:center; font-size:12px; line-height:1.6; }
+.row-cell .label { font-size:10px; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px; font-weight:600; }
+.row-cell.s-orb  { background:rgba(201,64,64,0.08); }
+.row-cell.s-orb  .label { color:var(--red); }
+.row-cell.p-orb  { background:rgba(196,124,26,0.08); }
+.row-cell.p-orb  .label { color:var(--amber); }
+.row-cell.d-orb  { background:rgba(42,109,181,0.08); }
+.row-cell.d-orb  .label { color:var(--blue); }
+.orb-big { font-family:Georgia,serif; font-size:24px; font-weight:700; margin-bottom:4px; }
+.s-orb .orb-big { color:var(--red); }
+.p-orb .orb-big { color:var(--amber); }
+.d-orb .orb-big { color:var(--blue); }
+
+.tip { margin-top:12px; padding:12px 14px; border-radius:12px; background:rgba(60,50,30,0.04); border:1px dashed var(--border); font-size:13px; color:var(--muted); line-height:1.7; }
+.tip strong { color:var(--ink); }
+
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+.half-card { padding:14px; border-radius:14px; font-size:13px; line-height:1.7; }
+.half-card.blue-bg  { background:rgba(42,109,181,0.07);  border:1px solid rgba(42,109,181,0.2); }
+.half-card.red-bg   { background:rgba(201,64,64,0.07);   border:1px solid rgba(201,64,64,0.2); }
+.half-card.green-bg { background:rgba(42,138,90,0.07);   border:1px solid rgba(42,138,90,0.2); }
+.half-card.amber-bg { background:rgba(196,124,26,0.07);  border:1px solid rgba(196,124,26,0.2); }
+.half-card .hc-title { font-weight:600; font-size:14px; margin-bottom:6px; }
+
+.mnemonic { display:flex; gap:10px; padding:14px; background:linear-gradient(135deg,rgba(42,109,181,0.06),rgba(201,64,64,0.06)); border-radius:14px; border:1px solid var(--border); margin:12px 0; }
+.mnemonic-icon { font-size:26px; display:flex; align-items:center; justify-content:center; width:42px; flex-shrink:0; }
+.mnemonic-text { font-size:14px; line-height:1.7; }
+.m-label { font-size:10px; text-transform:uppercase; letter-spacing:0.15em; color:var(--muted); display:block; margin-bottom:2px; }
+
+.divider { height:1px; background:var(--border); margin:18px 0; }
+
+.badge { display:inline-block; padding:3px 10px; border-radius:6px; font-size:11px; font-weight:500; margin:2px 2px 2px 0; }
+.badge.red   { background:rgba(201,64,64,0.12);  color:var(--red); }
+.badge.blue  { background:rgba(42,109,181,0.12); color:var(--blue); }
+.badge.green { background:rgba(42,138,90,0.12);  color:var(--green); }
+.badge.amber { background:rgba(196,124,26,0.12); color:var(--amber); }
+
+.diff-badge { font-size:10px; padding:3px 10px; border-radius:100px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; }
+.diff-badge.easy   { background:rgba(42,138,90,0.12);  color:var(--green); }
+.diff-badge.medium { background:rgba(196,124,26,0.12); color:var(--amber); }
+.diff-badge.hard   { background:rgba(201,64,64,0.12);  color:var(--red); }
+
+.task-card { background:var(--white); border:1.5px solid var(--border); border-radius:18px; margin-bottom:12px; overflow:hidden; box-shadow:0 2px 12px var(--shadow); }
+.task-top { padding:18px 22px 14px; }
+.task-meta { display:flex; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+.task-num { font-family:Georgia,serif; font-size:24px; font-weight:900; color:var(--border); line-height:1; }
+.task-q { font-size:15px; line-height:1.75; color:var(--ink); }
+.task-q .chem { font-family:'Courier New',monospace; background:rgba(42,109,181,0.08); color:var(--blue); padding:1px 5px; border-radius:4px; font-size:14px; }
+
+.step-list { list-style:none; display:flex; flex-direction:column; gap:8px; margin-top:8px; }
+.step-list li { display:flex; gap:10px; align-items:flex-start; font-size:13px; line-height:1.7; }
+.step-num { background:var(--blue); color:white; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-size:11px; flex-shrink:0; margin-top:2px; font-weight:600; }
+
+.trap-item { font-size:13px; line-height:1.7; padding:10px 14px; background:rgba(201,64,64,0.06); border-radius:10px; border-left:3px solid var(--red); margin-bottom:8px; }
+
+.conf-table { width:100%; border-collapse:collapse; font-size:13px; margin-top:8px; border-radius:12px; overflow:hidden; }
+.conf-table th { background:var(--ink); color:var(--white); padding:9px 12px; text-align:left; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; }
+.conf-table td { padding:8px 12px; border-bottom:1px solid var(--border); }
+.conf-table tr:last-child td { border-bottom:none; }
+.conf-table tr:nth-child(even) td { background:rgba(60,50,30,0.02); }
+.conf-table td:first-child { font-weight:600; color:var(--blue); }
+.conf-table td:nth-child(2) { font-family:'Courier New',monospace; font-size:12.5px; }
+.conf-table td:last-child { color:var(--muted); font-size:12px; }
+
+@media(max-width:560px) { .two-col { grid-template-columns:1fr; } .row-table { grid-template-columns:1fr; } }
+
+.footer { text-align:center; padding:36px 20px; color:var(--muted); font-size:12px; }
+</style>
+</head>
+<body>
+
+<input type="radio" name="tabs" id="tab-theory" class="tab-radio" checked>
+<input type="radio" name="tabs" id="tab-tasks" class="tab-radio">
+<input type="radio" name="tabs" id="tab-summary" class="tab-radio">
+
+<nav class="nav">
+  <div class="nav-title">⚛️ Задание 1</div>
+  <div class="nav-pills">
+    <label for="tab-theory" class="tab-label label-theory">Теория</label>
+    <label for="tab-tasks" class="tab-label label-tasks">Задания</label>
+    <label for="tab-summary" class="tab-label label-summary">Шпаргалка</label>
+  </div>
+  <span style="margin-left:auto;font-size:12px;color:var(--muted)">10 класс · ЕГЭ</span>
+</nav>
+
+<div class="main">
+
+<!-- ══════════════════════════════════════
+     ТЕОРИЯ
+══════════════════════════════════════ -->
+<div class="section-page sec-theory">
+  <div class="section-header">
+    <div class="section-tag"><span></span> Теория <span></span></div>
+    <h2>Электронная конфигурация —<br><em>строим атом</em> по правилам</h2>
+    <p>Как расположены электроны в атоме. Главное: знать порядок заполнения орбиталей и уметь его применять.</p>
+  </div>
+
+  <!-- Строение атома -->
+  <div class="card blue">
+    <div class="card-label">Основы</div>
+    <h3>Из чего состоит атом</h3>
+    <div class="two-col">
+      <div class="half-card blue-bg">
+        <div class="hc-title" style="color:var(--blue)">🔵 Ядро</div>
+        <strong>Протоны</strong> (заряд +1, масса 1) — определяют, какой это элемент.<br><br>
+        <strong>Нейтроны</strong> (заряд 0, масса 1) — не влияют на химические свойства.
+      </div>
+      <div class="half-card red-bg">
+        <div class="hc-title" style="color:var(--red)">🔴 Оболочка</div>
+        <strong>Электроны</strong> (заряд −1, масса ≈ 0) — определяют связи.<br><br>
+        В нейтральном атоме: <strong>e⁻ = протонам = Z</strong>
+      </div>
+    </div>
+    <div class="mnemonic">
+      <div class="mnemonic-icon">🧮</div>
+      <div class="mnemonic-text">
+        <span class="m-label">Формулы для расчёта</span>
+        <strong style="font-size:15px;color:var(--ink)">Протоны = Электроны = Z (порядковый номер)</strong><br>
+        <span style="color:var(--muted)"><strong style="color:var(--blue)">Нейтроны</strong> = A − Z, где A — округлённая атомная масса</span><br>
+        <span style="color:var(--red);font-size:13px">⚠️ Масса хлора Cl = 35,5 — не округляется! Для ³⁵Cl нейтроны = 18.</span>
+      </div>
+    </div>
+    <div class="card-label" style="margin-top:14px;margin-bottom:6px">Изотопы</div>
+    <p>Атомы одного элемента с разным числом нейтронов. Химические свойства <strong>одинаковы</strong> — разная только масса.</p>
+    <div class="rxn blue">¹H — 0 нейтронов · ²H (дейтерий) — 1 нейтрон · ³H (тритий) — 2 нейтрона<br>Все трое — водород. Все образуют «воду»: H₂O / D₂O / T₂O</div>
+  </div>
+
+  <!-- Орбитали -->
+  <div class="card red">
+    <div class="card-label">Уровни и подуровни</div>
+    <h3>Орбитали и их вместимость</h3>
+    <p>Электроны располагаются на <strong>энергетических уровнях</strong> (1, 2, 3, 4...), каждый делится на <strong>орбитали (подуровни)</strong>.</p>
+    <div class="row-table">
+      <div class="row-cell s-orb">
+        <div class="label">s-орбиталь</div>
+        <div class="orb-big">s</div>
+        <div><strong>2 электрона</strong></div>
+        <div style="color:var(--muted);margin-top:4px">1 ячейка<br>розовый в таблице</div>
+      </div>
+      <div class="row-cell p-orb">
+        <div class="label">p-орбиталь</div>
+        <div class="orb-big">p</div>
+        <div><strong>6 электронов</strong></div>
+        <div style="color:var(--muted);margin-top:4px">3 ячейки<br>жёлтый в таблице</div>
+      </div>
+      <div class="row-cell d-orb">
+        <div class="label">d-орбиталь</div>
+        <div class="orb-big">d</div>
+        <div><strong>10 электронов</strong></div>
+        <div style="color:var(--muted);margin-top:4px">5 ячеек<br>синий в таблице</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="card-label" style="margin-bottom:8px">Состав уровней</div>
+    <div class="two-col" style="margin:0">
+      <div>
+        <div class="rxn red" style="font-size:12px">1-й уровень: только s</div>
+        <div class="rxn red" style="font-size:12px">2-й уровень: s и p</div>
+      </div>
+      <div>
+        <div class="rxn red" style="font-size:12px">3-й уровень: s, p и d</div>
+        <div class="rxn red" style="font-size:12px">4-й уровень: s, p, d и f</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Порядок заполнения -->
+  <div class="card green">
+    <div class="card-label">Ключевое правило</div>
+    <h3>Порядок заполнения орбиталей</h3>
+    <div style="text-align:center;padding:16px 12px;background:rgba(42,138,90,0.07);border-radius:12px;border:1px solid rgba(42,138,90,0.2);margin-bottom:12px">
+      <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Главная последовательность</div>
+      <div style="font-family:'Courier New',monospace;font-size:15px;font-weight:700;color:var(--ink);line-height:2">1s → 2s → 2p → 3s → 3p → 4s → 3d → 4p → 5s → 4d → 5p</div>
+    </div>
+    <div class="tip" style="border-color:rgba(42,138,90,0.3)">
+      <strong style="color:var(--green)">d запаздывает!</strong> 3d заполняется <em>после</em> 4s — на период позже, чем кажется. Смотри на цвет ячейки в таблице Менделеева.
+    </div>
+    <div class="divider"></div>
+    <div class="card-label" style="margin-bottom:8px">Алгоритм составления конфигурации</div>
+    <ul class="step-list">
+      <li><span class="step-num" style="background:var(--green)">1</span><div>Найди элемент в таблице → определи Z (порядковый номер)</div></li>
+      <li><span class="step-num" style="background:var(--green)">2</span><div>Определи цвет ячейки: розовый → s, жёлтый → p, синий → d</div></li>
+      <li><span class="step-num" style="background:var(--green)">3</span><div>Посчитай, <em>какой по счёту</em> элемент в своём блоке — столько электронов на последней орбитали</div></li>
+      <li><span class="step-num" style="background:var(--green)">4</span><div>Все предыдущие орбитали заполнены полностью — пиши автоматически по порядку</div></li>
+    </ul>
+    <div class="rxn green" style="margin-top:12px">Пример — Углерод C (Z = 6):<br>2-й жёлтый (p) элемент 2-го периода → внешний уровень 2p²<br>Конфигурация: 1s² 2s² 2p²</div>
+  </div>
+
+  <!-- Правило троллейбуса -->
+  <div class="card amber">
+    <div class="card-label">Квантовые ячейки</div>
+    <h3>Правило троллейбуса (правило Хунда)</h3>
+    <div class="mnemonic">
+      <div class="mnemonic-icon">🚎</div>
+      <div class="mnemonic-text">
+        <span class="m-label">Мнемоника</span>
+        <strong style="font-size:15px;color:var(--ink)">Электрон — как пассажир в троллейбусе</strong><br>
+        <span style="color:var(--muted)">Всегда садится на <strong style="color:var(--ink)">свободное место</strong>, если оно есть. Только если мест нет — подсаживается к другому.</span>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="half-card amber-bg">
+        <div class="hc-title" style="color:var(--amber)">N — азот (2p³)</div>
+        Три ячейки, 3 электрона:<br>
+        <span style="font-family:'Courier New',monospace;font-size:18px;letter-spacing:6px">↑ ↑ ↑</span><br>
+        <span style="font-size:12px;color:var(--muted)">3 неспаренных → валентность 3</span>
+      </div>
+      <div class="half-card amber-bg">
+        <div class="hc-title" style="color:var(--amber)">O — кислород (2p⁴)</div>
+        Три ячейки, 4 электрона:<br>
+        <span style="font-family:'Courier New',monospace;font-size:18px;letter-spacing:3px">↑↓ ↑ ↑</span><br>
+        <span style="font-size:12px;color:var(--muted)">2 неспаренных → валентность 2</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="card-label" style="margin-bottom:6px">Возбуждённое состояние (S*)</div>
+    <p>Электронная пара <strong>распаривается</strong>, один электрон переходит на свободную ячейку выше → растёт валентность.</p>
+    <div class="rxn amber">S  основное:    ...3s² 3p⁴        → 2 неспаренных (валентность 2)<br>S* первое:     ...3s² 3p³ 3d¹   → 4 неспаренных (валентность 4)<br>S** второе:    ...3s¹ 3p³ 3d²   → 6 неспаренных (валентность 6)</div>
+  </div>
+
+  <!-- Аномалии -->
+  <div class="card red">
+    <div class="card-label">Важные исключения — выучить!</div>
+    <h3>Аномалии хрома и меди</h3>
+    <p>d-орбиталь особо устойчива, когда заполнена <strong>ровно наполовину (d⁵)</strong> или <strong>полностью (d¹⁰)</strong>. Поэтому электрон «прыгает» с s на d.</p>
+    <div class="two-col">
+      <div class="half-card red-bg">
+        <div class="hc-title" style="color:var(--red)">Хром Cr (Z = 24)</div>
+        <span style="font-size:12px;color:var(--muted)">Ожидаемо: ...4s²3d⁴</span><br>
+        <span style="font-size:12px;color:var(--muted)">Фактически:</span>
+        <div class="rxn red" style="font-size:12px;margin-top:6px">...4s¹ 3d⁵</div>
+        <span style="font-size:12px;color:var(--red)">d⁵ — полузаполненная ✓</span>
+      </div>
+      <div class="half-card red-bg">
+        <div class="hc-title" style="color:var(--red)">Медь Cu (Z = 29)</div>
+        <span style="font-size:12px;color:var(--muted)">Ожидаемо: ...4s²3d⁹</span><br>
+        <span style="font-size:12px;color:var(--muted)">Фактически:</span>
+        <div class="rxn red" style="font-size:12px;margin-top:6px">...4s¹ 3d¹⁰</div>
+        <span style="font-size:12px;color:var(--red)">d¹⁰ — полностью заполненная ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Главная / побочная -->
+  <div class="card blue">
+    <div class="card-label">Группы</div>
+    <h3>Главная и побочная подгруппы</h3>
+    <div class="two-col">
+      <div class="half-card blue-bg">
+        <div class="hc-title" style="color:var(--blue)">Главная подгруппа</div>
+        Число e⁻ на внешнем уровне = <strong>номер группы</strong>.<br><br>
+        <span style="font-size:12px;color:var(--muted)">C (IV группа): 2s²2p² → 4 е⁻ ✓</span>
+      </div>
+      <div class="half-card red-bg">
+        <div class="hc-title" style="color:var(--red)">Побочная подгруппа</div>
+        Внешний уровень — только <strong>s-орбиталь</strong> с максимальной цифрой.<br><br>
+        <span style="font-size:12px;color:var(--muted)">Cr (VI группа): внешний = 4s¹ (1 е⁻)</span>
+      </div>
+    </div>
+    <div class="tip" style="margin-top:12px">
+      <strong>Валентные электроны d-элементов</strong> = внешняя s + предвнешняя d.<br>
+      <span style="font-size:12px">Cr: 4s¹ + 3d⁵ = 6 валентных = номер группы ✓</span>
+    </div>
+  </div>
+
+  <!-- Ионы -->
+  <div class="card green">
+    <div class="card-label">Ионы</div>
+    <h3>Электронная конфигурация иона</h3>
+    <div class="two-col">
+      <div class="half-card blue-bg">
+        <div class="hc-title" style="color:var(--blue)">⊖ Анион (M⁻ⁿ)</div>
+        <strong>Добавляем</strong> n e⁻ на внешний уровень.
+        <div class="rxn blue" style="font-size:12px;margin-top:8px">Cl⁻: 1s²2s²2p⁶3s²3p⁶<br>(добавили 1e⁻ на 3p)</div>
+      </div>
+      <div class="half-card red-bg">
+        <div class="hc-title" style="color:var(--red)">⊕ Катион (M⁺ⁿ)</div>
+        <strong>Убираем</strong> n e⁻ с внешнего уровня.
+        <div class="rxn red" style="font-size:12px;margin-top:8px">Ca²⁺: 1s²2s²2p⁶3s²3p⁶<br>(убрали 2e⁻ с 4s)</div>
+      </div>
+    </div>
+    <div class="tip" style="margin-top:12px">
+      <strong>Лайфхак:</strong> ионы со структурой благородного газа — самые устойчивые. Ca²⁺ и Cl⁻ оба имеют конфигурацию аргона Ar.
+    </div>
+  </div>
+
+</div><!-- /sec-theory -->
+
+<!-- ══════════════════════════════════════
+     ЗАДАНИЯ
+══════════════════════════════════════ -->
+<div class="section-page sec-tasks">
+  <div class="section-header">
+    <div class="section-tag"><span></span> Практика <span></span></div>
+    <h2>Задания<br><em>от простого к сложному</em></h2>
+    <p>Запиши решение в тетрадь — проверь по версии с ответами.</p>
+  </div>
+
+  <!-- 01 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">01</div>
+        <span class="diff-badge easy">лёгкое</span>
+        <span class="badge blue">частицы</span>
+      </div>
+      <div class="task-q">В атоме некоего элемента <strong>15 протонов</strong>. Укажи: а) число электронов; б) число нейтронов (атомная масса ≈ 31); в) название элемента.</div>
+    </div>
+  </div>
+  <!-- 02 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">02</div>
+        <span class="diff-badge easy">лёгкое</span>
+        <span class="badge green">конфигурация</span>
+      </div>
+      <div class="task-q">Запиши полную электронную конфигурацию атома <span class="chem">Si</span> (кремний, Z = 14).</div>
+    </div>
+  </div>
+  <!-- 03 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">03</div>
+        <span class="diff-badge easy">лёгкое</span>
+        <span class="badge amber">квантовые ячейки</span>
+      </div>
+      <div class="task-q">Сколько <strong>неспаренных электронов</strong> у атома азота <span class="chem">N</span> (Z = 7) в основном состоянии? Нарисуй квантовые ячейки.</div>
+    </div>
+  </div>
+  <!-- 04 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">04</div>
+        <span class="diff-badge easy">лёгкое</span>
+        <span class="badge blue">ионы</span>
+      </div>
+      <div class="task-q">Запиши конфигурацию иона <span class="chem">Ca²⁺</span> (кальций, Z = 20). Конфигурацию какого благородного газа она напоминает?</div>
+    </div>
+  </div>
+  <!-- 05 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">05</div>
+        <span class="diff-badge medium">среднее</span>
+        <span class="badge red">аномалия</span>
+      </div>
+      <div class="task-q">Запиши полную конфигурацию <span class="chem">Cr</span> (хром, Z = 24). Почему она отличается от ожидаемой?</div>
+    </div>
+  </div>
+  <!-- 06 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">06</div>
+        <span class="diff-badge medium">среднее</span>
+        <span class="badge blue">изотопы</span>
+      </div>
+      <div class="task-q">Определи число протонов, нейтронов и электронов в изотопе <span class="chem">⁴⁰Ca</span> (Z = 20).</div>
+    </div>
+  </div>
+  <!-- 07 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">07</div>
+        <span class="diff-badge medium">среднее</span>
+        <span class="badge blue">ионы</span>
+      </div>
+      <div class="task-q">Запиши конфигурацию иона <span class="chem">Cl⁻</span> (хлор, Z = 17). С конфигурацией какого атома она совпадает?</div>
+    </div>
+  </div>
+  <!-- 08 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">08</div>
+        <span class="diff-badge medium">среднее</span>
+        <span class="badge green">конфигурация</span>
+      </div>
+      <div class="task-q">Элемент находится в <strong>3-м периоде, главной подгруппе, III группе</strong>. Назови его и запиши конфигурацию.</div>
+    </div>
+  </div>
+  <!-- 09 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">09</div>
+        <span class="diff-badge medium">среднее</span>
+        <span class="badge amber">изотопы</span>
+      </div>
+      <div class="task-q">Чем отличаются <span class="chem">²H</span> (дейтерий) и <span class="chem">¹H</span> (водород)? Одинаковы ли их химические свойства?</div>
+    </div>
+  </div>
+  <!-- 10 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">10</div>
+        <span class="diff-badge medium">среднее</span>
+        <span class="badge red">ловушка</span>
+      </div>
+      <div class="task-q">Конфигурация внешнего уровня атома — <span class="chem">3s²3p⁶</span>. Назови все возможные частицы с такой конфигурацией.</div>
+    </div>
+  </div>
+  <!-- 11 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">11</div>
+        <span class="diff-badge medium">среднее</span>
+        <span class="badge amber">сравнение</span>
+      </div>
+      <div class="task-q">Сравни конфигурации <span class="chem">Li</span> (Z=3) и <span class="chem">Na</span> (Z=11). Что общего? Что различается?</div>
+    </div>
+  </div>
+  <!-- 12 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">12</div>
+        <span class="diff-badge medium">среднее</span>
+        <span class="badge red">аномалия</span>
+      </div>
+      <div class="task-q">Запиши полную конфигурацию <span class="chem">Cu</span> (медь, Z = 29). Объясни аномалию.</div>
+    </div>
+  </div>
+  <!-- 13 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">13</div>
+        <span class="diff-badge hard">сложное</span>
+        <span class="badge green">конфигурация</span>
+      </div>
+      <div class="task-q">Определи элемент: <em>s-элемент, 3-й период, 2 электрона на внешнем уровне</em>. Запиши полную конфигурацию.</div>
+    </div>
+  </div>
+  <!-- 14 -->
+  <div class="task-card">
+<div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">14</div>
+        <span class="diff-badge hard">сложное · ЕГЭ</span>
+        <span class="badge blue">конфигурация</span>
+      </div>
+      <div class="task-q">Дана конфигурация: <span class="chem">1s²2s²2p⁶3s²3p⁶4s²3d¹⁰</span>. Назови элемент и укажи его семейство (s, p или d).</div>
+    </div>
+  </div>
+  <!-- 15 -->
+  <div class="task-card">
+    <div class="task-top">
+      <div class="task-meta">
+        <div class="task-num">15</div>
+        <span class="diff-badge hard">сложное · ЕГЭ</span>
+        <span class="badge amber">возбуждение</span>
+      </div>
+      <div class="task-q">Атом серы <span class="chem">S</span> (Z = 16) переходит в возбуждённое состояние <strong>S*</strong>. Сколько неспаренных электронов? Запиши конфигурации S* и S**.</div>
+    </div>
+  </div>
+
+</div><!-- /sec-tasks -->
+
+<!-- ══════════════════════════════════════
+     ШПАРГАЛКА
+══════════════════════════════════════ -->
+<div class="section-page sec-summary">
+  <div class="section-header">
+    <div class="section-tag"><span></span> Шпаргалка <span></span></div>
+    <h2>Всё самое важное<br><em>на одной странице</em></h2>
+    <p>Сохрани для повторения перед ЕГЭ.</p>
+  </div>
+
+  <!-- Алгоритм -->
+  <div class="card blue">
+    <div class="card-label">Алгоритм решения</div>
+    <h3>5 шагов к правильному ответу</h3>
+    <ul class="step-list">
+      <li><span class="step-num">1</span><div>Найди элемент в таблице Менделеева → запиши <strong>Z</strong> (порядковый номер)</div></li>
+      <li><span class="step-num">2</span><div>Определи <strong>цвет ячейки</strong>: розовый → s, жёлтый → p, синий → d</div></li>
+      <li><span class="step-num">3</span><div>Посчитай, какой <strong>по счёту</strong> элемент в своём блоке — столько электронов на последней орбитали</div></li>
+      <li><span class="step-num">4</span><div>Все предыдущие орбитали <strong>заполнены полностью</strong> — пиши по порядку</div></li>
+      <li><span class="step-num">5</span><div>Проверь: сумма всех электронов = <strong>Z</strong> ✓</div></li>
+    </ul>
+  </div>
+
+  <!-- Ловушки -->
+  <div class="card red">
+    <div class="card-label">Ловушки ЕГЭ</div>
+    <h3>Типичные ошибки</h3>
+    <div class="trap-item">❌ <strong>Cr: конфигурация ...4s²3d⁴</strong> — НЕТ! Правильно: 4s¹3d⁵ (d⁵ устойчива)</div>
+    <div class="trap-item">❌ <strong>Cu: конфигурация ...4s²3d⁹</strong> — НЕТ! Правильно: 4s¹3d¹⁰ (d¹⁰ устойчива)</div>
+    <div class="trap-item">❌ <strong>Масса Cl = 35,5 → нейтронов 18,5</strong> — НЕТ! Нужен конкретный изотоп: ³⁵Cl → нейтронов 18</div>
+    <div class="trap-item">❌ <strong>У Li и Na одинаковые конфигурации</strong> — НЕТ! Они <em>сходные</em> (ns¹), но не одинаковые</div>
+    <div class="trap-item">❌ <strong>Внешний уровень Cr — это 3d⁵</strong> — НЕТ! Внешний уровень — 4s¹ (максимальная цифра)</div>
+  </div>
+
+  <!-- Порядок + аномалии -->
+  <div class="card amber">
+    <div class="card-label">Главная последовательность</div>
+    <h3>Порядок заполнения и аномалии</h3>
+    <div style="text-align:center;padding:16px 12px;background:rgba(196,124,26,0.07);border-radius:12px;border:1px solid rgba(196,124,26,0.2);margin-bottom:12px">
+      <div style="font-family:'Courier New',monospace;font-size:14px;font-weight:700;color:var(--ink);line-height:2">1s → 2s → 2p → 3s → 3p → 4s → 3d → 4p → 5s → 4d → 5p</div>
+    </div>
+    <div class="two-col">
+      <div class="half-card amber-bg">
+        <div class="hc-title" style="color:var(--amber)">Cr (Z = 24)</div>
+        <span style="font-family:'Courier New',monospace;font-size:13px">...4s¹ 3d⁵</span><br>
+        <span style="font-size:12px;color:var(--muted)">не 4s²3d⁴ !</span>
+      </div>
+      <div class="half-card amber-bg">
+        <div class="hc-title" style="color:var(--amber)">Cu (Z = 29)</div>
+        <span style="font-family:'Courier New',monospace;font-size:13px">...4s¹ 3d¹⁰</span><br>
+        <span style="font-size:12px;color:var(--muted)">не 4s²3d⁹ !</span>
+      </div>
+    </div>
+    <div class="tip" style="margin-top:12px"><strong>Причина:</strong> d⁵ (полузаполненная) и d¹⁰ (полностью заполненная) — особо устойчивые конфигурации.</div>
+  </div>
+
+  <!-- Таблица конфигураций -->
+  <div class="card green">
+    <div class="card-label">Для запоминания</div>
+    <h3>Конфигурации первых 20 элементов</h3>
+    <table class="conf-table">
+      <tr><th>Элемент</th><th>Конфигурация</th><th>Семейство</th></tr>
+      <tr><td>H (1)</td><td>1s¹</td><td>s</td></tr>
+      <tr><td>He (2)</td><td>1s²</td><td>s</td></tr>
+      <tr><td>Li (3)</td><td>1s² 2s¹</td><td>s</td></tr>
+      <tr><td>Be (4)</td><td>1s² 2s²</td><td>s</td></tr>
+      <tr><td>B (5)</td><td>1s² 2s² 2p¹</td><td>p</td></tr>
+      <tr><td>C (6)</td><td>1s² 2s² 2p²</td><td>p</td></tr>
+      <tr><td>N (7)</td><td>1s² 2s² 2p³</td><td>p</td></tr>
+      <tr><td>O (8)</td><td>1s² 2s² 2p⁴</td><td>p</td></tr>
+      <tr><td>F (9)</td><td>1s² 2s² 2p⁵</td><td>p</td></tr>
+      <tr><td>Ne (10)</td><td>1s² 2s² 2p⁶</td><td>p</td></tr>
+      <tr><td>Na (11)</td><td>[Ne] 3s¹</td><td>s</td></tr>
+      <tr><td>Mg (12)</td><td>[Ne] 3s²</td><td>s</td></tr>
+      <tr><td>Al (13)</td><td>[Ne] 3s² 3p¹</td><td>p</td></tr>
+      <tr><td>Si (14)</td><td>[Ne] 3s² 3p²</td><td>p</td></tr>
+      <tr><td>P (15)</td><td>[Ne] 3s² 3p³</td><td>p</td></tr>
+      <tr><td>S (16)</td><td>[Ne] 3s² 3p⁴</td><td>p</td></tr>
+      <tr><td>Cl (17)</td><td>[Ne] 3s² 3p⁵</td><td>p</td></tr>
+      <tr><td>Ar (18)</td><td>[Ne] 3s² 3p⁶</td><td>p</td></tr>
+      <tr><td>K (19)</td><td>[Ar] 4s¹</td><td>s</td></tr>
+      <tr><td>Ca (20)</td><td>[Ar] 4s²</td><td>s</td></tr>
+    </table>
+  </div>
+
+  <!-- Ионы -->
+  <div class="card blue">
+    <div class="card-label">Ионы — быстрая шпора</div>
+    <h3>Правило для ионов</h3>
+    <div class="two-col">
+      <div class="half-card blue-bg">
+        <div class="hc-title" style="color:var(--blue)">Катион M⁺ⁿ</div>
+        Убираем <strong>n e⁻</strong> с внешнего уровня
+        <div class="rxn blue" style="font-size:12px;margin-top:8px">Ca²⁺: убрали 4s²<br>→ 1s²2s²2p⁶3s²3p⁶</div>
+      </div>
+      <div class="half-card red-bg">
+        <div class="hc-title" style="color:var(--red)">Анион M⁻ⁿ</div>
+        Добавляем <strong>n e⁻</strong> на внешний уровень
+        <div class="rxn red" style="font-size:12px;margin-top:8px">Cl⁻: добавили на 3p<br>→ 1s²2s²2p⁶3s²3p⁶</div>
+      </div>
+    </div>
+    <div class="tip" style="margin-top:12px"><strong>Изоэлектронные частицы</strong> — ионы с одинаковым числом электронов.<br><span style="font-size:12px">Na⁺, Mg²⁺, Al³⁺, Ne, F⁻, O²⁻ — у всех 10 электронов.</span></div>
+  </div>
+
+</div><!-- /sec-summary -->
+
+</div><!-- /main -->
+
+<div class="footer">⚛️ Химия · ЕГЭ · 10 класс</div>
+</body>
+</html>
