@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Химия 8 класс — Конспект</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f0f4f8;
+  --white:#ffffff;
+  --card:#ffffff;
+  --border:#e2e8f0;
+  --text:#1a2332;
+  --muted:#64748b;
+  --faint:#94a3b8;
+  --c1:#2563eb;--c1l:#dbeafe;--c1d:#1d4ed8;
+  --c2:#059669;--c2l:#d1fae5;--c2d:#047857;
+  --c3:#dc2626;--c3l:#fee2e2;--c3d:#b91c1c;
+  --c4:#d97706;--c4l:#fef3c7;--c4d:#b45309;
+  --c5:#7c3aed;--c5l:#ede9fe;--c5d:#6d28d9;
+  --radius:12px;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.12);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Lexend',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+
+/* ── LAYOUT ── */
+.layout{display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{
+width:280px;min-width:280px;
+background:var(–white);
+border-right:1px solid var(–border);
+position:sticky;top:0;height:100vh;
+display:flex;flex-direction:column;
+overflow:hidden;z-index:50;
+transition:transform .3s;
+}
+.sb-header{
+padding:28px 24px 20px;
+background:linear-gradient(135deg,var(–c1) 0%,var(–c5) 100%);
+color:#fff;
+flex-shrink:0;
+}
+.sb-badge{
+display:inline-block;background:rgba(255,255,255,.2);
+border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600;
+letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;
+}
+.sb-header h1{font-size:22px;font-weight:800;line-height:1.2;margin-bottom:4px}
+.sb-header p{font-size:12px;opacity:.75;font-weight:300}
+
+.sb-nav{flex:1;overflow-y:auto;padding:12px 0}
+.sb-nav::-webkit-scrollbar{width:4px}
+.sb-nav::-webkit-scrollbar-thumb{background:var(–border);border-radius:4px}
+
+.sb-label{
+font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+color:var(–faint);padding:12px 24px 4px;
+}
+.nav-btn{
+display:flex;align-items:center;gap:12px;
+width:100%;padding:11px 24px;
+background:none;border:none;cursor:pointer;
+font-family:‘Lexend’,sans-serif;font-size:13px;font-weight:400;
+color:var(–muted);text-align:left;
+border-left:3px solid transparent;
+transition:all .15s;
+}
+.nav-btn:hover{background:var(–bg);color:var(–text)}
+.nav-btn.active{
+color:var(–c1);background:var(–c1l);
+border-left-color:var(–c1);font-weight:600;
+}
+.nav-btn .nb-num{
+font-family:‘Fira Code’,monospace;font-size:10px;
+color:var(–faint);min-width:20px;
+}
+.nav-btn.active .nb-num{color:var(–c1)}
+
+.sb-footer{
+padding:16px 24px;border-top:1px solid var(–border);
+font-size:11px;color:var(–faint);flex-shrink:0;
+}
+
+/* ── MAIN ── */
+.main{flex:1;overflow:hidden}
+
+/* ── PAGE ── */
+.page{display:none;flex-direction:column;min-height:100vh;animation:fadeIn .25s ease}
+.page.active{display:flex}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── PAGE HEADER ── */
+.page-header{
+padding:40px 48px 32px;
+background:var(–white);
+border-bottom:1px solid var(–border);
+position:relative;overflow:hidden;
+}
+.ph-accent{
+position:absolute;right:-20px;top:-20px;
+width:180px;height:180px;border-radius:50%;
+opacity:.06;
+}
+.ph-tag{
+display:inline-flex;align-items:center;gap:6px;
+font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+padding:4px 12px;border-radius:20px;margin-bottom:14px;
+}
+.page-header h2{
+font-size:28px;font-weight:800;line-height:1.2;
+margin-bottom:8px;max-width:600px;
+}
+.page-header .ph-sub{font-size:13px;color:var(–muted);max-width:560px}
+
+/* ── CONTENT AREA ── */
+.content{padding:32px 48px 64px;max-width:900px}
+
+/* ── DEFINITION CARD ── */
+.def{
+background:var(–white);border:1px solid var(–border);
+border-radius:var(–radius);padding:20px 22px;
+margin:16px 0;box-shadow:var(–shadow);
+border-left:4px solid var(–c1);
+}
+.def.green{border-left-color:var(–c2)}
+.def.red{border-left-color:var(–c3)}
+.def.amber{border-left-color:var(–c4)}
+.def.purple{border-left-color:var(–c5)}
+.def-tag{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(–c1);margin-bottom:6px}
+.def.green .def-tag{color:var(–c2)}
+.def.red .def-tag{color:var(–c3)}
+.def.amber .def-tag{color:var(–c4)}
+.def.purple .def-tag{color:var(–c5)}
+.def-title{font-size:15px;font-weight:700;margin-bottom:6px}
+.def-text{font-size:13px;color:var(–muted);line-height:1.75}
+
+/* ── KEY BOX ── */
+.key{
+background:var(–c4l);border:1px solid #fcd34d;
+border-radius:var(–radius);padding:16px 20px;margin:16px 0;
+}
+.key-head{font-size:11px;font-weight:700;color:var(–c4d);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.key-text{font-size:13px;color:#78350f;line-height:1.75}
+
+/* ── FORMULA BOX ── */
+.formula{
+background:linear-gradient(135deg,#1e1b4b,#1e3a5f);
+border-radius:var(–radius);padding:20px 24px;margin:16px 0;
+text-align:center;box-shadow:var(–shadow-lg);
+}
+.formula-main{
+font-family:‘Fira Code’,monospace;font-size:18px;
+color:#7dd3fc;font-weight:500;letter-spacing:.04em;line-height:1.5;
+}
+.formula-note{font-size:11px;color:#64748b;margin-top:8px}
+
+/* ── GRIDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+@media(max-width:700px){.g2,.g3,.g4{grid-template-columns:1fr}}
+@media(max-width:900px){.g3{grid-template-columns:1fr 1fr}.g4{grid-template-columns:1fr 1fr}}
+
+/* ── INFO CARD ── */
+.ic{
+background:var(–white);border:1px solid var(–border);
+border-radius:var(–radius);padding:18px;
+box-shadow:var(–shadow);
+}
+.ic-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ic-dot{width:8px;height:8px;border-radius:50%;background:var(–c1);flex-shrink:0}
+.ic.c2 .ic-dot{background:var(–c2)}
+.ic.c3 .ic-dot{background:var(–c3)}
+.ic.c4 .ic-dot{background:var(–c4)}
+.ic.c5 .ic-dot{background:var(–c5)}
+.ic-title{font-size:13px;font-weight:700}
+.ic-body{font-size:12px;color:var(–muted);line-height:1.7}
+.ic-body ul{padding-left:14px;margin-top:4px}
+.ic-body ul li{margin-bottom:2px}
+
+/* ── TABLE ── */
+.tbl-wrap{overflow-x:auto;margin:16px 0;border-radius:var(–radius);box-shadow:var(–shadow);border:1px solid var(–border)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead{background:var(–text)}
+thead th{color:#fff;padding:11px 14px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.05em;white-space:nowrap}
+tbody td{padding:10px 14px;border-bottom:1px solid var(–border);vertical-align:top;color:var(–text)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:nth-child(even) td{background:#f8fafc}
+tbody tr:hover td{background:var(–c1l)}
+td.sym{font-family:‘Fira Code’,monospace;font-size:16px;font-weight:600;color:var(–c1);text-align:center}
+td.hi{color:var(–c2);font-weight:600}
+
+/* ── LIST ── */
+ul.ul,ol.ol{font-size:13px;color:var(–muted);line-height:1.75;padding-left:6px;margin:10px 0;display:flex;flex-direction:column;gap:3px}
+ul.ul{list-style:none}
+ul.ul li{padding-left:20px;position:relative}
+ul.ul li::before{content:‘→’;position:absolute;left:0;color:var(–c1);font-weight:700}
+ol.ol{padding-left:22px}
+ol.ol li::marker{color:var(–c1);font-weight:700}
+strong{color:var(–text);font-weight:600}
+
+/* ── STATE CARDS ── */
+.state-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}
+.sc{background:var(–white);border:2px solid var(–border);border-radius:var(–radius);padding:22px 16px;text-align:center;transition:border-color .2s,transform .2s}
+.sc:hover{transform:translateY(-4px)}
+.sc.blu{border-color:var(–c1);background:var(–c1l)}
+.sc.grn{border-color:var(–c2);background:var(–c2l)}
+.sc.amb{border-color:var(–c4);background:var(–c4l)}
+.sc-emoji{font-size:40px;margin-bottom:10px}
+.sc-name{font-size:13px;font-weight:700;margin-bottom:6px}
+.sc-text{font-size:11px;color:var(–muted);line-height:1.6}
+
+/* ── TRANSITION TABLE ── */
+.trans-table{
+background:var(–white);border:1px solid var(–border);
+border-radius:var(–radius);overflow:hidden;margin:16px 0;
+box-shadow:var(–shadow);
+}
+.trans-row{
+display:grid;
+grid-template-columns:1fr auto 1fr;
+align-items:center;
+border-bottom:1px solid var(–border);
+padding:0;
+}
+.trans-row:last-child{border-bottom:none}
+.trans-from,.trans-to{
+padding:14px 16px;
+font-size:13px;font-weight:700;
+text-align:center;
+background:var(–text);color:#fff;
+}
+.trans-to{ background: #2a3a50; }
+.trans-mid{
+display:flex;flex-direction:column;align-items:center;
+padding:10px 12px;gap:3px;
+background:var(–bg);
+}
+.trans-name{
+font-size:10px;font-weight:700;color:var(–c1);
+text-align:center;letter-spacing:.04em;
+}
+.trans-arrow{font-size:20px;color:var(–c1);line-height:1}
+
+/* ── VALENCY CHIPS ── */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.chip{
+background:var(–white);border:2px solid var(–border);
+border-radius:10px;padding:10px 14px;
+text-align:center;min-width:68px;
+box-shadow:var(–shadow);transition:border-color .15s,transform .15s;
+cursor:default;
+}
+.chip:hover{border-color:var(–c1);transform:translateY(-2px)}
+.chip .el{font-family:‘Fira Code’,monospace;font-size:18px;font-weight:600;color:var(–c1)}
+.chip .vl{font-size:10px;color:var(–muted);margin-top:2px;font-weight:500}
+
+/* ── METHODS ── */
+.method-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:16px 0}
+.method-card{
+background:var(–white);border:1px solid var(–border);
+border-radius:var(–radius);padding:16px;
+box-shadow:var(–shadow);transition:box-shadow .2s,transform .2s;
+}
+.method-card:hover{box-shadow:var(–shadow-lg);transform:translateY(-2px)}
+.mc-icon{font-size:24px;margin-bottom:8px}
+.mc-title{font-size:13px;font-weight:700;margin-bottom:5px}
+.mc-text{font-size:11px;color:var(–muted);line-height:1.6}
+
+/* ── CALC BLOCK ── */
+.calc{
+background:var(–white);border:1px solid var(–border);
+border-radius:var(–radius);padding:20px 22px;margin:12px 0;
+box-shadow:var(–shadow);
+}
+.calc-title{font-size:11px;font-weight:700;color:var(–c2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.calc-title::after{content:’’;flex:1;height:1px;background:var(–border)}
+.calc-row{display:flex;gap:10px;font-size:13px;line-height:2;flex-wrap:wrap}
+.calc-lbl{color:var(–muted);min-width:200px}
+.calc-val{color:var(–text)}
+.calc-res{color:var(–c1);font-weight:700}
+.calc-ok{color:var(–c2);font-weight:700}
+
+/* ── ALGO ── */
+.algo{
+background:var(–white);border:1px solid var(–border);
+border-radius:var(–radius);overflow:hidden;margin:16px 0;
+box-shadow:var(–shadow);
+}
+.algo-head{
+background:linear-gradient(90deg,var(–c1),var(–c5));
+color:#fff;padding:12px 18px;
+font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+}
+.algo-step{
+display:flex;gap:14px;padding:12px 18px;
+border-bottom:1px solid var(–border);align-items:flex-start;
+}
+.algo-step:last-child{border-bottom:none}
+.algo-n{
+width:28px;height:28px;border-radius:50%;
+background:var(–c1);color:#fff;
+display:flex;align-items:center;justify-content:center;
+font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;
+}
+.algo-text{font-size:13px;color:var(–muted);line-height:1.65}
+.algo-text strong{color:var(–text)}
+
+/* ── SUMMARY ── */
+.summary{
+background:var(–white);border:2px solid var(–c1);
+border-radius:var(–radius);overflow:hidden;margin:24px 0;
+box-shadow:var(–shadow-lg);
+}
+.summary-head{
+background:linear-gradient(135deg,var(–c1),var(–c5));
+color:#fff;padding:14px 20px;
+font-size:13px;font-weight:700;
+}
+.sum-row{
+display:grid;grid-template-columns:1.2fr 2fr;
+border-bottom:1px solid var(–border);
+}
+.sum-row:last-child{border-bottom:none}
+.sum-row:hover{background:var(–c1l)}
+.sum-k{padding:12px 18px;font-size:12px;font-weight:600;border-right:1px solid var(–border);color:var(–text)}
+.sum-v{padding:12px 18px;font-size:12px;font-family:‘Fira Code’,monospace;color:var(–c1d)}
+
+/* ── SEPARATOR ── */
+.sep{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(–faint);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.sep::before,.sep::after{content:’’;flex:1;height:1px;background:var(–border)}
+
+/* ── BODY TEXT ── */
+p.body{font-size:13px;color:var(–muted);line-height:1.75;margin:8px 0}
+
+/* ── MOBILE TOGGLE ── */
+.hamburger{
+display:none;position:fixed;top:14px;left:14px;z-index:200;
+background:var(–white);border:1px solid var(–border);border-radius:8px;
+width:38px;height:38px;align-items:center;justify-content:center;
+cursor:pointer;box-shadow:var(–shadow);font-size:18px;
+}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:49}
+@media(max-width:900px){
+.sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:100}
+.sidebar.open{transform:translateX(0)}
+.hamburger{display:flex}
+.overlay.show{display:block}
+.content{padding:24px 20px 60px}
+.page-header{padding:28px 20px 22px}
+.state-cards{grid-template-columns:1fr}
+}
+
+/* badge color helpers */
+.tag-blue{background:var(–c1l);color:var(–c1d)}
+.tag-green{background:var(–c2l);color:var(–c2d)}
+.tag-red{background:var(–c3l);color:var(–c3d)}
+.tag-amber{background:var(–c4l);color:var(–c4d)}
+.tag-purple{background:var(–c5l);color:var(–c5d)}
+</style>
+
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+<button class="hamburger" id="hamburger">☰</button>
+
+<div class="layout">
+
+<!-- ═══ SIDEBAR ═══ -->
+
+<aside class="sidebar" id="sidebar">
+  <div class="sb-header">
+    <div class="sb-badge">8 класс · Углублённый</div>
+    <h1>Химия<br>Конспект</h1>
+    <p>Основные понятия и законы</p>
+  </div>
+
+  <div class="sb-nav">
+    <div class="sb-label">Разделы</div>
+    <button class="nav-btn active" data-page="p1">
+      <span class="nb-num">01</span> Предмет химии
+    </button>
+    <button class="nav-btn" data-page="p2">
+      <span class="nb-num">02</span> Тела и вещества
+    </button>
+    <button class="nav-btn" data-page="p3">
+      <span class="nb-num">03</span> Агрегатные состояния
+    </button>
+    <button class="nav-btn" data-page="p4">
+      <span class="nb-num">04</span> Методы познания
+    </button>
+    <button class="nav-btn" data-page="p5">
+      <span class="nb-num">05</span> Чистые вещества и смеси
+    </button>
+    <button class="nav-btn" data-page="p6">
+      <span class="nb-num">06</span> Атомы, молекулы, элементы
+    </button>
+    <button class="nav-btn" data-page="p7">
+      <span class="nb-num">07</span> Простые и сложные вещества
+    </button>
+    <button class="nav-btn" data-page="p8">
+      <span class="nb-num">08</span> Атомно-молекулярное учение
+    </button>
+    <button class="nav-btn" data-page="p9">
+      <span class="nb-num">09</span> Химическая формула. Валентность
+    </button>
+    <button class="nav-btn" data-page="p10">
+      <span class="nb-num">10</span> Законы и расчёты
+    </button>
+  </div>
+
+  <div class="sb-footer">⚗️ Химия · 8 класс · 10 тем</div>
+</aside>
+
+<!-- ═══ MAIN ═══ -->
+
+<main class="main">
+
+<!-- ══════════════════ PAGE 1 ══════════════════ -->
+
+<div class="page active" id="p1">
+  <div class="page-header">
+    <div class="ph-accent" style="background:var(--c1)"></div>
+    <div class="ph-tag tag-blue">01 / Введение</div>
+    <h2>Предмет химии. Роль химии в жизни человека. Химия в системе наук</h2>
+    <p class="ph-sub">Что изучает химия, где применяется и как связана с другими науками</p>
+  </div>
+  <div class="content">
+
+```
+<div class="def">
+  <div class="def-tag">Определение</div>
+  <div class="def-title">Химия</div>
+  <div class="def-text">— наука о <strong>веществах</strong>, их строении, свойствах, превращениях и явлениях, сопровождающих эти превращения. Слово «химия» предположительно происходит от греч. <em>χημεία</em> — искусство выплавки металлов.</div>
+</div>
+
+<div class="sep">Что изучает химия</div>
+
+<div class="g2">
+  <div class="ic">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Состав и строение</div></div>
+    <div class="ic-body">Из каких частиц состоит вещество, как они расположены и связаны между собой</div>
+  </div>
+  <div class="ic c2">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Свойства веществ</div></div>
+    <div class="ic-body">Физические (цвет, плотность, t°кип) и химические (что происходит при реакциях)</div>
+  </div>
+  <div class="ic c4">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Химические реакции</div></div>
+    <div class="ic-body">Превращения одних веществ в другие, условия и закономерности этих процессов</div>
+  </div>
+  <div class="ic c5">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Получение веществ</div></div>
+    <div class="ic-body">Синтез новых материалов, лекарств, удобрений и других полезных продуктов</div>
+  </div>
+</div>
+
+<div class="sep">Химия в системе наук</div>
+
+<div class="g3">
+  <div class="ic">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Физика</div></div>
+    <div class="ic-body">Изучает физические явления без изменения состава веществ. Граница: <strong>физическая химия</strong></div>
+  </div>
+  <div class="ic c2">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Биология</div></div>
+    <div class="ic-body">Живые организмы состоят из химических веществ. Граница: <strong>биохимия</strong></div>
+  </div>
+  <div class="ic c3">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Геология</div></div>
+    <div class="ic-body">Состав минералов и горных пород. Граница: <strong>геохимия</strong></div>
+  </div>
+</div>
+
+<div class="sep">Роль химии в жизни человека</div>
+
+<div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Область</th><th>Вклад химии</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="hi">Медицина</td><td>Создание лекарственных препаратов</td><td>Антибиотики, аспирин, анестезия, вакцины</td></tr>
+      <tr><td class="hi">Промышленность</td><td>Производство материалов и топлива</td><td>Пластик, резина, металлы, нефтепродукты</td></tr>
+      <tr><td class="hi">Сельское хозяйство</td><td>Повышение урожайности</td><td>Удобрения (NPK), пестициды, гербициды</td></tr>
+      <tr><td class="hi">Быт</td><td>Комфорт и гигиена</td><td>Мыло, стиральный порошок, краски, клей</td></tr>
+      <tr><td class="hi">Экология</td><td>Охрана окружающей среды</td><td>Очистка воды, нейтрализация отходов</td></tr>
+      <tr><td class="hi">Энергетика</td><td>Новые источники энергии</td><td>Водородное топливо, аккумуляторы, солнечные элементы</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="key">
+  <div class="key-head">⚠ Важно помнить</div>
+  <div class="key-text">Химия — наука с двойственным характером. Те же знания, что создают лекарства, могут производить яды. Ответственное применение химических знаний — важнейшая задача общества.</div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE 2 ══════════════════ -->
+
+<div class="page" id="p2">
+  <div class="page-header">
+    <div class="ph-accent" style="background:var(--c2)"></div>
+    <div class="ph-tag tag-green">02 / Основные понятия</div>
+    <h2>Тела и вещества. Физические свойства веществ</h2>
+    <p class="ph-sub">Различие между физическим телом и веществом. Физические характеристики</p>
+  </div>
+  <div class="content">
+
+```
+<div class="g2">
+  <div class="def">
+    <div class="def-tag">Понятие</div>
+    <div class="def-title">Физическое тело</div>
+    <div class="def-text">Любой предмет, занимающий определённое место в пространстве и имеющий форму.<br><br><strong>Примеры:</strong> монета, карандаш, капля воды, кусок льда, шарик из алюминия.</div>
+  </div>
+  <div class="def green">
+    <div class="def-tag">Понятие</div>
+    <div class="def-title">Вещество</div>
+    <div class="def-text">То, из чего состоит физическое тело.<br><br><strong>Примеры:</strong> монета — тело, <em>медь</em> — вещество; карандаш — тело, <em>графит и дерево</em> — вещества.</div>
+  </div>
+</div>
+
+<div class="key">
+  <div class="key-head">💡 Ключевое различие</div>
+  <div class="key-text">Одно и то же вещество может образовывать разные тела (вода: капля, река, лёд). Одно тело может состоять из нескольких веществ (карандаш = графит + дерево + лак).</div>
+</div>
+
+<div class="sep">Физические свойства веществ</div>
+
+<p class="body">Физические свойства — характеристики, которые наблюдают или измеряют <strong>без изменения состава вещества</strong>:</p>
+
+<div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Свойство</th><th>Описание</th><th>Единицы измерения</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Агрегатное состояние</strong></td><td>Твёрдое, жидкое, газообразное при н.у.</td><td>—</td><td>Лёд (тв.), вода (жидк.), пар (газ)</td></tr>
+      <tr><td><strong>Цвет</strong></td><td>Видимое свойство поверхности</td><td>—</td><td>Медь — красная, сера — жёлтая</td></tr>
+      <tr><td><strong>Запах</strong></td><td>Летучие вещества раздражают рецепторы</td><td>—</td><td>Аммиак — резкий; N₂ — без запаха</td></tr>
+      <tr><td><strong>Плотность (ρ)</strong></td><td>ρ = m / V</td><td>г/см³; кг/м³</td><td>Вода — 1 г/см³; алюминий — 2,7</td></tr>
+      <tr><td><strong>t° плавления</strong></td><td>Переход тв. → жидкое</td><td>°C (К)</td><td>Лёд 0°C; железо 1538°C</td></tr>
+      <tr><td><strong>t° кипения</strong></td><td>Переход жидкое → газ</td><td>°C (К)</td><td>Вода 100°C; азот −196°C</td></tr>
+      <tr><td><strong>Растворимость</strong></td><td>Масса вещества в 100 г растворителя</td><td>г/100 г H₂O</td><td>NaCl — 36 г; мел — почти не растворим</td></tr>
+      <tr><td><strong>Электропроводность</strong></td><td>Способность проводить ток</td><td>Ом·м</td><td>Медь — проводник; стекло — изолятор</td></tr>
+      <tr><td><strong>Теплопроводность</strong></td><td>Передача тепла внутри вещества</td><td>Вт/(м·К)</td><td>Металлы — высокая; дерево — низкая</td></tr>
+      <tr><td><strong>Твёрдость</strong></td><td>Шкала Мооса (1–10)</td><td>усл. ед.</td><td>Тальк — 1; алмаз — 10</td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE 3 ══════════════════ -->
+
+<div class="page" id="p3">
+  <div class="page-header">
+    <div class="ph-accent" style="background:var(--c4)"></div>
+    <div class="ph-tag tag-amber">03 / Состояния вещества</div>
+    <h2>Агрегатные состояния вещества</h2>
+    <p class="ph-sub">Три основных состояния, их свойства и переходы между ними</p>
+  </div>
+  <div class="content">
+
+```
+<div class="state-cards">
+  <div class="sc blu">
+    <div class="sc-emoji">🧊</div>
+    <div class="sc-name">Твёрдое</div>
+    <div class="sc-text">Сохраняет <strong>форму и объём</strong>. Частицы колеблются около узлов кристаллической решётки. Расстояния между частицами минимальны. Высокая плотность.</div>
+  </div>
+  <div class="sc grn">
+    <div class="sc-emoji">💧</div>
+    <div class="sc-name">Жидкое</div>
+    <div class="sc-text">Сохраняет <strong>объём</strong>, не сохраняет форму. Частицы подвижны, но силы притяжения значительны. Обладает текучестью. Плохо сжимается.</div>
+  </div>
+  <div class="sc amb">
+    <div class="sc-emoji">💨</div>
+    <div class="sc-name">Газообразное</div>
+    <div class="sc-text">Не сохраняет ни форму, ни объём. Частицы движутся хаотично, расстояния огромны. Заполняет весь доступный объём. Легко сжимается.</div>
+  </div>
+</div>
+
+<div class="sep">Переходы между состояниями</div>
+
+<div class="trans-table">
+  <div class="trans-row">
+    <div class="trans-from">🧊 Твёрдое</div>
+    <div class="trans-mid"><span class="trans-name">плавление</span><span class="trans-arrow">→</span></div>
+    <div class="trans-to">💧 Жидкое</div>
+  </div>
+  <div class="trans-row">
+    <div class="trans-from">💧 Жидкое</div>
+    <div class="trans-mid"><span class="trans-name">испарение / кипение</span><span class="trans-arrow">→</span></div>
+    <div class="trans-to">💨 Газообразное</div>
+  </div>
+  <div class="trans-row">
+    <div class="trans-from">💨 Газообразное</div>
+    <div class="trans-mid"><span class="trans-name">конденсация</span><span class="trans-arrow">→</span></div>
+    <div class="trans-to">💧 Жидкое</div>
+  </div>
+  <div class="trans-row">
+    <div class="trans-from">💧 Жидкое</div>
+    <div class="trans-mid"><span class="trans-name">отвердевание</span><span class="trans-arrow">→</span></div>
+    <div class="trans-to">🧊 Твёрдое</div>
+  </div>
+  <div class="trans-row">
+    <div class="trans-from">🧊 Твёрдое</div>
+    <div class="trans-mid"><span class="trans-name">сублимация</span><span class="trans-arrow">→</span></div>
+    <div class="trans-to">💨 Газообразное</div>
+  </div>
+  <div class="trans-row">
+    <div class="trans-from">💨 Газообразное</div>
+    <div class="trans-mid"><span class="trans-name">десублимация</span><span class="trans-arrow">→</span></div>
+    <div class="trans-to">🧊 Твёрдое</div>
+  </div>
+</div>
+
+<div class="key">
+  <div class="key-head">⚠ Важно</div>
+  <div class="key-text">Все переходы между агрегатными состояниями — <strong>физические явления</strong>: состав вещества не меняется, меняется только расположение и движение частиц. При плавлении льда получается вода (H₂O), а не другое вещество.</div>
+</div>
+
+<div class="sep">Четвёртое состояние — плазма</div>
+
+<div class="def purple">
+  <div class="def-tag">Дополнительно</div>
+  <div class="def-title">Плазма</div>
+  <div class="def-text">Ионизированный газ при сверхвысоких температурах. Атомы теряют электроны. Встречается в молниях, звёздах, люминесцентных лампах. Считается наиболее распространённым состоянием вещества во Вселенной.</div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE 4 ══════════════════ -->
+
+<div class="page" id="p4">
+  <div class="page-header">
+    <div class="ph-accent" style="background:var(--c5)"></div>
+    <div class="ph-tag tag-purple">04 / Методология</div>
+    <h2>Понятие о методах познания в химии</h2>
+    <p class="ph-sub">Как учёные изучают вещества и их превращения</p>
+  </div>
+  <div class="content">
+
+```
+<div class="method-grid">
+  <div class="method-card">
+    <div class="mc-icon">🔬</div>
+    <div class="mc-title">Наблюдение</div>
+    <div class="mc-text">Целенаправленное восприятие явления <strong>без вмешательства</strong> в его ход. Основа любого научного исследования.</div>
+  </div>
+  <div class="method-card">
+    <div class="mc-icon">🧪</div>
+    <div class="mc-title">Эксперимент</div>
+    <div class="mc-text">Активное изучение явления в <strong>специально созданных условиях</strong>. Позволяет проверить гипотезу.</div>
+  </div>
+  <div class="method-card">
+    <div class="mc-icon">💡</div>
+    <div class="mc-title">Гипотеза</div>
+    <div class="mc-text">Предположение, объясняющее факты. Требует <strong>экспериментальной проверки</strong>. Подтверждённая гипотеза → теория.</div>
+  </div>
+  <div class="method-card">
+    <div class="mc-icon">📐</div>
+    <div class="mc-title">Моделирование</div>
+    <div class="mc-text">Создание <strong>упрощённых моделей</strong> молекул и реакций (шаростержневых, компьютерных).</div>
+  </div>
+  <div class="method-card">
+    <div class="mc-icon">📊</div>
+    <div class="mc-title">Анализ и синтез</div>
+    <div class="mc-text"><strong>Анализ</strong> — разложение на части. <strong>Синтез</strong> — объединение знаний в целостную картину.</div>
+  </div>
+  <div class="method-card">
+    <div class="mc-icon">📏</div>
+    <div class="mc-title">Измерение</div>
+    <div class="mc-text">Количественное определение свойств: масса, объём, температура, давление. Без измерений нет точной науки.</div>
+  </div>
+</div>
+
+<div class="sep">Алгоритм научного познания</div>
+
+<div class="algo">
+  <div class="algo-head">Научный метод — пошаговый алгоритм</div>
+  <div class="algo-step"><div class="algo-n">1</div><div class="algo-text"><strong>Наблюдение</strong> — замечаем факт или явление</div></div>
+  <div class="algo-step"><div class="algo-n">2</div><div class="algo-text"><strong>Проблема</strong> — формулируем вопрос: почему это происходит?</div></div>
+  <div class="algo-step"><div class="algo-n">3</div><div class="algo-text"><strong>Гипотеза</strong> — предлагаем объяснение</div></div>
+  <div class="algo-step"><div class="algo-n">4</div><div class="algo-text"><strong>Эксперимент</strong> — проверяем гипотезу опытом</div></div>
+  <div class="algo-step"><div class="algo-n">5</div><div class="algo-text"><strong>Анализ</strong> — обрабатываем и интерпретируем результаты</div></div>
+  <div class="algo-step"><div class="algo-n">6</div><div class="algo-text"><strong>Вывод</strong> — подтверждаем или опровергаем гипотезу. Многократно подтверждённая гипотеза становится <strong>теорией</strong> или <strong>законом</strong></div></div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE 5 ══════════════════ -->
+
+<div class="page" id="p5">
+  <div class="page-header">
+    <div class="ph-accent" style="background:var(--c3)"></div>
+    <div class="ph-tag tag-red">05 / Смеси</div>
+    <h2>Чистые вещества и смеси. Способы разделения смесей</h2>
+    <p class="ph-sub">Виды смесей и методы их разделения физическими методами</p>
+  </div>
+  <div class="content">
+
+```
+<div class="g2">
+  <div class="def">
+    <div class="def-tag">Понятие</div>
+    <div class="def-title">Чистое вещество</div>
+    <div class="def-text">Состоит из частиц <strong>одного вида</strong>. Имеет постоянный состав и чёткие температуры плавления и кипения.<br><br><strong>Примеры:</strong> дистиллированная вода H₂O, медь Cu, поваренная соль NaCl.</div>
+  </div>
+  <div class="def red">
+    <div class="def-tag">Понятие</div>
+    <div class="def-title">Смесь</div>
+    <div class="def-text">Два и более вещества, <strong>не вступившие в химическую реакцию</strong>. Состав переменный, свойства каждого компонента сохраняются.<br><br><strong>Примеры:</strong> морская вода, воздух, гранит, молоко.</div>
+  </div>
+</div>
+
+<div class="sep">Виды смесей</div>
+
+<div class="g2">
+  <div class="ic c2">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Однородные (гомогенные)</div></div>
+    <div class="ic-body">Границы между компонентами не видны. Состав одинаков в любой точке.<br><strong>Примеры:</strong> раствор соли в воде, воздух, сплав бронза.</div>
+  </div>
+  <div class="ic c3">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Неоднородные (гетерогенные)</div></div>
+    <div class="ic-body">Видны границы между компонентами. Состав в разных точках разный.<br><strong>Примеры:</strong> молоко, речной песок, туман, суспензия.</div>
+  </div>
+</div>
+
+<div class="sep">Способы разделения смесей</div>
+
+<div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Метод</th><th>Принцип разделения</th><th>Применение</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Отстаивание</strong></td><td>Оседание тяжёлых нерастворимых частиц под действием силы тяжести</td><td>Речная вода + песок; очистка масла</td></tr>
+      <tr><td><strong>Фильтрование</strong></td><td>Нерастворимые частицы задерживаются пористым фильтром</td><td>Очистка воды от механических примесей</td></tr>
+      <tr><td><strong>Выпаривание</strong></td><td>Испарение растворителя при нагревании</td><td>Получение соли из морской воды</td></tr>
+      <tr><td><strong>Дистилляция (перегонка)</strong></td><td>Различие температур кипения компонентов</td><td>Очистка воды; перегонка нефти; производство спирта</td></tr>
+      <tr><td><strong>Кристаллизация</strong></td><td>Различная растворимость при изменении температуры</td><td>Получение сахара, соли из растворов</td></tr>
+      <tr><td><strong>Хроматография</strong></td><td>Различная скорость движения компонентов в неподвижной фазе</td><td>Анализ красителей, лекарств, ДНК</td></tr>
+      <tr><td><strong>Центрифугирование</strong></td><td>Разделение под действием центробежных сил</td><td>Сепарация сливок, анализ крови</td></tr>
+      <tr><td><strong>Действие магнитом</strong></td><td>Притяжение ферромагнитных частиц</td><td>Железные опилки из смеси с серой</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="key">
+  <div class="key-head">⚠ Ключевое отличие смеси от соединения</div>
+  <div class="key-text">Смесь можно разделить <strong>физическими</strong> методами (фильтрование, перегонка). Химическое соединение разложить можно только <strong>химическими</strong> реакциями. Воздух — смесь (кислород и азот), вода — химическое соединение (H₂O).</div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE 6 ══════════════════ -->
+
+<div class="page" id="p6">
+  <div class="page-header">
+    <div class="ph-accent" style="background:var(--c1)"></div>
+    <div class="ph-tag tag-blue">06 / Строение вещества</div>
+    <h2>Атомы и молекулы. Химические элементы. Символы элементов</h2>
+    <p class="ph-sub">Мельчайшие частицы вещества и язык химических обозначений</p>
+  </div>
+  <div class="content">
+
+```
+<div class="def">
+  <div class="def-tag">Определение</div>
+  <div class="def-title">Атом</div>
+  <div class="def-text">Наименьшая химически неделимая частица вещества, способная участвовать в химических реакциях. Состоит из <strong>ядра</strong> (протоны + нейтроны) и <strong>электронной оболочки</strong>. Размер ≈ 10⁻¹⁰ м.</div>
+</div>
+
+<div class="def green">
+  <div class="def-tag">Определение</div>
+  <div class="def-title">Молекула</div>
+  <div class="def-text">Наименьшая частица вещества, <strong>сохраняющая его химические свойства</strong>. Состоит из двух и более атомов, соединённых химическими связями. Примеры: H₂O, O₂, CO₂, NH₃.</div>
+</div>
+
+<div class="def amber">
+  <div class="def-tag">Определение</div>
+  <div class="def-title">Химический элемент</div>
+  <div class="def-text">Вид атомов с <strong>одинаковым зарядом ядра</strong> (числом протонов). Атомы одного элемента могут различаться числом нейтронов (изотопы), но имеют одинаковые химические свойства. Сегодня известно 118 элементов.</div>
+</div>
+
+<div class="key">
+  <div class="key-head">💡 Знак (символ) химического элемента</div>
+  <div class="key-text">Предложены <strong>Й. Я. Берцелиусом</strong> в 1814 году. Записываются латинскими буквами от латинского (или греческого) названия элемента. Знак обозначает: 1) название элемента; 2) один атом; 3) один моль атомов.</div>
+</div>
+
+<div class="sep">Важнейшие химические элементы</div>
+
+<div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Символ</th><th>Русское название</th><th>Латинское название</th><th>Символ</th><th>Русское название</th><th>Латинское название</th></tr></thead>
+    <tbody>
+      <tr><td class="sym">H</td><td>Водород</td><td>Hydrogenium</td><td class="sym">Na</td><td>Натрий</td><td>Natrium</td></tr>
+      <tr><td class="sym">He</td><td>Гелий</td><td>Helium</td><td class="sym">Mg</td><td>Магний</td><td>Magnesium</td></tr>
+      <tr><td class="sym">C</td><td>Углерод</td><td>Carboneum</td><td class="sym">Al</td><td>Алюминий</td><td>Aluminium</td></tr>
+      <tr><td class="sym">N</td><td>Азот</td><td>Nitrogenium</td><td class="sym">Si</td><td>Кремний</td><td>Silicium</td></tr>
+      <tr><td class="sym">O</td><td>Кислород</td><td>Oxygenium</td><td class="sym">P</td><td>Фосфор</td><td>Phosphorus</td></tr>
+      <tr><td class="sym">F</td><td>Фтор</td><td>Fluorum</td><td class="sym">S</td><td>Сера</td><td>Sulfur</td></tr>
+      <tr><td class="sym">Cl</td><td>Хлор</td><td>Chlorum</td><td class="sym">K</td><td>Калий</td><td>Kalium</td></tr>
+      <tr><td class="sym">Ca</td><td>Кальций</td><td>Calcium</td><td class="sym">Fe</td><td>Железо</td><td>Ferrum</td></tr>
+      <tr><td class="sym">Cu</td><td>Медь</td><td>Cuprum</td><td class="sym">Zn</td><td>Цинк</td><td>Zincum</td></tr>
+      <tr><td class="sym">Ag</td><td>Серебро</td><td>Argentum</td><td class="sym">Sn</td><td>Олово</td><td>Stannum</td></tr>
+      <tr><td class="sym">Au</td><td>Золото</td><td>Aurum</td><td class="sym">Pb</td><td>Свинец</td><td>Plumbum</td></tr>
+      <tr><td class="sym">Hg</td><td>Ртуть</td><td>Hydrargyrum</td><td class="sym">Br</td><td>Бром</td><td>Bromum</td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE 7 ══════════════════ -->
+
+<div class="page" id="p7">
+  <div class="page-header">
+    <div class="ph-accent" style="background:var(--c2)"></div>
+    <div class="ph-tag tag-green">07 / Классификация</div>
+    <h2>Простые и сложные вещества</h2>
+    <p class="ph-sub">Классификация веществ по составу. Аллотропия</p>
+  </div>
+  <div class="content">
+
+```
+<div class="g2">
+  <div class="def">
+    <div class="def-tag">Вид веществ</div>
+    <div class="def-title">Простые вещества</div>
+    <div class="def-text">Образованы атомами <strong>одного</strong> химического элемента.</div>
+  </div>
+  <div class="def green">
+    <div class="def-tag">Вид веществ</div>
+    <div class="def-title">Сложные вещества (соединения)</div>
+    <div class="def-text">Образованы атомами <strong>двух и более</strong> разных элементов, связанных химически.</div>
+  </div>
+</div>
+
+<div class="sep">Примеры простых веществ</div>
+
+<div class="g3">
+  <div class="ic">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Металлы</div></div>
+    <div class="ic-body">Fe (железо), Cu (медь), Al (алюминий), Na (натрий), Au (золото), Ag (серебро)</div>
+  </div>
+  <div class="ic c4">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Неметаллы</div></div>
+    <div class="ic-body">S (сера), P (фосфор), C (графит/алмаз), двухатомные: H₂, O₂, N₂, Cl₂, Br₂, I₂</div>
+  </div>
+  <div class="ic c5">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Инертные газы</div></div>
+    <div class="ic-body">He, Ne, Ar, Kr, Xe — одноатомные молекулы, крайне мало взаимодействуют</div>
+  </div>
+</div>
+
+<div class="sep">Примеры сложных веществ</div>
+
+<div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Формула</th><th>Название</th><th>Состав</th></tr></thead>
+    <tbody>
+      <tr><td class="sym">H₂O</td><td>Вода</td><td>Водород + кислород</td></tr>
+      <tr><td class="sym">CO₂</td><td>Углекислый газ</td><td>Углерод + кислород</td></tr>
+      <tr><td class="sym">NaCl</td><td>Поваренная соль</td><td>Натрий + хлор</td></tr>
+      <tr><td class="sym">H₂SO₄</td><td>Серная кислота</td><td>Водород + сера + кислород</td></tr>
+      <tr><td class="sym">CaCO₃</td><td>Карбонат кальция (мел)</td><td>Кальций + углерод + кислород</td></tr>
+      <tr><td class="sym">NH₃</td><td>Аммиак</td><td>Азот + водород</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="sep">Аллотропия</div>
+
+<div class="def purple">
+  <div class="def-tag">Явление</div>
+  <div class="def-title">Аллотропия</div>
+  <div class="def-text">Существование одного химического элемента в виде <strong>нескольких простых веществ</strong> (аллотропных модификаций), различающихся строением и свойствами.</div>
+</div>
+
+<div class="g2">
+  <div class="ic c5">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Углерод C</div></div>
+    <div class="ic-body"><ul class="ic-body"><li><strong>Алмаз</strong> — самое твёрдое вещество, не проводит ток</li><li><strong>Графит</strong> — мягкий, чёрный, проводит ток (карандаши)</li><li><strong>Фуллерен C₆₀</strong> — молекула-шар, новый материал</li><li><strong>Графен</strong> — один слой атомов, сверхпрочный</li></ul></div>
+  </div>
+  <div class="ic c3">
+    <div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Кислород O</div></div>
+    <div class="ic-body"><ul class="ic-body"><li><strong>O₂</strong> — кислород, необходим для дыхания и горения</li><li><strong>O₃</strong> — озон, резкий запах, защищает от УФ-излучения, токсичен в высоких концентрациях</li></ul></div>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE 8 ══════════════════ -->
+
+<div class="page" id="p8">
+  <div class="page-header">
+    <div class="ph-accent" style="background:var(--c4)"></div>
+    <div class="ph-tag tag-amber">08 / Теория</div>
+    <h2>Атомно-молекулярное учение (АМУ)</h2>
+    <p class="ph-sub">Основные положения. Ломоносов и Дальтон. Физические и химические явления</p>
+  </div>
+  <div class="content">
+
+```
+<p class="body">Разработано <strong>М. В. Ломоносовым</strong> (1741, Россия) и <strong>Джоном Дальтоном</strong> (начало XIX в., Англия). Стало фундаментом современной химии.</p>
+
+<div class="sep">Основные положения АМУ</div>
+
+<div class="algo">
+  <div class="algo-head">7 ключевых положений</div>
+  <div class="algo-step"><div class="algo-n">1</div><div class="algo-text">Все вещества состоят из <strong>молекул</strong> (или непосредственно из атомов — металлы, инертные газы, некоторые неметаллы).</div></div>
+  <div class="algo-step"><div class="algo-n">2</div><div class="algo-text"><strong>Молекула</strong> — наименьшая частица вещества, сохраняющая его химические свойства. Молекулы состоят из атомов.</div></div>
+  <div class="algo-step"><div class="algo-n">3</div><div class="algo-text"><strong>Атом</strong> — наименьшая химически неделимая частица. В химических реакциях атомы не уничтожаются и не возникают из ничего.</div></div>
+  <div class="algo-step"><div class="algo-n">4</div><div class="algo-text">Молекулы и атомы находятся в <strong>непрерывном движении</strong>. С повышением температуры скорость движения возрастает.</div></div>
+  <div class="algo-step"><div class="algo-n">5</div><div class="algo-text">Между частицами существуют силы <strong>притяжения и отталкивания</strong>. Их соотношение определяет агрегатное состояние.</div></div>
+  <div class="algo-step"><div class="algo-n">6</div><div class="algo-text">Молекулы <strong>одного вещества</strong> одинаковы; молекулы <strong>разных веществ</strong> — различны по составу и строению.</div></div>
+  <div class="algo-step"><div class="algo-n">7</div><div class="algo-text">При <strong>физических</strong> явлениях молекулы сохраняются; при <strong>химических</strong> — разрушаются и образуются новые молекулы.</div></div>
+</div>
+
+<div class="sep">Физические и химические явления</div>
+
+<div class="g2">
+  <div class="def">
+    <div class="def-tag">Физическое явление</div>
+    <div class="def-title">Состав не меняется</div>
+    <div class="def-text">Изменяется форма, размер, агрегатное состояние, но вещество остаётся прежним.<br><br><strong>Примеры:</strong> таяние льда, испарение воды, растворение сахара, разрезание бумаги, намагничивание железа.</div>
+  </div>
+  <div class="def red">
+    <div class="def-tag">Химическое явление (реакция)</div>
+    <div class="def-title">Образуются новые вещества</div>
+    <div class="def-text">Атомы перегруппировываются: старые молекулы разрушаются, новые образуются.<br><br><strong>Примеры:</strong> горение дерева, ржавление железа, скисание молока, фотосинтез.</div>
+  </div>
+</div>
+
+<div class="key">
+  <div class="key-head">💡 Признаки химической реакции</div>
+  <div class="key-text">Выделение/поглощение тепла и света · Изменение цвета · Выделение газа · Образование осадка · Появление запаха. Наличие одного или нескольких признаков указывает на химическую реакцию.</div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE 9 ══════════════════ -->
+
+<div class="page" id="p9">
+  <div class="page-header">
+    <div class="ph-accent" style="background:var(--c1)"></div>
+    <div class="ph-tag tag-blue">09 / Формулы</div>
+    <h2>Химическая формула. Валентность атомов химических элементов</h2>
+    <p class="ph-sub">Как записывать состав вещества и составлять формулы по валентности</p>
+  </div>
+  <div class="content">
+
+```
+<div class="def">
+  <div class="def-tag">Определение</div>
+  <div class="def-title">Химическая формула</div>
+  <div class="def-text">Условная запись состава вещества с помощью <strong>химических знаков элементов</strong> и <strong>числовых индексов</strong>.<br><br>Показывает: 1) качественный состав (какие элементы); 2) количественный состав (сколько атомов каждого элемента в молекуле).</div>
+</div>
+
+<div class="formula">
+  <div class="formula-main">H₂SO₄ &nbsp;→&nbsp; 2 атома H, 1 атом S, 4 атома O</div>
+  <div class="formula-note">Индекс записывается снизу справа от символа. Индекс 1 не пишется.</div>
+</div>
+
+<div class="sep">Валентность</div>
+
+<div class="def green">
+  <div class="def-tag">Определение</div>
+  <div class="def-title">Валентность</div>
+  <div class="def-text">Способность атома элемента образовывать определённое количество <strong>химических связей</strong> с другими атомами. Обозначается <strong>римскими цифрами</strong>: I, II, III, IV, V, VI, VII.</div>
+</div>
+
+<div class="sep">Постоянная валентность</div>
+<div class="chips">
+  <div class="chip"><div class="el">H</div><div class="vl">I</div></div>
+  <div class="chip"><div class="el">F</div><div class="vl">I</div></div>
+  <div class="chip"><div class="el">O</div><div class="vl">II</div></div>
+  <div class="chip"><div class="el">Na</div><div class="vl">I</div></div>
+  <div class="chip"><div class="el">K</div><div class="vl">I</div></div>
+  <div class="chip"><div class="el">Li</div><div class="vl">I</div></div>
+  <div class="chip"><div class="el">Ca</div><div class="vl">II</div></div>
+  <div class="chip"><div class="el">Mg</div><div class="vl">II</div></div>
+  <div class="chip"><div class="el">Ba</div><div class="vl">II</div></div>
+  <div class="chip"><div class="el">Al</div><div class="vl">III</div></div>
+  <div class="chip"><div class="el">Zn</div><div class="vl">II</div></div>
+</div>
+
+<div class="sep">Переменная валентность</div>
+<div class="chips">
+  <div class="chip"><div class="el">Fe</div><div class="vl">II, III</div></div>
+  <div class="chip"><div class="el">Cu</div><div class="vl">I, II</div></div>
+  <div class="chip"><div class="el">S</div><div class="vl">II, IV, VI</div></div>
+  <div class="chip"><div class="el">N</div><div class="vl">I–V</div></div>
+  <div class="chip"><div class="el">Cl</div><div class="vl">I,III,V,VII</div></div>
+  <div class="chip"><div class="el">P</div><div class="vl">III, V</div></div>
+  <div class="chip"><div class="el">Cr</div><div class="vl">II,III,VI</div></div>
+  <div class="chip"><div class="el">Mn</div><div class="vl">II,IV,VII</div></div>
+  <div class="chip"><div class="el">Sn</div><div class="vl">II, IV</div></div>
+  <div class="chip"><div class="el">Pb</div><div class="vl">II, IV</div></div>
+</div>
+
+<div class="sep">Алгоритм составления формулы по валентности</div>
+
+<div class="algo">
+  <div class="algo-head">Пример: составить формулу оксида алюминия (Al и O)</div>
+  <div class="algo-step"><div class="algo-n">1</div><div class="algo-text">Записать символы элементов: <strong>Al O</strong></div></div>
+  <div class="algo-step"><div class="algo-n">2</div><div class="algo-text">Проставить валентности: <strong>Al<sup>III</sup> O<sup>II</sup></strong></div></div>
+  <div class="algo-step"><div class="algo-n">3</div><div class="algo-text">Найти наименьшее общее кратное (НОК): НОК(3, 2) = <strong>6</strong></div></div>
+  <div class="algo-step"><div class="algo-n">4</div><div class="algo-text">Разделить НОК на валентность каждого: Al → 6/3 = <strong>2</strong>; O → 6/2 = <strong>3</strong></div></div>
+  <div class="algo-step"><div class="algo-n">5</div><div class="algo-text">Записать формулу с индексами: <strong>Al₂O₃</strong></div></div>
+  <div class="algo-step"><div class="algo-n">6</div><div class="algo-text">Проверка: 2 · III = 3 · II → 6 = 6 ✓</div></div>
+</div>
+
+<div class="key">
+  <div class="key-head">📌 Правило валентности</div>
+  <div class="key-text">В любой формуле: <strong>(число атомов элемента А) × (валентность А) = (число атомов элемента Б) × (валентность Б)</strong>. По этому правилу можно также определять валентность неизвестного элемента из формулы.</div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE 10 ══════════════════ -->
+
+<div class="page" id="p10">
+  <div class="page-header">
+    <div class="ph-accent" style="background:var(--c5)"></div>
+    <div class="ph-tag tag-purple">10 / Расчёты</div>
+    <h2>Законы. Атомная и молекулярная масса. Массовая доля</h2>
+    <p class="ph-sub">Закон постоянства состава, Aᵣ, Mᵣ и расчёт массовой доли элемента</p>
+  </div>
+  <div class="content">
+
+```
+<div class="def purple">
+  <div class="def-tag">Закон (Пруст, 1808)</div>
+  <div class="def-title">Закон постоянства состава веществ</div>
+  <div class="def-text">Каждое <strong>чистое химическое соединение</strong> имеет постоянный качественный и количественный состав <strong>независимо от способа получения</strong>.<br><br>Вода H₂O всегда содержит 11,1% H и 88,9% O по массе — из реки, из-под крана или синтезированная в лаборатории.</div>
+</div>
+
+<div class="sep">Относительная атомная масса</div>
+
+<div class="def">
+  <div class="def-tag">Понятие</div>
+  <div class="def-title">Относительная атомная масса (Aᵣ)</div>
+  <div class="def-text">Отношение массы атома элемента к <sup>1</sup>⁄<sub>12</sub> массы атома углерода ¹²C. Величина <strong>безразмерная</strong>. Значения берутся из Периодической таблицы.</div>
+</div>
+
+<div class="g4">
+  <div class="ic"><div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Aᵣ(H) = 1</div></div></div>
+  <div class="ic c2"><div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Aᵣ(C) = 12</div></div></div>
+  <div class="ic c4"><div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Aᵣ(O) = 16</div></div></div>
+  <div class="ic c5"><div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Aᵣ(Na) = 23</div></div></div>
+  <div class="ic c3"><div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Aᵣ(S) = 32</div></div></div>
+  <div class="ic"><div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Aᵣ(Cl) = 35,5</div></div></div>
+  <div class="ic c2"><div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Aᵣ(Ca) = 40</div></div></div>
+  <div class="ic c4"><div class="ic-top"><div class="ic-dot"></div><div class="ic-title">Aᵣ(Fe) = 56</div></div></div>
+</div>
+
+<div class="sep">Относительная молекулярная масса</div>
+
+<div class="def green">
+  <div class="def-tag">Понятие</div>
+  <div class="def-title">Относительная молекулярная масса (Mᵣ)</div>
+  <div class="def-text">Сумма относительных атомных масс всех атомов молекулы с учётом их числа:<br><br><strong>Mᵣ = Σ (n · Aᵣ)</strong></div>
+</div>
+
+<div class="calc">
+  <div class="calc-title">Пример: Mᵣ(H₂SO₄)</div>
+  <div class="calc-row"><span class="calc-lbl">Mᵣ(H₂SO₄) =</span><span class="calc-val">2·Aᵣ(H) + 1·Aᵣ(S) + 4·Aᵣ(O)</span></div>
+  <div class="calc-row"><span class="calc-lbl">= </span><span class="calc-val">2·1 + 32 + 4·16 = 2 + 32 + 64 = <span class="calc-res">98</span></span></div>
+</div>
+
+<div class="sep">Массовая доля элемента</div>
+
+<div class="def amber">
+  <div class="def-tag">Понятие</div>
+  <div class="def-title">Массовая доля химического элемента ω(Э)</div>
+  <div class="def-text">Отношение массы атомов данного элемента в молекуле к молекулярной массе вещества. Выражается в долях (0…1) или процентах (%).</div>
+</div>
+
+<div class="formula">
+  <div class="formula-main">ω(Э) = (n · Aᵣ(Э)) / Mᵣ(вещества) · 100%</div>
+  <div class="formula-note">n — число атомов элемента в формуле · Aᵣ — атомная масса · Mᵣ — молекулярная масса</div>
+</div>
+
+<div class="calc">
+  <div class="calc-title">Пример 1: Массовые доли в воде H₂O</div>
+  <div class="calc-row"><span class="calc-lbl">Mᵣ(H₂O)</span><span class="calc-val">= 2·1 + 16 = 18</span></div>
+  <div class="calc-row"><span class="calc-lbl">ω(H)</span><span class="calc-val">= (2·1)/18 · 100% = <span class="calc-res">11,1%</span></span></div>
+  <div class="calc-row"><span class="calc-lbl">ω(O)</span><span class="calc-val">= (1·16)/18 · 100% = <span class="calc-res">88,9%</span></span></div>
+  <div class="calc-row"><span class="calc-lbl">Проверка</span><span class="calc-val"><span class="calc-ok">11,1 + 88,9 = 100% ✓</span></span></div>
+</div>
+
+<div class="calc">
+  <div class="calc-title">Пример 2: Массовые доли в серной кислоте H₂SO₄</div>
+  <div class="calc-row"><span class="calc-lbl">Mᵣ(H₂SO₄)</span><span class="calc-val">= 2 + 32 + 64 = 98</span></div>
+  <div class="calc-row"><span class="calc-lbl">ω(H)</span><span class="calc-val">= 2/98 · 100% = <span class="calc-res">2,0%</span></span></div>
+  <div class="calc-row"><span class="calc-lbl">ω(S)</span><span class="calc-val">= 32/98 · 100% = <span class="calc-res">32,7%</span></span></div>
+  <div class="calc-row"><span class="calc-lbl">ω(O)</span><span class="calc-val">= 64/98 · 100% = <span class="calc-res">65,3%</span></span></div>
+  <div class="calc-row"><span class="calc-lbl">Проверка</span><span class="calc-val"><span class="calc-ok">2,0 + 32,7 + 65,3 = 100% ✓</span></span></div>
+</div>
+
+<div class="sep">Сводная таблица формул</div>
+
+<div class="summary">
+  <div class="summary-head">📋 Все ключевые формулы раздела</div>
+  <div class="sum-row"><div class="sum-k">Молекулярная масса</div><div class="sum-v">Mᵣ = Σ (n · Aᵣ)</div></div>
+  <div class="sum-row"><div class="sum-k">Массовая доля (%)</div><div class="sum-v">ω(Э) = n·Aᵣ(Э) / Mᵣ · 100%</div></div>
+  <div class="sum-row"><div class="sum-k">Сумма долей</div><div class="sum-v">ω₁ + ω₂ + ... = 100% (всегда)</div></div>
+  <div class="sum-row"><div class="sum-k">Правило валентности</div><div class="sum-v">n₁ · V₁ = n₂ · V₂</div></div>
+  <div class="sum-row"><div class="sum-k">Плотность</div><div class="sum-v">ρ = m / V</div></div>
+</div>
+```
+
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+(function(){
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const pages   = document.querySelectorAll('.page');
+  const sidebar = document.getElementById('sidebar');
+  const hamburger = document.getElementById('hamburger');
+  const overlay = document.getElementById('overlay');
+
+  function showPage(id){
+    pages.forEach(p => p.classList.remove('active'));
+    navBtns.forEach(b => b.classList.remove('active'));
+    const target = document.getElementById(id);
+    if(target) target.classList.add('active');
+    const btn = document.querySelector(`[data-page="${id}"]`);
+    if(btn) btn.classList.add('active');
+    // scroll main to top
+    const main = document.querySelector('.main');
+    if(main) main.scrollTop = 0;
+    window.scrollTo(0,0);
+  }
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      showPage(btn.dataset.page);
+      // close sidebar on mobile
+      if(window.innerWidth <= 900){
+        sidebar.classList.remove('open');
+        overlay.classList.remove('show');
+      }
+    });
+  });
+
+  hamburger.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('show');
+  });
+
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  });
+})();
+</script>
+
+</body>
+</html>
