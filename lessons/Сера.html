@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тема 13 — Халькогены (VI A группа)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+font-family: ‘Inter’, sans-serif;
+background: #f6f7fb;
+color: #1a1a2e;
+font-size: 15px;
+line-height: 1.65;
+min-height: 100vh;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+position: sticky; top: 0; z-index: 100;
+background: rgba(255,255,255,0.92);
+backdrop-filter: blur(10px);
+border-bottom: 1px solid #e4e7f0;
+display: flex; align-items: center; justify-content: space-between;
+padding: 0 28px; height: 54px;
+gap: 16px;
+}
+.topbar-brand { display: flex; align-items: center; gap: 8px; }
+.topbar-brand .icon { font-size: 20px; }
+.topbar-brand .title { font-size: 14px; font-weight: 700; color: #1a1a2e; }
+.topbar-brand .sub { font-size: 12px; color: #7b8299; font-weight: 500; margin-left: 8px; }
+
+.tabs { display: flex; gap: 2px; background: #f0f1f7; border-radius: 10px; padding: 3px; }
+.tab {
+padding: 6px 18px; border-radius: 8px; border: none; background: none;
+font-family: ‘Inter’, sans-serif; font-size: 13px; font-weight: 600;
+color: #7b8299; cursor: pointer; transition: all 0.15s;
+}
+.tab:hover { color: #1a1a2e; }
+.tab.active { background: #fff; color: #1a1a2e; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+/* ── PANELS ── */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── PAGE WRAP ── */
+.page { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* ── HERO ── */
+.hero {
+padding: 56px 0 48px;
+border-bottom: 1px solid #e4e7f0;
+margin-bottom: 52px;
+}
+.hero-eyebrow {
+font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+color: #7c6af7; margin-bottom: 12px;
+}
+.hero h1 {
+font-size: clamp(30px, 5vw, 50px); font-weight: 900; line-height: 1.1;
+letter-spacing: -1.5px; margin-bottom: 12px;
+}
+.hero h1 em { font-style: italic; color: #7c6af7; font-weight: 400; }
+.hero-desc { color: #7b8299; font-size: 16px; max-width: 540px; margin-bottom: 28px; }
+.hero-meta { font-size: 13px; color: #aab0c4; font-weight: 500; }
+
+/* ── SECTION HEADER ── */
+.sec-header { margin-bottom: 8px; }
+.sec-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #aab0c4; margin-bottom: 6px; }
+.sec-title { font-size: clamp(22px, 3.5vw, 34px); font-weight: 900; line-height: 1.15; letter-spacing: -1px; }
+.sec-title em { font-style: italic; color: #7c6af7; font-weight: 400; }
+.sec-desc { color: #7b8299; font-size: 15px; margin-top: 8px; margin-bottom: 36px; }
+
+/* ── PROPERTY BLOCK ── */
+.prop-block {
+margin-bottom: 40px;
+}
+.prop-label {
+display: inline-flex; align-items: center; gap: 6px;
+font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+color: #aab0c4; margin-bottom: 12px;
+}
+.prop-label .num {
+background: #f0f1f7; color: #7b8299; border-radius: 5px;
+padding: 1px 7px; font-size: 11px; font-weight: 800;
+}
+.prop-block h3 {
+font-size: 20px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 14px; color: #1a1a2e;
+}
+
+/* ── CARD ── */
+.card {
+background: #fff;
+border: 1px solid #e4e7f0;
+border-radius: 14px;
+padding: 22px 24px;
+margin-bottom: 10px;
+}
+.card-sm { padding: 16px 20px; border-radius: 10px; }
+
+/* ── TWO-COL SPLIT ── */
+.split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+@media(max-width: 580px){ .split2 { grid-template-columns: 1fr; } }
+
+/* ── DIRECTION CARDS (По периоду / По группе) ── */
+.dir-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+@media(max-width:560px){ .dir-grid { grid-template-columns: 1fr; } }
+
+.dir-card {
+border-radius: 10px; padding: 16px 18px;
+border: 1px solid transparent;
+}
+.dir-card.blue { background: #eff6ff; border-color: #bfdbfe; }
+.dir-card.purple { background: #f5f3ff; border-color: #ddd6fe; }
+.dir-card.green { background: #f0fdf4; border-color: #bbf7d0; }
+.dir-card.orange { background: #fff7ed; border-color: #fed7aa; }
+.dir-card.red { background: #fef2f2; border-color: #fecaca; }
+
+.dir-card .dir-label {
+font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+margin-bottom: 8px;
+}
+.dir-card.blue .dir-label { color: #3b82f6; }
+.dir-card.purple .dir-label { color: #7c3aed; }
+.dir-card.green .dir-label { color: #16a34a; }
+.dir-card.orange .dir-label { color: #ea580c; }
+.dir-card.red .dir-label { color: #dc2626; }
+
+.dir-card p { font-size: 14px; color: #374151; line-height: 1.6; }
+.dir-card strong { font-weight: 700; }
+.dir-card code {
+font-family: ‘JetBrains Mono’, monospace; font-size: 12px;
+background: rgba(0,0,0,0.06); border-radius: 4px; padding: 1px 5px;
+}
+
+/* ── CALLOUT (мнемоника / важно) ── */
+.callout {
+border-radius: 12px; padding: 16px 20px; margin: 12px 0;
+display: flex; align-items: flex-start; gap: 12px; font-size: 14px;
+}
+.callout .ico { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.callout-body .callout-head { font-weight: 700; margin-bottom: 3px; }
+.callout-purple { background: #f5f3ff; border: 1px solid #ddd6fe; color: #4c1d95; }
+.callout-blue { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e3a5f; }
+.callout-yellow { background: #fffbeb; border: 1px solid #fde68a; color: #78350f; }
+.callout-red { background: #fef2f2; border: 1px solid #fecaca; color: #7f1d1d; }
+.callout-green { background: #f0fdf4; border: 1px solid #bbf7d0; color: #14532d; }
+
+/* ── FORMULA BLOCK ── */
+.formula {
+background: #f8f9ff;
+border: 1px solid #e4e7f0;
+border-left: 3px solid #7c6af7;
+border-radius: 0 10px 10px 0;
+padding: 13px 16px;
+margin: 10px 0;
+font-family: ‘JetBrains Mono’, monospace;
+font-size: 13px;
+color: #2d3571;
+line-height: 2.1;
+}
+.formula .cmt { color: #9ca3af; font-size: 11.5px; font-family: ‘Inter’, sans-serif; font-style: italic; }
+
+/* ── BULLET LIST ── */
+ul.bl { list-style: none; padding: 0; }
+ul.bl li {
+padding: 5px 0 5px 18px; position: relative;
+font-size: 14px; color: #374151;
+border-bottom: 1px solid #f3f4f6;
+}
+ul.bl li:last-child { border-bottom: none; }
+ul.bl li::before { content: ‘›’; position: absolute; left: 0; color: #7c6af7; font-weight: 700; font-size: 16px; top: 4px; }
+
+/* ── TABLE ── */
+.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.tbl th {
+background: #f5f3ff; color: #6d28d9; font-size: 11px; font-weight: 700;
+letter-spacing: 1px; text-transform: uppercase;
+padding: 10px 14px; text-align: left;
+border-bottom: 1px solid #ddd6fe;
+}
+.tbl td { padding: 10px 14px; border-bottom: 1px solid #f3f4f6; color: #374151; vertical-align: top; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: #fafbff; }
+.tbl code { font-family: ‘JetBrains Mono’, monospace; font-size: 12px; color: #4c1d95; }
+
+/* ── DIVIDER ── */
+hr.div { border: none; border-top: 1px solid #e4e7f0; margin: 44px 0; }
+
+/* ── ЗАДАНИЯ ── */
+.tasks-intro { padding: 52px 0 16px; }
+.task-card {
+background: #fff; border: 1px solid #e4e7f0; border-radius: 14px;
+padding: 22px 24px; margin-bottom: 10px; display: flex; gap: 18px; align-items: flex-start;
+transition: border-color 0.15s;
+}
+.task-card:hover { border-color: #c4b5fd; }
+.task-num-badge {
+font-size: 12px; font-weight: 800; color: #7c6af7;
+background: #f5f3ff; border-radius: 8px; padding: 5px 11px;
+white-space: nowrap; flex-shrink: 0; margin-top: 2px; letter-spacing: 0.5px;
+}
+.task-content { flex: 1; }
+.task-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge {
+font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+padding: 3px 9px; border-radius: 6px;
+}
+.badge-easy { background: #dcfce7; color: #15803d; }
+.badge-mid  { background: #fef9c3; color: #a16207; }
+.badge-hard { background: #fce7f3; color: #be185d; }
+.badge-ege  { background: #ede9fe; color: #6d28d9; }
+.badge-topic{ background: #f0f9ff; color: #0369a1; }
+
+.task-title { font-size: 15px; font-weight: 600; color: #1a1a2e; margin-bottom: 12px; }
+
+.eq-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px,1fr)); gap: 7px; margin-top: 8px; }
+.eq-item {
+background: #f8f9ff; border: 1px solid #e4e7f0; border-radius: 8px;
+padding: 9px 13px; font-family: ‘JetBrains Mono’, monospace;
+font-size: 12.5px; color: #2d3571; display: flex; align-items: center; gap: 7px;
+}
+.eq-item::before { content: ‘▸’; color: #7c6af7; flex-shrink: 0; font-size: 11px; }
+.blank {
+display: inline-block; min-width: 48px; height: 1px;
+border-bottom: 1.5px dashed #c4b5fd; vertical-align: middle;
+}
+.eq-long { margin-top: 8px; }
+.eq-long .eq-item { grid-column: 1 / -1; }
+
+/* ── ШПАРГАЛКА ── */
+.cheat-section { margin-bottom: 44px; }
+.cheat-card {
+background: #fff; border: 1px solid #e4e7f0; border-radius: 14px; padding: 24px 26px; margin-bottom: 10px;
+}
+.cheat-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 16px; color: #1a1a2e; }
+.cheat-row {
+display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+padding: 9px 0; border-bottom: 1px solid #f3f4f6; font-size: 13.5px;
+}
+.cheat-row:last-child { border-bottom: none; }
+.cheat-key { color: #7b8299; flex-shrink: 0; min-width: 130px; }
+.cheat-val { color: #1a1a2e; font-weight: 600; text-align: right; }
+
+.mistake-card {
+background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px;
+padding: 14px 18px; margin-bottom: 8px;
+}
+.mistake-bad { font-size: 13px; font-weight: 700; color: #dc2626; margin-bottom: 4px; }
+.mistake-good { font-size: 13px; color: #15803d; }
+
+.pole-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media(max-width:560px){ .pole-grid { grid-template-columns: 1fr; } }
+.pole-card { border-radius: 12px; padding: 18px 20px; }
+.pole-card.plus { background: #f5f3ff; border: 1px solid #ddd6fe; }
+.pole-card.minus { background: #fff7ed; border: 1px solid #fed7aa; }
+.pole-card h4 { font-size: 14px; font-weight: 800; margin-bottom: 10px; }
+.pole-card.plus h4 { color: #6d28d9; }
+.pole-card.minus h4 { color: #c2410c; }
+.pole-card ul { list-style: none; padding: 0; }
+.pole-card ul li { font-size: 13px; padding: 3px 0 3px 16px; position: relative; color: #374151; }
+.pole-card ul li::before { content: ‘✓’; position: absolute; left: 0; }
+.pole-card.plus ul li::before { color: #7c3aed; }
+.pole-card.minus ul li::before { color: #ea580c; }
+
+/* steps */
+.steps { margin: 12px 0; }
+.step { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+.step-num {
+min-width: 26px; height: 26px; background: #7c6af7; color: #fff;
+font-size: 12px; font-weight: 800; border-radius: 50%;
+display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+}
+.step-text { font-size: 14px; color: #374151; padding-top: 4px; line-height: 1.55; }
+
+/* ── FOOTER ── */
+footer {
+text-align: center; padding: 32px 24px; color: #aab0c4;
+font-size: 12px; border-top: 1px solid #e4e7f0;
+}
+
+/* ══════════════════════════════════════════
+MOBILE — prevents any horizontal overflow/sliding
+════════════════════════════════════════════ */
+html, body { overflow-x: hidden; max-width: 100%; }
+img, svg { max-width: 100%; }
+
+@media (max-width: 700px) {
+/* topbar wraps into two rows instead of squeezing */
+.topbar {
+flex-wrap: wrap;
+height: auto;
+padding: 10px 14px;
+row-gap: 8px;
+}
+.topbar-brand .sub { display: none; }
+.tabs { width: 100%; justify-content: stretch; }
+.tab { flex: 1; padding: 7px 4px; font-size: 12px; text-align: center; }
+
+.page { padding: 0 14px 56px; }
+
+.hero { padding: 32px 0 28px; margin-bottom: 36px; }
+.hero-desc { max-width: 100%; }
+
+.sec-title { letter-spacing: -0.5px; }
+.sec-desc { margin-bottom: 26px; }
+
+.prop-block { margin-bottom: 30px; }
+.prop-block h3 { font-size: 18px; }
+
+.card, .cheat-card, .task-card { padding: 16px 16px; border-radius: 12px; }
+
+/* direction / split cards always stack on mobile */
+.dir-grid, .split2, .pole-grid { grid-template-columns: 1fr !important; }
+
+/* callouts: tighter padding, text still wraps normally */
+.callout { padding: 14px 16px; gap: 10px; }
+
+/* formulas: smaller mono font + force wrapping so nothing pushes the page wide */
+.formula {
+font-size: 12px;
+padding: 12px 14px;
+line-height: 1.9;
+overflow-wrap: anywhere;
+word-break: break-word;
+white-space: normal;
+}
+
+/* tables: fixed layout + wrapping cells instead of horizontal scroll/squish */
+.tbl { table-layout: fixed; font-size: 12px; }
+.tbl th, .tbl td {
+padding: 8px 8px;
+word-break: break-word;
+overflow-wrap: anywhere;
+}
+.tbl code { word-break: break-word; overflow-wrap: anywhere; }
+
+/* task cards: badge above content instead of side-by-side */
+.task-card { flex-direction: column; gap: 10px; }
+.task-num-badge { align-self: flex-start; }
+
+/* equation grid: one per row, no min-width forcing overflow */
+.eq-grid { grid-template-columns: 1fr; }
+.eq-item {
+flex-wrap: wrap;
+font-size: 12px;
+padding: 9px 11px;
+word-break: break-word;
+}
+/* any inline min-width set on blanks (tasks 5,7,10) must not force overflow */
+.blank { min-width: 36px !important; max-width: 100%; }
+
+/* cheat rows stack instead of squeezing two columns */
+.cheat-row {
+flex-direction: column;
+align-items: flex-start;
+gap: 4px;
+padding: 10px 0;
+}
+.cheat-key { min-width: 0; }
+.cheat-val { text-align: left; }
+
+hr.div { margin: 30px 0; }
+
+footer { padding: 24px 16px; }
+}
+
+@media (max-width: 420px) {
+.hero h1 { letter-spacing: -1px; }
+.sec-title { font-size: 21px; }
+.topbar-brand .title { font-size: 13px; }
+.tab { font-size: 11px; padding: 7px 2px; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- TOPBAR -->
+
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="icon">⚗️</span>
+    <span class="title">Тема 13</span>
+    <span class="sub">10 класс · ЕГЭ</span>
+  </div>
+  <nav class="tabs">
+    <button class="tab active" onclick="show('theory',this)">Теория</button>
+    <button class="tab" onclick="show('tasks',this)">Задания</button>
+    <button class="tab" onclick="show('cheat',this)">Шпаргалка</button>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════════
+     ТЕОРИЯ
+════════════════════════════════════════════ -->
+
+<div id="panel-theory" class="panel active">
+<div class="page">
+
+  <!-- Hero -->
+
+  <div class="hero">
+    <div class="hero-eyebrow">Неорганическая химия · Тема 13</div>
+    <h1>Халькогены <em>в таблице Менделеева</em></h1>
+    <p class="hero-desc">Строение атомов, кислород и его соединения, сера, пероксиды, сероводород, сернистый газ и серная кислота. Всё, что нужно для ЕГЭ.</p>
+    <div class="hero-meta">⚗️ Задание 13 · Тема 13</div>
+  </div>
+
+  <!-- SEC: Строение -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Основы</div>
+    <div class="sec-title">Строение атомов <em>и степени окисления</em></div>
+    <div class="sec-desc">Халькогены — элементы главной подгруппы VI группы. На внешнем уровне содержат 6 электронов.</div>
+  </div>
+
+  <div class="card" style="margin-bottom:10px">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Элемент</th><th>Конфигурация внешнего слоя</th><th>Степени окисления</th><th>Высшая валентность</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>O (Кислород)</strong></td>
+          <td><code>2s²2p⁴</code></td>
+          <td>−2, −1, 0, +1, +2</td>
+          <td>II (III в особых случаях)</td>
+        </tr>
+        <tr>
+          <td><strong>S (Сера)</strong></td>
+          <td><code>3s²3p⁴(3d⁰)</code></td>
+          <td>−2, −1, 0, +2, +4, +6</td>
+          <td>VI</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-yellow">
+    <span class="ico">⚡</span>
+    <div class="callout-body">
+      <div class="callout-head">Важно!</div>
+      У атомов всех халькогенов, <strong>кроме кислорода</strong>, в возбуждённом состоянии увеличивается число неспаренных электронов — поэтому они могут проявлять степени окисления <strong>+4 и +6</strong>. У кислорода нет d-орбиталей на 2-м уровне.
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- SEC: Простые вещества -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Раздел 1</div>
+    <div class="sec-title">Простые вещества</div>
+    <div class="sec-desc">Физические свойства и способы получения кислорода и серы.</div>
+  </div>
+
+  <!-- Физ свойства -->
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 1</span> Физические свойства</div>
+    <h3>Кислород, озон и сера</h3>
+
+```
+<div class="split2">
+  <div class="card card-sm">
+    <div class="dir-label" style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#3b82f6;margin-bottom:8px">Кислород O₂</div>
+    <ul class="bl">
+      <li>Бесцветный газ, без запаха и вкуса</li>
+      <li>Объёмная доля в воздухе ≈ 21%</li>
+      <li>Поддерживает дыхание, горение, гниение</li>
+      <li>Малорастворим в воде</li>
+    </ul>
+  </div>
+  <div class="card card-sm">
+    <div class="dir-label" style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#16a34a;margin-bottom:8px">Озон O₃</div>
+    <ul class="bl">
+      <li>Светло-голубой газ</li>
+      <li>Нерастворим в воде</li>
+      <li>Характерный запах свежести</li>
+      <li>Применяется для водоочистки</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card card-sm">
+  <div class="dir-label" style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#d97706;margin-bottom:8px">Сера S</div>
+  <div class="dir-grid">
+    <div class="dir-card orange">
+      <div class="dir-label">Кристаллическая S₈</div>
+      <p>Жёлтое твёрдое вещество. Нерастворима в воде, растворима в CS₂ и органических растворителях.</p>
+    </div>
+    <div class="dir-card orange">
+      <div class="dir-label">Пластическая Sn</div>
+      <p>Аморфное вещество коричневого цвета. Нерастворима в воде. Получается быстрым охлаждением расплавленной серы.</p>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- Получение кислорода -->
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 2</span> Получение кислорода</div>
+    <h3>Промышленность и лаборатория</h3>
+
+```
+<div class="dir-grid">
+  <div class="dir-card blue">
+    <div class="dir-label">В промышленности</div>
+    <p>Ректификация (фракционная перегонка) сжиженного воздуха. Часть — электролизом воды:</p>
+    <div class="formula" style="margin-top:8px">2H₂O → 2H₂ + O₂</div>
+  </div>
+  <div class="dir-card green">
+    <div class="dir-label">На подводных лодках</div>
+    <p>Регенерация выдыхаемого CO₂:</p>
+    <div class="formula" style="margin-top:8px">2Na₂O₂ + 2CO₂ = 2Na₂CO₃ + O₂</div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:10px">
+  <div style="font-size:13px;font-weight:700;color:#6d28d9;margin-bottom:10px">В лаборатории — термическое разложение:</div>
+  <div class="formula">
+    а) нитратов:       2KNO₃ = 2KNO₂ + O₂↑<br>
+    б) хлоратов:       2KClO₃ = 2KCl + 3O₂↑ <span class="cmt">(кат. MnO₂)</span><br>
+    в) перманганатов:  2KMnO₄ = MnO₂ + K₂MnO₄ + O₂↑<br>
+    г) перекиси:       2H₂O₂ = O₂↑ + 2H₂O <span class="cmt">(кат. MnO₂)</span><br>
+    д) оксидов Hg, Ag: 2HgO = 2Hg + O₂↑<br>
+    е) карб. серебра:  2Ag₂CO₃ = 4Ag + 2CO₂↑ + O₂↑
+  </div>
+</div>
+
+<div class="callout callout-purple" style="margin-top:10px">
+  <span class="ico">🌿</span>
+  <div class="callout-body">
+    <div class="callout-head">В природе — фотосинтез</div>
+    6CO₂ + 6H₂O = C₆H₁₂O₆ + 6O₂
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- Получение серы -->
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 3</span> Получение серы</div>
+    <h3>Промышленность и лаборатория</h3>
+    <div class="dir-grid">
+      <div class="dir-card orange">
+        <div class="dir-label">В промышленности</div>
+        <p>Из природных самородков, переработка сульфидных руд, нефти и природного газа.</p>
+      </div>
+      <div class="dir-card orange">
+        <div class="dir-label">В лаборатории</div>
+        <p>Пропускают H₂S и SO₂ через воду — выпадает коллоидный осадок:</p>
+        <div class="formula" style="margin-top:8px">2H₂S + SO₂ = 3S↓ + 2H₂O</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- SEC: Химические свойства -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Раздел 2</div>
+    <div class="sec-title">Химические свойства <em>O₂ и S</em></div>
+    <div class="sec-desc">Реакции с неметаллами, металлами и сложными веществами.</div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Раздел 2.1</span> Взаимодействие с неметаллами</div>
+    <h3>Кислород и сера</h3>
+
+```
+<div class="callout callout-blue">
+  <span class="ico">💡</span>
+  <div class="callout-body">
+    Кислород реагирует со всеми неметаллами, <strong>кроме Cl, Br, I и инертных газов</strong>. Реакции (кроме окисления N₂) — экзотермические.
+  </div>
+</div>
+
+<div class="formula">
+  5O₂(изб.) + 4P = 2P₂O₅<br>
+  O₂ + N₂ ⇌ 2NO − Q <span class="cmt">(эндотермическая!)</span><br>
+  S + O₂ = SO₂<br>
+  S + H₂ = H₂S
+</div>
+```
+
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Раздел 2.2</span> Взаимодействие с металлами</div>
+    <h3>Кислород и сера</h3>
+
+```
+<div class="dir-grid">
+  <div class="dir-card blue">
+    <div class="dir-label">Кислород</div>
+    <p>Реагирует со всеми металлами, <strong>кроме Ag, Au и платиновой группы</strong>. Щелочные металлы при комнатной температуре образуют пероксиды (только Li — оксид).</p>
+  </div>
+  <div class="dir-card orange">
+    <div class="dir-label">Сера</div>
+    <p>При комнатной температуре реагирует <strong>только с ртутью</strong>. Остальные металлы окисляются при нагревании.</p>
+  </div>
+</div>
+
+<div class="formula">
+  3Fe + 2O₂ = Fe₃O₄<br>
+  2Na + O₂ = Na₂O₂ <span class="cmt">(пероксид; Li даёт Li₂O)</span><br>
+  Fe + S = FeS <span class="cmt">(при нагревании)</span>
+</div>
+```
+
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Раздел 2.3</span> Взаимодействие со сложными веществами</div>
+    <h3>Кислород и особые реакции серы</h3>
+    <div class="formula">
+      2Cu₂O + O₂ = 4CuO<br>
+      2Al₂S₃ + 9O₂ = 2Al₂O₃ + 6SO₂<br>
+      CH₄ + 2O₂ = CO₂ + 2H₂O
+    </div>
+    <div class="card" style="margin-top:10px">
+      <div style="font-size:13px;font-weight:700;color:#6d28d9;margin-bottom:8px">Особые реакции серы (с концентрированными кислотами и щёлочью):</div>
+      <table class="tbl">
+        <thead><tr><th>Реагент</th><th>S</th><th>O₂</th></tr></thead>
+        <tbody>
+          <tr><td>+ HNO₃(конц.), t°</td><td><code>S + 6HNO₃(конц.) = H₂SO₄ + 6NO₂ + 2H₂O</code></td><td style="text-align:center;color:#9ca3af">— <span style="font-size:11px">(не реагирует)</span></td></tr>
+          <tr><td>+ H₂SO₄(конц.), t°</td><td><code>S + 2H₂SO₄(конц.) = 3SO₂ + 2H₂O</code></td><td style="text-align:center;color:#9ca3af">— <span style="font-size:11px">(не реагирует)</span></td></tr>
+          <tr><td>+ KOH, t°</td><td><code>3S + 6KOH = 2K₂S + K₂SO₃ + 3H₂O</code> (диспропорционирование)</td><td style="text-align:center;color:#9ca3af">— <span style="font-size:11px">(не реагирует)</span></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px;color:#9ca3af;margin-top:10px;font-style:italic">Кислород O₂ не вступает в эти реакции — ни с HNO₃(конц.), ни с H₂SO₄(конц.), ни со щёлочью. Это особые реакции именно серы.</p>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- SEC: Пероксиды -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Раздел 3</div>
+    <div class="sec-title">Перекись водорода <em>и пероксиды металлов</em></div>
+    <div class="sec-desc">Степень окисления O = −1, поэтому проявляют и окислительные, и восстановительные свойства.</div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 1</span> Физические свойства и получение</div>
+    <h3>H₂O₂ — перекись водорода</h3>
+    <div class="dir-grid">
+      <div class="dir-card purple">
+        <div class="dir-label">Свойства</div>
+        <p>Бесцветная вязкая жидкость. Неограниченно смешивается с водой. Содержит ковалентную неполярную связь O–O.</p>
+      </div>
+      <div class="dir-card purple">
+        <div class="dir-label">Получение</div>
+        <p>Гидролиз пероксидов металлов на холоду:</p>
+        <div class="formula" style="margin-top:8px">
+          Na₂O₂ + 2H₂O(хол.) = 2NaOH + H₂O₂<br>
+          BaO₂ + H₂SO₄(разб.) = BaSO₄ + H₂O₂
+        </div>
+      </div>
+    </div>
+    <div class="callout callout-purple">
+      <span class="ico">💡</span>
+      <div class="callout-body">
+        <div class="callout-head">Мнемоника</div>
+        Перекись хранится в холодильнике (= не разлагается на холоду).
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 2</span> Диспропорционирование</div>
+    <h3>О⁻¹ → О⁰ и О⁻²</h3>
+    <div class="formula">
+      2H₂O₂ = 2H₂O + O₂ <span class="cmt">(свет, t° или MnO₂)</span><br>
+      2Na₂O₂ + 2H₂O(горяч.) = 4NaOH + O₂<br>
+      2Li₂O₂ + 2H₂SO₄(разб.) = 2Li₂SO₄ + O₂ + 2H₂O<br>
+      2Na₂O₂ + 2CO₂ = 2Na₂CO₃ + O₂
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 3</span> Окислитель</div>
+    <h3>О⁻¹ → О⁻²</h3>
+    <div class="formula">
+      2Fe(OH)₂ + H₂O₂ = 2Fe(OH)₃<br>
+      2CrCl₃ + 3H₂O₂ + 10NaOH = 2Na₂CrO₄ + 6NaCl + 8H₂O<br>
+      PbS + 4H₂O₂ = PbSO₄ + 4H₂O <span class="cmt">(реставрация: чёрный PbS → белый PbSO₄)</span>
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 4</span> Восстановитель</div>
+    <h3>О⁻¹ → О⁰ (выделяется O₂)</h3>
+    <p style="font-size:14px;color:#7b8299;margin-bottom:10px">Окислители — Cl₂, KMnO₄, K₂Cr₂O₇, HClO:</p>
+    <div class="formula">
+      2KMnO₄ + 5H₂O₂ + 3H₂SO₄ = 2MnSO₄ + K₂SO₄ + 8H₂O + 5O₂↑
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- SEC: Сероводород -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Раздел 4</div>
+    <div class="sec-title">Сероводород H₂S <em>и сульфиды</em></div>
+    <div class="sec-desc">Бесцветный газ с запахом тухлых яиц, ядовитый, горючий, малорастворим в воде.</div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 1</span> Кислотные свойства</div>
+    <h3>H₂S — слабая двухосновная кислота</h3>
+    <div class="dir-grid">
+      <div class="dir-card purple">
+        <div class="dir-label">Со щелочами</div>
+        <div class="formula" style="margin-top:4px">
+          H₂S + 2NaOH(изб.) = Na₂S + 2H₂O<br>
+          H₂S + NaOH(нед.) = NaHS + H₂O
+        </div>
+      </div>
+      <div class="dir-card red">
+        <div class="dir-label">«Суровые» сульфиды (чёрный осадок)</div>
+        <p>С солями Cu, Pb, Ag, Hg — выпадают нерастворимые чёрные осадки:</p>
+        <div class="formula" style="margin-top:6px">H₂S + CuSO₄ = CuS↓ + H₂SO₄</div>
+      </div>
+    </div>
+    <div class="callout callout-red">
+      <span class="ico">🔴</span>
+      <div class="callout-body">
+        CuS, PbS, Ag₂S <strong>нерастворимы в разбавленных кислотах!</strong> Растворяются только в конц. HNO₃ или конц. H₂SO₄ при нагревании (ОВР). Это отличает их от обычных растворимых сульфидов (Na₂S), которые с разбавленной кислотой реагируют как обычная соль слабой кислоты:
+      </div>
+    </div>
+    <div class="formula">
+      CuS↓ + H₂SO₄(р-р) <span class="cmt">≠ (реакция не идёт)</span><br>
+      Na₂S + H₂SO₄(р-р) = H₂S + Na₂SO₄ <span class="cmt">(для сравнения — обычная соль реагирует)</span>
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 2</span> Взаимодействие с кислородом</div>
+    <h3>Полное и неполное окисление</h3>
+    <div class="dir-grid">
+      <div class="dir-card blue">
+        <div class="dir-label">Полное окисление (O₂ избыток)</div>
+        <div class="formula" style="margin-top:4px">2H₂S + 3O₂(изб.) = 2SO₂ + 2H₂O</div>
+      </div>
+      <div class="dir-card orange">
+        <div class="dir-label">Неполное окисление (O₂ недостаток)</div>
+        <div class="formula" style="margin-top:4px">2H₂S + O₂(нед.) = 2S + 2H₂O</div>
+      </div>
+    </div>
+    <div class="formula" style="margin-top:8px">
+      2CuS + 3O₂ = 2CuO + 2SO₂ <span class="cmt">(обжиг сульфидов Cu и металлов средней активности)</span>
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 3</span> Взаимодействие с галогенами</div>
+    <h3>Br₂, I₂ — замещение; Cl₂ — до сульфата</h3>
+    <div class="formula">
+      H₂S + Br₂ = S + 2HBr<br>
+      H₂S + I₂ = S + 2HI<br>
+      H₂S + 4Cl₂ + 4H₂O = H₂SO₄ + 8HCl <span class="cmt">(хлор окисляет S²⁻ → SO₄²⁻)</span>
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 4</span> С сернистым газом и другие ОВР</div>
+    <h3>Реакции с окислителями</h3>
+    <div class="formula">
+      2H₂S + SO₂ = 3S↓ + 2H₂O<br>
+      2KMnO₄ + 3H₂S = 2MnO₂ + 3S + 2KOH + 2H₂O<br>
+      H₂S + 8HNO₃(конц.,г) = H₂SO₄ + 8NO₂ + 4H₂O<br>
+      K₂Cr₂O₇ + 3K₂S + 7H₂SO₄ = Cr₂(SO₄)₃ + 4K₂SO₄ + 3S + 7H₂O
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 5</span> С солями Al, Cr(III), Fe(III)</div>
+    <h3>Совместный гидролиз и ОВР</h3>
+    <div class="callout callout-yellow">
+      <span class="ico">⚡</span>
+      <div class="callout-body">
+        <strong>Fe(III)</strong> → ОВР (сера, FeS не выпадает). <strong>Al и Cr(III)</strong> → совместный гидролиз с сульфидами.
+      </div>
+    </div>
+    <div class="formula">
+      2FeCl₃ + H₂S = S↓ + 2FeCl₂ + 2HCl<br>
+      Fe₂(SO₄)₃ + 3(NH₄)₂S = S↓ + 2FeS↓ + 3(NH₄)₂SO₄<br>
+      3Na₂S + 2AlCl₃ + 6H₂O = 2Al(OH)₃ + 6NaCl + 3H₂S <span class="cmt">(совм. гидролиз)</span>
+    </div>
+    <div style="font-size:13px;font-weight:700;color:#6d28d9;margin:12px 0 6px">Гидролиз Al₂S₃ зависит от среды:</div>
+    <div class="formula">
+      Al₂S₃ + 6H₂O = 2Al(OH)₃ + 3H₂S <span class="cmt">(нейтральная)</span><br>
+      Al₂S₃ + 6HCl = 2AlCl₃ + 3H₂S <span class="cmt">(кислая)</span><br>
+      Al₂S₃ + 8KOH(изб.) = 2K[Al(OH)₄] + 3K₂S <span class="cmt">(щелочная)</span>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- SEC: Сернистый газ -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Раздел 5</div>
+    <div class="sec-title">Сернистый газ SO₂ <em>и сульфиты</em></div>
+    <div class="sec-desc">Бесцветный газ с резким запахом жжёной серы, ядовитый, растворим в воде.</div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 1</span> Как кислотный оксид</div>
+    <h3>Реакции SO₂ с основаниями и оксидами</h3>
+    <div class="formula">
+      H₂O + SO₂ ⇌ H₂SO₃ <span class="cmt">(обратимая реакция)</span><br>
+      2NaOH(изб.) + SO₂ = Na₂SO₃ + H₂O<br>
+      NaOH(нед.) + SO₂ = NaHSO₃<br>
+      CaO + SO₂ = CaSO₃
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 2</span> ОВР — восстановительные свойства</div>
+    <h3>S⁺⁴ → S⁺⁶</h3>
+    <div class="formula">
+      2SO₂ + O₂ ⇌ 2SO₃ <span class="cmt">(кат. V₂O₅ — ключевая реакция производства H₂SO₄!)</span><br>
+      5SO₂ + 2KMnO₄ + 2H₂O = 2MnSO₄ + K₂SO₄ + 2H₂SO₄<br>
+      SO₂ + 2HNO₃(конц.) = H₂SO₄ + 2NO₂<br>
+      Fe₂(SO₄)₃ + SO₂ + 2H₂O = 2FeSO₄ + 2H₂SO₄ <span class="cmt">(Fe³⁺ → Fe²⁺)</span>
+    </div>
+    <div class="callout callout-blue" style="margin-top:10px">
+      <span class="ico">🔄</span>
+      <div class="callout-body">
+        В реакции с H₂S сернистый газ — <strong>окислитель</strong>:<br>
+        SO₂ + 2H₂S = 3S↓ + 2H₂O
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 3</span> Особые свойства сульфитов</div>
+    <h3>Совместный гидролиз с Al, Cr(III), Fe(III)</h3>
+    <div class="formula">
+      3Na₂SO₃ + 2AlCl₃ + 3H₂O = 2Al(OH)₃ + 6NaCl + 3SO₂ <span class="cmt">(совм. гидролиз)</span><br>
+      2FeCl₃ + Na₂SO₃ + H₂O = 2FeCl₂ + Na₂SO₄ + 2HCl <span class="cmt">(ОВР с Fe(III))</span>
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 4</span> Другие ОВР сульфитов</div>
+    <h3>Окисление твёрдых сульфитов и их растворов</h3>
+    <p style="font-size:14px;color:#7b8299;margin-bottom:10px">Твёрдые сульфиты окисляются кислородом. Реакции с растворами окислителей тоже идут:</p>
+    <div class="formula">
+      2Na₂SO₃ + O₂ = 2Na₂SO₄ <span class="cmt">(окисление кислородом)</span><br>
+      5K₂SO₃ + 2KMnO₄ + 3H₂SO₄ = 6K₂SO₄ + 2MnSO₄ + 3H₂O<br>
+      K₂SO₃ + Br₂ + H₂O = K₂SO₄ + 2HBr<br>
+      Na₂SO₃ + 2HNO₃(конц.) = Na₂SO₄ + 2NO₂ + H₂O
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 5</span> Диспропорционирование и разложение</div>
+    <h3>При нагревании</h3>
+    <div class="formula">
+      4Na₂SO₃ = 3Na₂SO₄ + Na₂S <span class="cmt">(диспропорционирование без доступа воздуха — не для запоминания)</span><br>
+      2NaHSO₃ = Na₂SO₃ + H₂O + SO₂ <span class="cmt">(разложение гидросульфита)</span><br>
+      CaSO₃ = CaO + SO₂ <span class="cmt">(разложение нерастворимого сульфита)</span>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- SEC: Серная кислота -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Раздел 6</div>
+    <div class="sec-title">Серная кислота H₂SO₄</div>
+    <div class="sec-desc">Бесцветная маслянистая ядовитая жидкость. Смешивается с водой с выделением тепла. Сильное водоотнимающее средство.</div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 1</span> Производство</div>
+    <h3>Контактный способ</h3>
+    <div class="callout callout-green">
+      <span class="ico">🏭</span>
+      <div class="callout-body">
+        FeS₂ → SO₂ → SO₃ <span style="color:#7b8299">(кат. V₂O₅)</span> → олеум → H₂SO₄
+      </div>
+    </div>
+
+```
+<div class="card" style="margin-top:10px">
+  <p style="font-size:14px;color:#374151;margin-bottom:10px">Ежегодно в мире получают свыше 150 тонн серной кислоты — основное количество расходуют на производство минеральных удобрений и очистку нефти и нефтепродуктов. Также применяется в металлургии, при получении красителей, лекарств, других кислот и солей, как окислитель и водоотнимающее средство.</p>
+  <div class="dir-grid" style="margin-bottom:0">
+    <div class="dir-card green">
+      <div class="dir-label">Сырьё</div>
+      <p>Пирит FeS₂, самородная сера, серосодержащие газы — отходы цветной металлургии, воздух.</p>
+    </div>
+    <div class="dir-card green">
+      <div class="dir-label">Вспомогательные материалы</div>
+      <p>Серная кислота (98%), катализатор — оксид ванадия(V).</p>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:10px;overflow-x:auto">
+  <table class="tbl">
+    <thead><tr><th>Аппарат</th><th>Назначение</th><th>Реакция</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Печь для обжига<br>«в кипящем слое»</strong></td>
+        <td>Пирит подвергают обжигу кислородом воздуха</td>
+        <td><code>4FeS₂ + 11O₂ = 2Fe₂O₃ + 8SO₂ + 3310 кДж</code></td>
+      </tr>
+      <tr>
+        <td><strong>Циклон</strong></td>
+        <td>Тщательная очистка от крупных частиц пыли</td>
+        <td style="text-align:center;color:#9ca3af">—</td>
+      </tr>
+      <tr>
+        <td><strong>Электрофильтр</strong></td>
+        <td>Тщательная очистка от мелких частиц пыли</td>
+        <td style="text-align:center;color:#9ca3af">—</td>
+      </tr>
+      <tr>
+        <td><strong>Сушильная башня</strong></td>
+        <td>Осушение от водяных паров</td>
+        <td style="text-align:center;color:#9ca3af">—</td>
+      </tr>
+      <tr>
+        <td><strong>Теплообменник</strong></td>
+        <td>Очищенный обжиговый газ перед поступлением в контактный аппарат нагревают за счёт теплоты газов, выходящих из контактного аппарата</td>
+        <td style="text-align:center;color:#9ca3af">—</td>
+      </tr>
+      <tr>
+        <td><strong>Контактный аппарат</strong></td>
+        <td>Обжиговый газ в присутствии катализатора при 450°C окисляется до оксида серы (VI)</td>
+        <td><code>2SO₂ + O₂ = 2SO₃ + 197,8 кДж</code></td>
+      </tr>
+      <tr>
+        <td><strong>Поглотительная башня</strong></td>
+        <td>Оксид серы (VI) поглощают концентрированной серной кислотой. Образуется олеум, из которого можно приготовить серную кислоту любой концентрации</td>
+        <td><code>SO₃ + H₂O = H₂SO₄</code><br><code>nSO₃ + H₂SO₄ = H₂SO₄·nSO₃</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="callout callout-blue" style="margin-top:10px">
+  <span class="ico">⚙️</span>
+  <div class="callout-body">
+    <div class="callout-head">Особенности технологического процесса</div>
+    Производство непрерывное. Обжиг колчедана ведут в кипящем слое, продувая в печь воздух, нагретый отходящим обжиговым газом. Очищенный газ перед контактным аппаратом нагревают теплотой газов, выходящих из него же. В поглотительных башнях SO₃ поглощают серной кислотой <strong>противотоком</strong>.
+  </div>
+</div>
+
+<div class="callout callout-purple" style="margin-top:10px">
+  <span class="ico">🎯</span>
+  <div class="callout-body">
+    <strong>Основной продукт:</strong> олеум. <strong>Общие научные принципы химического производства:</strong> непрерывность, противоток.
+  </div>
+</div>
+```
+
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 2</span> Разбавленная H₂SO₄</div>
+    <h3>Типичные кислотные свойства</h3>
+    <p style="font-size:14px;color:#7b8299;margin-bottom:10px">Реагирует с металлами левее H, основными и амфотерными оксидами, основаниями, солями.</p>
+    <div class="formula">
+      Fe + H₂SO₄(разб.) = H₂ + FeSO₄<br>
+      MgO + H₂SO₄ = MgSO₄ + H₂O<br>
+      H₂SO₄ + 2NaOH = Na₂SO₄ + 2H₂O
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 3</span> Концентрированная H₂SO₄</div>
+    <h3>Особые свойства — сильный окислитель</h3>
+
+```
+<div class="callout callout-red">
+  <span class="ico">⚠️</span>
+  <div class="callout-body">
+    При комнатной температуре <strong>пассивирует Al, Fe, Cr, Pb</strong> — не реагирует с ними. <strong>Никогда не реагирует</strong> с Pt и Au.
+  </div>
+</div>
+
+<div class="callout callout-yellow">
+  <span class="ico">📌</span>
+  <div class="callout-body">
+    <div class="callout-head">Правило: чем активнее металл → тем ниже СО серы в продукте</div>
+    [Cr…Ag] → SO₂ &nbsp;|&nbsp; Ca, Mg → H₂S &nbsp;|&nbsp; щелочные → часто взрыв
+  </div>
+</div>
+
+<div class="formula">
+  Cu + 2H₂SO₄(конц.) = CuSO₄ + 2H₂O + SO₂<br>
+  2Fe + 6H₂SO₄(конц.,г) = Fe₂(SO₄)₃ + 6H₂O + 3SO₂<br>
+  4Mg + 5H₂SO₄(конц.) = 4MgSO₄ + 4H₂O + H₂S
+</div>
+
+<div class="card" style="margin-top:12px">
+  <table class="tbl">
+    <thead><tr><th>С чем реагирует</th><th>Уравнения</th></tr></thead>
+    <tbody>
+      <tr><td>Неметаллы (только P, S, C)</td><td><code>2P + 5H₂SO₄(конц.) = 2H₃PO₄ + 5SO₂ + 2H₂O</code><br><code>S + 2H₂SO₄(конц.) = 3SO₂ + 2H₂O</code><br><code>C + 2H₂SO₄(конц.) = CO₂ + 2H₂O + 2SO₂</code></td></tr>
+      <tr><td>Водородные соединения<br>(PH₃, H₂S, HBr, HI)</td><td><code>PH₃ + 4H₂SO₄(конц.) = H₃PO₄ + 4SO₂ + 4H₂O</code><br><code>2HBr + H₂SO₄(конц.) = Br₂ + SO₂ + 2H₂O</code><br><code>8HI + H₂SO₄(конц.) = 4I₂ + H₂S + 4H₂O</code></td></tr>
+      <tr><td>Бромиды, иодиды, сульфиды</td><td><code>2NaBr + 2H₂SO₄(конц.) = Br₂ + SO₂ + Na₂SO₄ + 2H₂O</code><br><code>8KI + 5H₂SO₄(конц.) = 4I₂ + H₂S + 4K₂SO₄ + 4H₂O</code></td></tr>
+      <tr><td>Соединения Fe²⁺, Cr²⁺ <span class="cmt">(→ Fe³⁺, Cr³⁺)</span></td><td><code>2FeO + 4H₂SO₄(конц.) = Fe₂(SO₄)₃ + SO₂ + 4H₂O</code><br><code>2CrO + 4H₂SO₄(конц.) = Cr₂(SO₄)₃ + SO₂ + 4H₂O</code></td></tr>
+      <tr><td>Соединения Cu⁺ <span class="cmt">(→ Cu²⁺)</span></td><td><code>Cu₂O + 3H₂SO₄(конц.) = 2CuSO₄ + SO₂ + 3H₂O</code><br><code>2CuI + 4H₂SO₄(конц.) = 2CuSO₄ + I₂ + 2SO₂ + 4H₂O</code></td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
+  </div>
+
+  <hr class="div">
+
+  <!-- SEC: Качественные реакции -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Раздел 7</div>
+    <div class="sec-title">Качественные реакции <em>на соединения серы</em></div>
+  </div>
+
+  <div class="card">
+    <table class="tbl">
+      <thead><tr><th>Частица</th><th>Реагент</th><th>Признак реакции</th></tr></thead>
+      <tbody>
+        <tr><td><strong>H₂S / S²⁻</strong></td><td>Cu²⁺ (CuCl₂)</td><td>⚫ Выпадение чёрного осадка CuS</td></tr>
+        <tr><td></td><td>Ag⁺ (AgNO₃)</td><td>⚫ Выпадение чёрного осадка Ag₂S</td></tr>
+        <tr><td></td><td>Pb²⁺ (PbCl₂)</td><td>⚫ Выпадение чёрного осадка PbS</td></tr>
+        <tr><td><strong>S²⁻</strong></td><td>H⁺ (HCl)</td><td>💨 Газ с запахом тухлых яиц</td></tr>
+        <tr><td><strong>SO₂</strong></td><td>Ca(OH)₂</td><td>🌫 Помутнение известковой воды</td></tr>
+        <tr><td><strong>SO₃²⁻</strong></td><td>H⁺ (HCl)</td><td>💨 Газ с запахом жжёных спичек</td></tr>
+        <tr><td><strong>SO₄²⁻</strong></td><td>Ba²⁺ (Ba(NO₃)₂)</td><td>⬜ Белый осадок BaSO₄, нерастворимый в кислотах</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     ЗАДАНИЯ
+════════════════════════════════════════════ -->
+
+<div id="panel-tasks" class="panel">
+<div class="page">
+
+  <div class="tasks-intro">
+    <div class="sec-eyebrow">Практика</div>
+    <div class="sec-title">Задания <em>от простого к сложному</em></div>
+    <div class="sec-desc">Запиши уравнения в тетрадь. Все задания из учебника по теме 13.</div>
+  </div>
+
+  <!-- З1 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">01</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-easy">лёгкое</span>
+        <span class="badge badge-topic">свойства S и O₂</span>
+      </div>
+      <div class="task-title">Закончите уравнения реакций, описывающих свойства серы и кислорода.</div>
+      <div class="eq-grid">
+        <div class="eq-item">Si + O₂ = <span class="blank"></span></div>
+        <div class="eq-item">__ + __ = CS₂</div>
+        <div class="eq-item">P + O₂(изб.) = <span class="blank"></span></div>
+        <div class="eq-item">Cu + O₂ = <span class="blank"></span></div>
+        <div class="eq-item">Cu + S = <span class="blank"></span></div>
+        <div class="eq-item">Al₄C₃ + O₂ = <span class="blank"></span></div>
+        <div class="eq-item">Al + S = <span class="blank"></span></div>
+        <div class="eq-item">FeO + O₂ = <span class="blank"></span></div>
+        <div class="eq-item">Al + O₂ = <span class="blank"></span></div>
+        <div class="eq-item">CuS + O₂ = <span class="blank"></span></div>
+        <div class="eq-item">Zn + S = <span class="blank"></span></div>
+        <div class="eq-item">CO + O₂ = <span class="blank"></span></div>
+        <div class="eq-item">__ + __ = P₂S₅</div>
+        <div class="eq-item">S + NaOH = <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З2 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">02</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-mid">среднее</span>
+        <span class="badge badge-topic">пероксиды-окислители</span>
+      </div>
+      <div class="task-title">Закончите уравнения реакций, в которых пероксиды являются <strong>окислителями</strong>.</div>
+      <div class="eq-grid">
+        <div class="eq-item">Na₂O₂ + CO = <span class="blank"></span></div>
+        <div class="eq-item">H₂O₂ + NaI + H₂SO₄ = <span class="blank"></span></div>
+        <div class="eq-item">Na₂O₂ + SO₂ = <span class="blank"></span></div>
+        <div class="eq-item">FeSO₄ + H₂O₂ + H₂SO₄ = <span class="blank"></span></div>
+        <div class="eq-item">NH₃ + H₂O₂ = N₂ + <span class="blank"></span></div>
+        <div class="eq-item">Cr₂(SO₄)₃ + H₂O₂ + KOH = <span class="blank"></span></div>
+        <div class="eq-item">KI + H₂O₂ = <span class="blank"></span></div>
+        <div class="eq-item">Cr(OH)₃ + NaOH + H₂O₂ = <span class="blank"></span></div>
+        <div class="eq-item">H₂O₂ + HI = <span class="blank"></span></div>
+        <div class="eq-item">Cr₂O₃ + KOH + H₂O₂ = <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З3 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">03</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-mid">среднее</span>
+        <span class="badge badge-topic">пероксиды-восстановители</span>
+      </div>
+      <div class="task-title">Закончите уравнения реакций, в которых пероксиды являются <strong>восстановителями</strong>.</div>
+      <div class="eq-grid">
+        <div class="eq-item">H₂O₂ + Cl₂ = <span class="blank"></span></div>
+        <div class="eq-item">Na₂O₂ + NaMnO₄ + H₂SO₄ = <span class="blank"></span></div>
+        <div class="eq-item">H₂O₂ + HClO = <span class="blank"></span></div>
+        <div class="eq-item">H₂O₂ + K₂Cr₂O₇ + H₂SO₄ = <span class="blank"></span></div>
+        <div class="eq-item">H₂O₂ + Ag₂O = <span class="blank"></span></div>
+        <div class="eq-item">H₂O₂ + KClO₃ = <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З4 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">04</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-mid">среднее</span>
+        <span class="badge badge-topic">кислотные свойства H₂S</span>
+      </div>
+      <div class="task-title">Закончите уравнения реакций, описывающих кислотные свойства сероводорода.</div>
+      <div class="eq-grid">
+        <div class="eq-item">KOH + H₂S(изб.) = <span class="blank"></span></div>
+        <div class="eq-item">Na[Al(OH)₄] + H₂S(изб.) = <span class="blank"></span></div>
+        <div class="eq-item">LiOH(изб.) + H₂S = <span class="blank"></span></div>
+        <div class="eq-item">K₂[Zn(OH)₄] + H₂S(изб.) = <span class="blank"></span></div>
+        <div class="eq-item">Na₂S(р-р) + H₂S = <span class="blank"></span></div>
+        <div class="eq-item">AgNO₃ + H₂S = <span class="blank"></span></div>
+        <div class="eq-item">NaOH + H₂S(нед.) = <span class="blank"></span></div>
+        <div class="eq-item">CuBr₂ + H₂S = <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З5 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">05</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-hard">сложное</span>
+        <span class="badge badge-ege">ЕГЭ</span>
+        <span class="badge badge-topic">ОВР · продукт — сера</span>
+      </div>
+      <div class="task-title">Закончите ОВР, продуктом которых является сера. Расставьте коэффициенты.</div>
+      <div style="display:flex;flex-direction:column;gap:7px;margin-top:10px">
+        <div class="eq-item">А)&nbsp; __ KMnO₄ + __ K₂S + __ H₂O = <span class="blank" style="min-width:180px"></span></div>
+        <div class="eq-item">Б)&nbsp; __ K₂Cr₂O₇ + __ H₂S + __ H₂SO₄ = <span class="blank" style="min-width:160px"></span></div>
+        <div class="eq-item">В)&nbsp; __ Ca(HS)₂ + __ HNO₃ = NO + <span class="blank" style="min-width:160px"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З6 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">06</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-easy">лёгкое</span>
+        <span class="badge badge-topic">кислотный оксид SO₂</span>
+      </div>
+      <div class="task-title">Закончите уравнения реакций, описывающих кислотные свойства SO₂.</div>
+      <div class="eq-grid">
+        <div class="eq-item">Na₂O + SO₂ = <span class="blank"></span></div>
+        <div class="eq-item">CaSO₃ + SO₂ + H₂O = <span class="blank"></span></div>
+        <div class="eq-item">KOH + SO₂(изб.) = <span class="blank"></span></div>
+        <div class="eq-item">Na[Al(OH)₄] + SO₂(изб.) = <span class="blank"></span></div>
+        <div class="eq-item">LiOH(изб.) + SO₂ = <span class="blank"></span></div>
+        <div class="eq-item">K₂[Zn(OH)₄] + SO₂(изб.) = <span class="blank"></span></div>
+        <div class="eq-item">K₂SO₃ + SO₂ + H₂O = <span class="blank"></span></div>
+        <div class="eq-item">Na₂SiO₃ + SO₂(изб.) + H₂O = <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З7 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">07</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-hard">сложное</span>
+        <span class="badge badge-ege">ЕГЭ</span>
+        <span class="badge badge-topic">ОВР · SO₂ и сульфиты</span>
+      </div>
+      <div class="task-title">Закончите ОВР с участием сернистого газа и сульфитов. Расставьте коэффициенты.</div>
+      <div style="display:flex;flex-direction:column;gap:7px;margin-top:10px">
+        <div class="eq-item">А)&nbsp; __ FeCl₃ + __ K₂SO₃ + __ H₂O = <span class="blank" style="min-width:160px"></span></div>
+        <div class="eq-item">Б)&nbsp; __ K₂Cr₂O₇ + __ SO₂ + __ H₂SO₄ = <span class="blank" style="min-width:160px"></span></div>
+        <div class="eq-item">В)&nbsp; __ SO₂ + __ FeCl₃ + __ H₂O = <span class="blank" style="min-width:160px"></span></div>
+        <div class="eq-item">Г)&nbsp; __ MnO₂ + __ Na₂SO₃ + __ H₂SO₄ = <span class="blank" style="min-width:160px"></span></div>
+        <div class="eq-item">Д)&nbsp; __ Ba(HSO₃)₂ + __ H₂O₂ = <span class="blank" style="min-width:160px"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З8 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">08</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-easy">лёгкое</span>
+        <span class="badge badge-topic">разбавленная H₂SO₄</span>
+      </div>
+      <div class="task-title">Закончите уравнения реакций с участием разбавленной серной кислоты.</div>
+      <div class="eq-grid">
+        <div class="eq-item">Fe + H₂SO₄(р-р) = <span class="blank"></span></div>
+        <div class="eq-item">NaHCO₃ + H₂SO₄(р-р) = <span class="blank"></span></div>
+        <div class="eq-item">Al + H₂SO₄(р-р) = <span class="blank"></span></div>
+        <div class="eq-item">Al(OH)₃ + H₂SO₄(р-р) = <span class="blank"></span></div>
+        <div class="eq-item">KOH + H₂SO₄(р-р) = <span class="blank"></span></div>
+        <div class="eq-item">K₂[Zn(OH)₄] + H₂SO₄(нед.) = <span class="blank"></span></div>
+        <div class="eq-item">NH₃ + H₂SO₄(р-р) = <span class="blank"></span></div>
+        <div class="eq-item">NaFeO₂ + H₂SO₄(изб.) = <span class="blank"></span></div>
+        <div class="eq-item">BaCl₂ + H₂SO₄(р-р) = <span class="blank"></span></div>
+        <div class="eq-item">ZnO + H₂SO₄(р-р) = <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З9 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">09</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-hard">сложное</span>
+        <span class="badge badge-ege">ЕГЭ</span>
+        <span class="badge badge-topic">конц. H₂SO₄</span>
+      </div>
+      <div class="task-title">Закончите уравнения реакций с участием концентрированной серной кислоты.</div>
+      <div class="eq-grid">
+        <div class="eq-item">Ag + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">Hg + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">Ca + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">Zn + H₂SO₄(конц.) = H₂S + <span class="blank"></span></div>
+        <div class="eq-item">Al + H₂SO₄(конц.) = H₂S + <span class="blank"></span></div>
+        <div class="eq-item">FeSO₄ + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">Fe₃O₄ + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">Fe(OH)₂ + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">KBr + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">BaI₂ + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">ZnS + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">NaCl(тв.) + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">FeCl₂ + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">Cu₂S + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">CuBr + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">Fe(OH)₃ + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">FeS + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">FeS₂ + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">NaHCO₃ + H₂SO₄(конц.) = <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З10 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">10</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-hard">сложное</span>
+        <span class="badge badge-ege">ЕГЭ</span>
+        <span class="badge badge-topic">обратное задание</span>
+      </div>
+      <div class="task-title">Допишите <strong>левые части</strong> реакций, расставьте коэффициенты.</div>
+      <div style="display:flex;flex-direction:column;gap:7px;margin-top:10px">
+        <div class="eq-item"><span class="blank" style="min-width:200px"></span> = Fe₂(SO₄)₃ + I₂ + SO₂ + H₂O</div>
+        <div class="eq-item"><span class="blank" style="min-width:200px"></span> = CuSO₄ + I₂ + SO₂ + H₂O</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     ШПАРГАЛКА
+════════════════════════════════════════════ -->
+
+<div id="panel-cheat" class="panel">
+<div class="page">
+
+  <div class="tasks-intro">
+    <div class="sec-eyebrow">Шпаргалка</div>
+    <div class="sec-title">Всё самое важное <em>на одной странице</em></div>
+    <div class="sec-desc">Сохрани для повторения перед ЕГЭ.</div>
+  </div>
+
+  <!-- Качественные реакции -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Таблица 1</span> Качественные реакции на соединения серы</div>
+    <div class="cheat-card">
+      <h3>Как распознать?</h3>
+      <div class="cheat-row"><span class="cheat-key">H₂S / S²⁻</span><span class="cheat-val">+ Cu²⁺, Ag⁺, Pb²⁺ → чёрный осадок</span></div>
+      <div class="cheat-row"><span class="cheat-key">S²⁻</span><span class="cheat-val">+ H⁺ → газ с запахом тухлых яиц</span></div>
+      <div class="cheat-row"><span class="cheat-key">SO₂</span><span class="cheat-val">+ Ca(OH)₂ → помутнение известковой воды</span></div>
+      <div class="cheat-row"><span class="cheat-key">SO₃²⁻</span><span class="cheat-val">+ H⁺ → запах жжёных спичек</span></div>
+      <div class="cheat-row"><span class="cheat-key">SO₄²⁻</span><span class="cheat-val">+ Ba²⁺ → белый осадок, нерастворимый в HNO₃</span></div>
+    </div>
+  </div>
+
+  <!-- Степени окисления серы -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Таблица 2</span> Соединения серы по степени окисления</div>
+    <div class="cheat-card">
+      <h3>Сера — степени окисления</h3>
+      <div class="cheat-row"><span class="cheat-key">−2</span><span class="cheat-val">H₂S, Na₂S, FeS, Al₂S₃ — сульфиды</span></div>
+      <div class="cheat-row"><span class="cheat-key">0</span><span class="cheat-val">S₈ — простое вещество</span></div>
+      <div class="cheat-row"><span class="cheat-key">+4</span><span class="cheat-val">SO₂, H₂SO₃, Na₂SO₃ — сернистый газ, сульфиты</span></div>
+      <div class="cheat-row"><span class="cheat-key">+6</span><span class="cheat-val">SO₃, H₂SO₄, Na₂SO₄ — серная кислота, сульфаты</span></div>
+    </div>
+  </div>
+
+  <!-- Пероксиды -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Таблица 3</span> Пероксиды (О в СО = −1)</div>
+    <div class="cheat-card">
+      <h3>Три типа реакций</h3>
+      <div class="cheat-row"><span class="cheat-key">Диспропорционирование</span><span class="cheat-val">О⁻¹ → О⁰ и О⁻² · выделяет O₂</span></div>
+      <div class="cheat-row"><span class="cheat-key">Окислитель</span><span class="cheat-val">О⁻¹ → О⁻² · Fe²⁺→Fe³⁺, Cr³⁺→Cr⁶⁺</span></div>
+      <div class="cheat-row"><span class="cheat-key">Восстановитель</span><span class="cheat-val">О⁻¹ → О⁰ · с KMnO₄, K₂Cr₂O₇, Cl₂</span></div>
+    </div>
+  </div>
+
+  <!-- Конц. H2SO4 -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Таблица 4</span> Концентрированная H₂SO₄</div>
+    <div class="cheat-card">
+      <h3>Продукты восстановления</h3>
+      <div class="cheat-row"><span class="cheat-key">Металлы [Cr…Ag]</span><span class="cheat-val">→ SO₂↑ (чаще всего)</span></div>
+      <div class="cheat-row"><span class="cheat-key">Активные Me (Ca, Mg)</span><span class="cheat-val">→ H₂S↑</span></div>
+      <div class="cheat-row"><span class="cheat-key">HBr, HI, H₂S</span><span class="cheat-val">→ Br₂/I₂/S + SO₂</span></div>
+      <div class="cheat-row"><span class="cheat-key">P, C, S</span><span class="cheat-val">→ H₃PO₄/CO₂/SO₂ + SO₂</span></div>
+      <div class="cheat-row"><span class="cheat-key">Fe²⁺, Cu⁺</span><span class="cheat-val">→ окисляет до высших + SO₂</span></div>
+    </div>
+    <div class="callout callout-red" style="margin-top:8px">
+      <span class="ico">🚫</span>
+      <div class="callout-body">
+        Не реагирует при комнатной температуре с <strong>Al, Fe, Cr, Pb</strong> (пассивация). Никогда — с <strong>Pt, Au</strong>.
+      </div>
+    </div>
+  </div>
+
+  <!-- Ловушки -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Ловушки ЕГЭ</span> Типичные ошибки</div>
+    <div class="mistake-card">
+      <div class="mistake-bad">❌ Суровые сульфиды (CuS, PbS, Ag₂S) растворяются в HCl или H₂SO₄(разб.)</div>
+      <div class="mistake-good">✓ Нет! Нерастворимы в разбавленных кислотах. Растворяются только в конц. HNO₃ или конц. H₂SO₄ при нагревании.</div>
+    </div>
+    <div class="mistake-card">
+      <div class="mistake-bad">❌ Fe(III) с сульфидами → выпадает FeS</div>
+      <div class="mistake-good">✓ Нет! Идёт ОВР, образуется сера. FeS не пишем — он растворяется в HCl, образующейся в реакции.</div>
+    </div>
+    <div class="mistake-card">
+      <div class="mistake-bad">❌ Al + конц. H₂SO₄ при комнатной температуре</div>
+      <div class="mistake-good">✓ Пассивация! Реакция идёт только при нагревании, продукт — H₂S.</div>
+    </div>
+    <div class="mistake-card">
+      <div class="mistake-bad">❌ H₂S + Cl₂ → S + HCl (всегда)</div>
+      <div class="mistake-good">✓ При избытке Cl₂ и воды: H₂S + 4Cl₂ + 4H₂O = H₂SO₄ + 8HCl (S²⁻ → SO₄²⁻).</div>
+    </div>
+    <div class="mistake-card">
+      <div class="mistake-bad">❌ SO₂ + вода → необратимая реакция</div>
+      <div class="mistake-good">✓ H₂O + SO₂ ⇌ H₂SO₃ — обратима, H₂SO₃ неустойчива.</div>
+    </div>
+  </div>
+
+  <!-- Алгоритм -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Алгоритм</span> Как решать ОВР с серой</div>
+    <div class="cheat-card">
+      <h3>5 шагов</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">Определи степень окисления серы в реагенте и возможные продукты.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">Определи силу окислителя: KMnO₄ > K₂Cr₂O₇ > HNO₃(конц.) > Cl₂ > Br₂ > H₂SO₄(конц.).</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">Правило: чем сильнее окислитель → тем выше СО серы в продукте (S²⁻→S⁰→SO₂→SO₄²⁻).</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text">Составь электронный баланс, расставь коэффициенты.</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-text">Проверь сумму зарядов и атомов в левой и правой частях.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Применение -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Применение</span> Где встречается в задачах</div>
+    <div class="cheat-card">
+      <h3>Вещества и их применение</h3>
+      <div class="cheat-row"><span class="cheat-key">Сера</span><span class="cheat-val">Производство резины (вулканизация)</span></div>
+      <div class="cheat-row"><span class="cheat-key">Озон</span><span class="cheat-val">Водоочистка</span></div>
+      <div class="cheat-row"><span class="cheat-key">Пирит FeS₂</span><span class="cheat-val">Производство серной кислоты</span></div>
+      <div class="cheat-row"><span class="cheat-key">H₂SO₄</span><span class="cheat-val">Производство удобрений, катализатор</span></div>
+      <div class="cheat-row"><span class="cheat-key">Al₂(SO₄)₃</span><span class="cheat-val">Водоподготовка</span></div>
+      <div class="cheat-row"><span class="cheat-key">CuSO₄·5H₂O</span><span class="cheat-val">Медный купорос — защита растений</span></div>
+      <div class="cheat-row"><span class="cheat-key">H₂O₂</span><span class="cheat-val">Отбеливатели, осветление волос, медицина, реставрация картин</span></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>⚗️ Химия · ЕГЭ · 10 класс · Тема 13 — Халькогены</footer>
+
+<script>
+  function show(name, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
