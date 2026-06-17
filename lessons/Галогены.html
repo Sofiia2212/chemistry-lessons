@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тема 12.2 — Галогены (VII A группа)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+font-family: ‘Inter’, sans-serif;
+background: #f6f7fb;
+color: #1a1a2e;
+font-size: 15px;
+line-height: 1.65;
+min-height: 100vh;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+position: sticky; top: 0; z-index: 100;
+background: rgba(255,255,255,0.92);
+backdrop-filter: blur(10px);
+border-bottom: 1px solid #e4e7f0;
+display: flex; align-items: center; justify-content: space-between;
+padding: 0 28px; height: 54px;
+gap: 16px;
+}
+.topbar-brand { display: flex; align-items: center; gap: 8px; }
+.topbar-brand .icon { font-size: 20px; }
+.topbar-brand .title { font-size: 14px; font-weight: 700; color: #1a1a2e; }
+.topbar-brand .sub { font-size: 12px; color: #7b8299; font-weight: 500; margin-left: 8px; }
+
+.tabs { display: flex; gap: 2px; background: #f0f1f7; border-radius: 10px; padding: 3px; }
+.tab {
+padding: 6px 18px; border-radius: 8px; border: none; background: none;
+font-family: ‘Inter’, sans-serif; font-size: 13px; font-weight: 600;
+color: #7b8299; cursor: pointer; transition: all 0.15s;
+}
+.tab:hover { color: #1a1a2e; }
+.tab.active { background: #fff; color: #1a1a2e; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+/* ── PANELS ── */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── PAGE WRAP ── */
+.page { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* ── HERO ── */
+.hero {
+padding: 56px 0 48px;
+border-bottom: 1px solid #e4e7f0;
+margin-bottom: 52px;
+}
+.hero-eyebrow {
+font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+color: #7c6af7; margin-bottom: 12px;
+}
+.hero h1 {
+font-size: clamp(30px, 5vw, 50px); font-weight: 900; line-height: 1.1;
+letter-spacing: -1.5px; margin-bottom: 12px;
+}
+.hero h1 em { font-style: italic; color: #7c6af7; font-weight: 400; }
+.hero-desc { color: #7b8299; font-size: 16px; max-width: 540px; margin-bottom: 28px; }
+.hero-meta { font-size: 13px; color: #aab0c4; font-weight: 500; }
+
+/* ── SECTION HEADER ── */
+.sec-header { margin-bottom: 8px; }
+.sec-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #aab0c4; margin-bottom: 6px; }
+.sec-title { font-size: clamp(22px, 3.5vw, 34px); font-weight: 900; line-height: 1.15; letter-spacing: -1px; }
+.sec-title em { font-style: italic; color: #7c6af7; font-weight: 400; }
+.sec-desc { color: #7b8299; font-size: 15px; margin-top: 8px; margin-bottom: 36px; }
+
+/* ── PROPERTY BLOCK ── */
+.prop-block {
+margin-bottom: 40px;
+}
+.prop-label {
+display: inline-flex; align-items: center; gap: 6px;
+font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+color: #aab0c4; margin-bottom: 12px;
+}
+.prop-label .num {
+background: #f0f1f7; color: #7b8299; border-radius: 5px;
+padding: 1px 7px; font-size: 11px; font-weight: 800;
+}
+.prop-block h3 {
+font-size: 20px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 14px; color: #1a1a2e;
+}
+
+/* ── CARD ── */
+.card {
+background: #fff;
+border: 1px solid #e4e7f0;
+border-radius: 14px;
+padding: 22px 24px;
+margin-bottom: 10px;
+}
+.card-sm { padding: 16px 20px; border-radius: 10px; }
+
+/* ── TWO-COL SPLIT ── */
+.split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+@media(max-width: 580px){ .split2 { grid-template-columns: 1fr; } }
+
+/* ── DIRECTION CARDS (По периоду / По группе) ── */
+.dir-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+@media(max-width:560px){ .dir-grid { grid-template-columns: 1fr; } }
+
+.dir-card {
+border-radius: 10px; padding: 16px 18px;
+border: 1px solid transparent;
+}
+.dir-card.blue { background: #eff6ff; border-color: #bfdbfe; }
+.dir-card.purple { background: #f5f3ff; border-color: #ddd6fe; }
+.dir-card.green { background: #f0fdf4; border-color: #bbf7d0; }
+.dir-card.orange { background: #fff7ed; border-color: #fed7aa; }
+.dir-card.red { background: #fef2f2; border-color: #fecaca; }
+
+.dir-card .dir-label {
+font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+margin-bottom: 8px;
+}
+.dir-card.blue .dir-label { color: #3b82f6; }
+.dir-card.purple .dir-label { color: #7c3aed; }
+.dir-card.green .dir-label { color: #16a34a; }
+.dir-card.orange .dir-label { color: #ea580c; }
+.dir-card.red .dir-label { color: #dc2626; }
+
+.dir-card p { font-size: 14px; color: #374151; line-height: 1.6; }
+.dir-card strong { font-weight: 700; }
+.dir-card code {
+font-family: ‘JetBrains Mono’, monospace; font-size: 12px;
+background: rgba(0,0,0,0.06); border-radius: 4px; padding: 1px 5px;
+}
+
+/* ── CALLOUT (мнемоника / важно) ── */
+.callout {
+border-radius: 12px; padding: 16px 20px; margin: 12px 0;
+display: flex; align-items: flex-start; gap: 12px; font-size: 14px;
+}
+.callout .ico { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.callout-body .callout-head { font-weight: 700; margin-bottom: 3px; }
+.callout-purple { background: #f5f3ff; border: 1px solid #ddd6fe; color: #4c1d95; }
+.callout-blue { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e3a5f; }
+.callout-yellow { background: #fffbeb; border: 1px solid #fde68a; color: #78350f; }
+.callout-red { background: #fef2f2; border: 1px solid #fecaca; color: #7f1d1d; }
+.callout-green { background: #f0fdf4; border: 1px solid #bbf7d0; color: #14532d; }
+
+/* ── FORMULA BLOCK ── */
+.formula {
+background: #f8f9ff;
+border: 1px solid #e4e7f0;
+border-left: 3px solid #7c6af7;
+border-radius: 0 10px 10px 0;
+padding: 13px 16px;
+margin: 10px 0;
+font-family: ‘JetBrains Mono’, monospace;
+font-size: 13px;
+color: #2d3571;
+line-height: 2.1;
+}
+.formula .cmt { color: #9ca3af; font-size: 11.5px; font-family: ‘Inter’, sans-serif; font-style: italic; }
+
+/* ── BULLET LIST ── */
+ul.bl { list-style: none; padding: 0; }
+ul.bl li {
+padding: 5px 0 5px 18px; position: relative;
+font-size: 14px; color: #374151;
+border-bottom: 1px solid #f3f4f6;
+}
+ul.bl li:last-child { border-bottom: none; }
+ul.bl li::before { content: ‘›’; position: absolute; left: 0; color: #7c6af7; font-weight: 700; font-size: 16px; top: 4px; }
+
+/* ── TABLE ── */
+.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.tbl th {
+background: #f5f3ff; color: #6d28d9; font-size: 11px; font-weight: 700;
+letter-spacing: 1px; text-transform: uppercase;
+padding: 10px 14px; text-align: left;
+border-bottom: 1px solid #ddd6fe;
+}
+.tbl td { padding: 10px 14px; border-bottom: 1px solid #f3f4f6; color: #374151; vertical-align: top; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: #fafbff; }
+.tbl code { font-family: ‘JetBrains Mono’, monospace; font-size: 12px; color: #4c1d95; }
+
+/* ── DIVIDER ── */
+hr.div { border: none; border-top: 1px solid #e4e7f0; margin: 44px 0; }
+
+/* ── ЗАДАНИЯ ── */
+.tasks-intro { padding: 52px 0 16px; }
+.task-card {
+background: #fff; border: 1px solid #e4e7f0; border-radius: 14px;
+padding: 22px 24px; margin-bottom: 10px; display: flex; gap: 18px; align-items: flex-start;
+transition: border-color 0.15s;
+}
+.task-card:hover { border-color: #c4b5fd; }
+.task-num-badge {
+font-size: 12px; font-weight: 800; color: #7c6af7;
+background: #f5f3ff; border-radius: 8px; padding: 5px 11px;
+white-space: nowrap; flex-shrink: 0; margin-top: 2px; letter-spacing: 0.5px;
+}
+.task-content { flex: 1; }
+.task-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge {
+font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+padding: 3px 9px; border-radius: 6px;
+}
+.badge-easy { background: #dcfce7; color: #15803d; }
+.badge-mid  { background: #fef9c3; color: #a16207; }
+.badge-hard { background: #fce7f3; color: #be185d; }
+.badge-ege  { background: #ede9fe; color: #6d28d9; }
+.badge-topic{ background: #f0f9ff; color: #0369a1; }
+
+.task-title { font-size: 15px; font-weight: 600; color: #1a1a2e; margin-bottom: 12px; }
+
+.eq-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px,1fr)); gap: 7px; margin-top: 8px; }
+.eq-item {
+background: #f8f9ff; border: 1px solid #e4e7f0; border-radius: 8px;
+padding: 9px 13px; font-family: ‘JetBrains Mono’, monospace;
+font-size: 12.5px; color: #2d3571; display: flex; align-items: center; gap: 7px;
+}
+.eq-item::before { content: ‘▸’; color: #7c6af7; flex-shrink: 0; font-size: 11px; }
+.blank {
+display: inline-block; min-width: 48px; height: 1px;
+border-bottom: 1.5px dashed #c4b5fd; vertical-align: middle;
+}
+.eq-long { margin-top: 8px; }
+.eq-long .eq-item { grid-column: 1 / -1; }
+
+/* ── ШПАРГАЛКА ── */
+.cheat-section { margin-bottom: 44px; }
+.cheat-card {
+background: #fff; border: 1px solid #e4e7f0; border-radius: 14px; padding: 24px 26px; margin-bottom: 10px;
+}
+.cheat-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 16px; color: #1a1a2e; }
+.cheat-row {
+display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+padding: 9px 0; border-bottom: 1px solid #f3f4f6; font-size: 13.5px;
+}
+.cheat-row:last-child { border-bottom: none; }
+.cheat-key { color: #7b8299; flex-shrink: 0; min-width: 130px; }
+.cheat-val { color: #1a1a2e; font-weight: 600; text-align: right; }
+
+.mistake-card {
+background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px;
+padding: 14px 18px; margin-bottom: 8px;
+}
+.mistake-bad { font-size: 13px; font-weight: 700; color: #dc2626; margin-bottom: 4px; }
+.mistake-good { font-size: 13px; color: #15803d; }
+
+.pole-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media(max-width:560px){ .pole-grid { grid-template-columns: 1fr; } }
+.pole-card { border-radius: 12px; padding: 18px 20px; }
+.pole-card.plus { background: #f5f3ff; border: 1px solid #ddd6fe; }
+.pole-card.minus { background: #fff7ed; border: 1px solid #fed7aa; }
+.pole-card h4 { font-size: 14px; font-weight: 800; margin-bottom: 10px; }
+.pole-card.plus h4 { color: #6d28d9; }
+.pole-card.minus h4 { color: #c2410c; }
+.pole-card ul { list-style: none; padding: 0; }
+.pole-card ul li { font-size: 13px; padding: 3px 0 3px 16px; position: relative; color: #374151; }
+.pole-card ul li::before { content: ‘✓’; position: absolute; left: 0; }
+.pole-card.plus ul li::before { color: #7c3aed; }
+.pole-card.minus ul li::before { color: #ea580c; }
+
+/* steps */
+.steps { margin: 12px 0; }
+.step { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+.step-num {
+min-width: 26px; height: 26px; background: #7c6af7; color: #fff;
+font-size: 12px; font-weight: 800; border-radius: 50%;
+display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+}
+.step-text { font-size: 14px; color: #374151; padding-top: 4px; line-height: 1.55; }
+
+/* ── FOOTER ── */
+footer {
+text-align: center; padding: 32px 24px; color: #aab0c4;
+font-size: 12px; border-top: 1px solid #e4e7f0;
+}
+
+/* ══════════════════════════════════════════
+MOBILE — prevents any horizontal overflow/sliding
+════════════════════════════════════════════ */
+html, body { overflow-x: hidden; max-width: 100%; }
+img, svg { max-width: 100%; }
+
+@media (max-width: 700px) {
+/* topbar wraps into two rows instead of squeezing */
+.topbar {
+flex-wrap: wrap;
+height: auto;
+padding: 10px 14px;
+row-gap: 8px;
+}
+.topbar-brand .sub { display: none; }
+.tabs { width: 100%; justify-content: stretch; }
+.tab { flex: 1; padding: 7px 4px; font-size: 12px; text-align: center; }
+
+.page { padding: 0 14px 56px; }
+
+.hero { padding: 32px 0 28px; margin-bottom: 36px; }
+.hero-desc { max-width: 100%; }
+
+.sec-title { letter-spacing: -0.5px; }
+.sec-desc { margin-bottom: 26px; }
+
+.prop-block { margin-bottom: 30px; }
+.prop-block h3 { font-size: 18px; }
+
+.card, .cheat-card, .task-card { padding: 16px 16px; border-radius: 12px; }
+
+/* direction / split cards always stack on mobile */
+.dir-grid, .split2, .pole-grid { grid-template-columns: 1fr !important; }
+
+/* callouts: tighter padding, text still wraps normally */
+.callout { padding: 14px 16px; gap: 10px; }
+
+/* formulas: smaller mono font + force wrapping so nothing pushes the page wide */
+.formula {
+font-size: 12px;
+padding: 12px 14px;
+line-height: 1.9;
+overflow-wrap: anywhere;
+word-break: break-word;
+white-space: normal;
+}
+
+/* tables: fixed layout + wrapping cells instead of horizontal scroll/squish */
+.tbl { table-layout: fixed; font-size: 12px; }
+.tbl th, .tbl td {
+padding: 8px 8px;
+word-break: break-word;
+overflow-wrap: anywhere;
+}
+.tbl code { word-break: break-word; overflow-wrap: anywhere; }
+
+/* task cards: badge above content instead of side-by-side */
+.task-card { flex-direction: column; gap: 10px; }
+.task-num-badge { align-self: flex-start; }
+
+/* equation grid: one per row, no min-width forcing overflow */
+.eq-grid { grid-template-columns: 1fr; }
+.eq-item {
+flex-wrap: wrap;
+font-size: 12px;
+padding: 9px 11px;
+word-break: break-word;
+}
+/* any inline min-width set on blanks (tasks 5,7,10) must not force overflow */
+.blank { min-width: 36px !important; max-width: 100%; }
+
+/* cheat rows stack instead of squeezing two columns */
+.cheat-row {
+flex-direction: column;
+align-items: flex-start;
+gap: 4px;
+padding: 10px 0;
+}
+.cheat-key { min-width: 0; }
+.cheat-val { text-align: left; }
+
+hr.div { margin: 30px 0; }
+
+footer { padding: 24px 16px; }
+}
+
+@media (max-width: 420px) {
+.hero h1 { letter-spacing: -1px; }
+.sec-title { font-size: 21px; }
+.topbar-brand .title { font-size: 13px; }
+.tab { font-size: 11px; padding: 7px 2px; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- TOPBAR -->
+
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="icon">⚗️</span>
+    <span class="title">Тема 12.2</span>
+    <span class="sub">10 класс · ЕГЭ</span>
+  </div>
+  <nav class="tabs">
+    <button class="tab active" onclick="show('theory',this)">Теория</button>
+    <button class="tab" onclick="show('tasks',this)">Задания</button>
+    <button class="tab" onclick="show('cheat',this)">Шпаргалка</button>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════════
+     ТЕОРИЯ
+════════════════════════════════════════════ -->
+
+<div id="panel-theory" class="panel active">
+<div class="page">
+
+  <!-- Hero -->
+
+  <div class="hero">
+    <div class="hero-eyebrow">Неорганическая химия · Тема 12.2</div>
+    <h1>Галогены <em>в таблице Менделеева</em></h1>
+    <p class="hero-desc">Строение атомов, простые вещества, реакции с неметаллами, металлами, водой и щёлочью, галогеноводороды, кислородсодержащие соединения хлора. Всё, что нужно для ЕГЭ.</p>
+    <div class="hero-meta">⚗️ Задание 12.2 · Элементы VII A группы</div>
+  </div>
+
+  <!-- SEC: Строение -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Основы</div>
+    <div class="sec-title">Строение атомов <em>и типичные степени окисления</em></div>
+    <div class="sec-desc">Галогены (Hal) — элементы главной подгруппы VII группы. На внешнем уровне содержат 7 электронов.</div>
+  </div>
+
+  <div class="card" style="margin-bottom:10px">
+    <table class="tbl">
+      <thead>
+        <tr><th>Элемент</th><th>Конфигурация внешнего слоя</th><th>Набор степеней окисления</th><th>Высшая валентность</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>F</strong></td>
+          <td><code>2s²2p⁵</code></td>
+          <td>−1, 0</td>
+          <td>I</td>
+        </tr>
+        <tr>
+          <td><strong>Cl, Br, I</strong></td>
+          <td><code>ns²np⁵(nd⁰)</code></td>
+          <td>−1, 0, +1, +3, +5, +7</td>
+          <td>VII</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-yellow">
+    <span class="ico">⚡</span>
+    <div class="callout-body">
+      <div class="callout-head">Важно!</div>
+      У атомов всех галогенов, <strong>кроме фтора</strong>, возможно распаривание электронов, поэтому они могут проявлять степени окисления <strong>+3, +5 и +7</strong>. У фтора нет свободных d-орбиталей и он самый электроотрицательный элемент — положительных степеней окисления не бывает.
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- SEC: Простые вещества -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Раздел 1</div>
+    <div class="sec-title">Простые вещества</div>
+    <div class="sec-desc">Физические свойства и способы получения галогенов.</div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 1</span> Физические свойства</div>
+    <h3>F₂, Cl₂, Br₂, I₂</h3>
+    <div class="dir-grid">
+      <div class="dir-card blue">
+        <div class="dir-label">Фтор F₂</div>
+        <p>Жёлтый газ, с удушающим запахом, очень ядовитый.</p>
+      </div>
+      <div class="dir-card green">
+        <div class="dir-label">Хлор Cl₂</div>
+        <p>Жёлто-зелёный газ, с удушающим запахом, ядовитый, тяжелее воздуха.</p>
+      </div>
+    </div>
+    <div class="dir-grid">
+      <div class="dir-card orange">
+        <div class="dir-label">Бром Br₂</div>
+        <p>Тяжёлая тёмно-красная <strong>жидкость</strong> (н.у.), с неприятным удушливым запахом, ядовитая, легко испаряется.</p>
+      </div>
+      <div class="dir-card purple">
+        <div class="dir-label">Иод I₂</div>
+        <p>Кристаллическое вещество серо-фиолетового цвета, с металлическим блеском. Легко возгоняется, образует фиолетовые пары. Ядовитый, с резким раздражающим запахом.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 2</span> Способы получения</div>
+    <h3>В промышленности и в лаборатории</h3>
+
+```
+<div class="card card-sm">
+  <div class="dir-label" style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#3b82f6;margin-bottom:8px">[1] В промышленности — электролитический способ</div>
+  <p style="font-size:14px;color:#374151;margin-bottom:8px">Сырьём для производства галогенов являются соли щелочных металлов (натрия, калия). Фтор можно получить только электролизом расплава солей, остальные галогены — электролизом и растворов, и расплавов.</p>
+  <div class="formula" style="margin:0">
+    2KF → 2K + F₂ <span class="cmt">(в расплаве)</span><br>
+    2NaCl + 2H₂O → 2NaOH + H₂ + Cl₂ <span class="cmt">(электролиз)</span>
+  </div>
+</div>
+
+<div class="card card-sm" style="margin-top:10px">
+  <div class="dir-label" style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#16a34a;margin-bottom:8px">[2] В лаборатории</div>
+  <p style="font-size:14px;color:#374151;margin-bottom:8px">Хлор получают действием концентрированной соляной кислоты на KMnO₄, K₂Cr₂O₇, MnO₂ (окислители за счёт атома металла в степени окисления ≥4) и кислородсодержащие соли хлора:</p>
+  <div class="formula" style="margin:0 0 10px">4HCl(конц.) + MnO₂ = Cl₂ + MnCl₂ + 2H₂O</div>
+  <p style="font-size:14px;color:#374151;margin-bottom:8px">Бромид- и иодид-анионы являются более сильными восстановителями. Поэтому для получения брома и иода используют не только галогеноводородные кислоты, но и их соли. К списку уже перечисленных окислителей добавляются ещё концентрированные серная и азотная кислоты:</p>
+  <div class="formula" style="margin:0">
+    16HBr(конц.) + 2KMnO₄ = 5Br₂ + 2MnBr₂ + 2KBr + 8H₂O<br>
+    2KI + MnO₂ + 2H₂SO₄ = K₂SO₄ + MnSO₄ + 2H₂O + I₂
+  </div>
+</div>
+
+<div class="callout callout-red">
+  <span class="ico">🔴</span>
+  <div class="callout-body">Фтороводород и фториды в подобные реакции <strong>не вступают</strong>.</div>
+</div>
+```
+
+  </div>
+
+  <hr class="div">
+
+  <!-- SEC: Химические свойства простых веществ -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Раздел 2</div>
+    <div class="sec-title">Химические свойства <em>простых веществ</em></div>
+    <div class="sec-desc">Реакции с неметаллами, металлами, водой, щёлочью, замещение и другие сложные вещества.</div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">[1]</span> Взаимодействие с неметаллами</div>
+    <h3>Сводная таблица реакций</h3>
+    <p style="font-size:14px;color:#7b8299;margin-bottom:10px">Жирным выделены продукты тех реакций, которые необходимо знать наизусть. Остальные даны для ознакомления. Галогены также реагируют друг с другом.</p>
+    <div class="card" style="overflow-x:auto">
+      <table class="tbl">
+        <thead><tr><th></th><th>F₂</th><th>Cl₂</th><th>Br₂</th><th>I₂</th></tr></thead>
+        <tbody>
+          <tr><td><strong>H₂</strong></td><td><strong>HF</strong></td><td><strong>HCl</strong></td><td><strong>HBr</strong></td><td><strong>HI</strong></td></tr>
+          <tr><td><strong>O₂</strong></td><td>OF₂, O₂F₂</td><td style="text-align:center;color:#9ca3af">—</td><td style="text-align:center;color:#9ca3af">—</td><td style="text-align:center;color:#9ca3af">—</td></tr>
+          <tr><td><strong>P</strong></td><td>PF₅</td><td><strong>PCl₅</strong> — изб. Cl₂<br><strong>PCl₃</strong> — нед. Cl₂</td><td>PBr₅ — изб. Br₂<br>PBr₃ — нед. Br₂</td><td>PI₃</td></tr>
+          <tr><td><strong>S</strong></td><td>SF₆</td><td>SCl₄, SCl₂, S₂Cl₂</td><td>S₂Br₂</td><td style="text-align:center;color:#9ca3af">—</td></tr>
+          <tr><td><strong>C</strong></td><td>CF₄</td><td style="text-align:center;color:#9ca3af">—</td><td style="text-align:center;color:#9ca3af">—</td><td style="text-align:center;color:#9ca3af">—</td></tr>
+          <tr><td><strong>N₂</strong></td><td style="text-align:center;color:#9ca3af">—</td><td style="text-align:center;color:#9ca3af">—</td><td style="text-align:center;color:#9ca3af">—</td><td style="text-align:center;color:#9ca3af">—</td></tr>
+          <tr><td><strong>Si</strong></td><td>SiF₄</td><td><strong>SiCl₄</strong></td><td>SiBr₄</td><td>SiI₄</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">[2]</span> С металлами</div>
+    <h3>F₂, Cl₂, Br₂ — выбираем высшую СО металла</h3>
+    <p style="font-size:14px;color:#374151;margin-bottom:10px">Фтор, хлор и бром реагируют практически со всеми металлами. Если приходится выбирать степень окисления металла в продукте, то пишем <strong>более высокую</strong>. Например, +3 для железа:</p>
+    <div class="formula">
+      2Fe + 3Cl₂(изб.) = 2FeCl₃<br>
+      2Fe + 3Br₂(изб.) = 2FeBr₃<br>
+      Cu + Br₂ = CuBr₂
+    </div>
+
+```
+<div class="callout callout-purple" style="margin-top:10px">
+  <span class="ico">🧊</span>
+  <div class="callout-body">
+    <div class="callout-head">Иод — особый случай</div>
+    Даже с активными металлами реагирует только при нагревании. Реакция с магнием и алюминием идёт при комнатной температуре при катализе водой. Если приходится выбирать степень окисления металла в продукте, пишем <strong>более низкую</strong>. Например, +2 для железа:
+  </div>
+</div>
+<div class="formula">Fe + I₂ = FeI₂ <span class="cmt">(при t°)</span></div>
+```
+
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">[3]</span> С водой</div>
+    <h3>От фтора до иода — разное поведение</h3>
+
+```
+<div class="dir-grid">
+  <div class="dir-card blue">
+    <div class="dir-label">Фтор окисляет воду</div>
+    <p>Говорят, что во фторе вода горит:</p>
+    <div class="formula" style="margin-top:6px">2F₂ + 2H₂O = 4HF + O₂</div>
+  </div>
+  <div class="dir-card green">
+    <div class="dir-label">Хлорная вода («хлорка»)</div>
+    <p>Смесь соляной и хлорноватистой кислот:</p>
+    <div class="formula" style="margin-top:6px">Cl₂ + H₂O ⇌ HClO + HCl</div>
+  </div>
+</div>
+
+<p style="font-size:14px;color:#374151;margin:10px 0">Хлорноватистая кислота разлагается на свету с выделением активного атомарного кислорода. Это объясняет обеззараживающее и отбеливающее действие хлорной воды:</p>
+<div class="formula">
+  HClO = HCl + [O]<br>
+  2Cl₂ + 2H₂O = O₂ + 4HCl <span class="cmt">(суммарно)</span>
+</div>
+
+<div class="dir-grid" style="margin-top:10px">
+  <div class="dir-card orange">
+    <div class="dir-label">Бром в воде</div>
+    <p>Обратимо диспропорционирует:</p>
+    <div class="formula" style="margin-top:6px">Br₂ + H₂O ⇌ HBrO + HBr</div>
+  </div>
+  <div class="dir-card purple">
+    <div class="dir-label">Иод в воде</div>
+    <p>Практически не растворяется, но растворимость резко повышается в присутствии иодида калия за счёт образования комплекса (жёлто-бурая окраска):</p>
+    <div class="formula" style="margin-top:6px">I₂ + KI = K[I₃]</div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">[4]</span> Со щелочами</div>
+    <h3>Диспропорционирование — холодные и горячие растворы</h3>
+    <p style="font-size:14px;color:#374151;margin-bottom:10px">Хлор, бром и иод в растворах щелочей диспропорционируют. Продукты реакции зависят от температуры.</p>
+
+```
+<div class="dir-grid">
+  <div class="dir-card blue">
+    <div class="dir-label">Холодный раствор (~0°C)</div>
+    <p>Образуются хлорид и гипохлорит или бромид и гипобромид. Для иода протекание реакции по такой схеме невозможно.</p>
+    <div class="formula" style="margin-top:6px">
+      2KOH + Cl₂ = KCl + KClO + H₂O<br>
+      2NaOH + Br₂ = NaBr + NaBrO + H₂O
+    </div>
+  </div>
+  <div class="dir-card red">
+    <div class="dir-label">Нагретый раствор</div>
+    <p>Также диспропорционирование, но атомы галогена окисляются до СО <strong>+5</strong>, а не +1. У иода реакция со щелочами <strong>всегда</strong> протекает по этой схеме:</p>
+    <div class="formula" style="margin-top:6px">
+      6NaOH + 3Cl₂ = 5NaCl + NaClO₃ + 3H₂O <span class="cmt">(при t°)</span><br>
+      6KOH + 3I₂ = 5KI + KIO₃ + 3H₂O <span class="cmt">(всегда)</span>
+    </div>
+  </div>
+</div>
+
+<div class="callout callout-blue">
+  <span class="ico">💡</span>
+  <div class="callout-body">
+    Растворы карбонатов калия или натрия имеют щелочную среду из-за гидролиза. Поэтому с ними галогены реагируют похожим образом:<br>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:13px">3K₂CO₃ + 3Cl₂ = 5KCl + KClO₃ + 3CO₂</span> <span class="cmt">(при t°)</span>
+  </div>
+</div>
+```
+
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">[5]</span> Реакции замещения</div>
+    <h3>Более активный галоген вытесняет менее активный</h3>
+
+```
+<div class="card">
+  <table class="tbl">
+    <thead><tr><th>Ряд активности</th><th>Правило</th></tr></thead>
+    <tbody>
+      <tr><td><strong>F₂ → Cl₂ → Br₂ → I₂</strong></td><td>Окислительная способность галогенов уменьшается. Более активный галоген (стоящий выше) вытесняет менее активный (стоящий ниже) из галогеноводородных кислот и их солей.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="formula">
+  2KBr + Cl₂ = 2KCl + Br₂ <span class="cmt">(появление оранжевой окраски раствора)</span><br>
+  2HI + Cl₂ = 2HBr + I₂ <span class="cmt">(буро окраска; с крахмалом — синее)</span><br>
+  I₂ + 5Cl₂ + 6H₂O = 2HIO₃ + 10HCl <span class="cmt">(при избытке Cl₂ иод окисляется, раствор обесцвечивается)</span>
+</div>
+
+<p style="font-size:14px;color:#374151;margin:10px 0">Галогены также вытесняют серу из сульфидов и сероводорода:</p>
+<div class="formula">
+  Na₂S + Br₂ = 2NaBr + S↓ <span class="cmt">(бледно-желтый осадок, раствор обесцвечивается)</span><br>
+  H₂S + I₂ = 2HI + S↓
+</div>
+
+<div class="callout callout-red">
+  <span class="ico">🚫</span>
+  <div class="callout-body">
+    Примеры реакций, которые <strong>не пойдут:</strong> NaBr + I₂; CaBr₂ + S. Фтор на практике не используют из-за его слишком высокой окислительной способности.
+  </div>
+</div>
+
+<p style="font-size:14px;color:#374151;margin:10px 0">Хлор проявляет более сильные окислительные свойства, чем бром и иод, поэтому в подходящих условиях может перевести серу в степень окисления +6:</p>
+<div class="formula">
+  H₂S + 4Cl₂ + 4H₂O = H₂SO₄ + 8HCl<br>
+  H₂S + Cl₂ = S + 2HCl <span class="cmt">(если реагируют газы — простое замещение)</span>
+</div>
+```
+
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">[6]</span> С другими сложными веществами</div>
+    <h3>ОВР с участием Cl₂ и Br₂</h3>
+    <p style="font-size:14px;color:#374151;margin-bottom:10px">Фтор реагирует со многими сложными веществами, но составлять уравнения этих реакций не придётся. Наиболее распространённые ОВР с участием хлора и брома собраны в таблице. Галогены проявляют окислительные свойства, переходят в низшую степень окисления −1.</p>
+
+```
+<div class="card">
+  <table class="tbl">
+    <thead><tr><th>Переход восстановителя</th><th>Примеры реакций</th></tr></thead>
+    <tbody>
+      <tr><td><strong>S⁺⁴ → S⁺⁶</strong></td><td><code>K₂SO₃ + Br₂ + H₂O = K₂SO₄ + 2HBr</code><br><code>SO₂ + Cl₂ + 4KOH = K₂SO₄ + 2KCl + 2H₂O</code></td></tr>
+      <tr><td><strong>P⁻³ → P⁺⁵</strong></td><td><code>PH₃ + 4Cl₂ + 4H₂O = H₃PO₄ + 8HCl</code></td></tr>
+      <tr><td><strong>Fe⁺² → Fe⁺³</strong></td><td><code>2FeCl₂ + Cl₂ = 2FeCl₃</code></td></tr>
+      <tr><td><strong>Cr⁺³ → Cr⁺⁶</strong></td><td><code>3Cl₂ + 2Cr(OH)₃ + 10KOH = 6KCl + 2K₂CrO₄ + 8H₂O</code><br><code>3Br₂ + 2CrBr₃ + 16NaOH = 12NaBr + 2Na₂CrO₄ + 8H₂O</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p style="font-size:14px;color:#374151;margin:10px 0">Для иода также характерны восстановительные свойства. Концентрированная азотная кислота и концентрированный раствор перекиси водорода окисляют его до иодноватой кислоты:</p>
+<div class="formula">
+  I₂ + 10HNO₃(конц.) = 2HIO₃ + 10NO₂ + 4H₂O<br>
+  I₂ + 5H₂O₂ = 2HIO₃ + 4H₂O
+</div>
+
+<div class="callout callout-green">
+  <span class="ico">🧪</span>
+  <div class="callout-body">
+    Степень окисления +5 у иода достаточно устойчива. Иодноватую кислоту можно выделить в чистом виде; при нагревании она разлагается на оксид и воду (без взрыва):<br>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:13px">2HIO₃ = I₂O₅ + H₂O</span> <span class="cmt">(при t°)</span>
+  </div>
+</div>
+```
+
+  </div>
+
+  <hr class="div">
+
+  <!-- SEC: Галогеноводороды -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Раздел 3</div>
+    <div class="sec-title">Галогеноводороды <em>и галогениды</em></div>
+    <div class="sec-desc">HF, HCl, HBr, HI — физические свойства, тренды, способы получения и химические свойства.</div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 1</span> Физические свойства и тренд HF → HI</div>
+    <h3>Что меняется вниз по группе</h3>
+
+```
+<div class="dir-grid">
+  <div class="dir-card purple">
+    <div class="dir-label">HF</div>
+    <p>Бесцветный газ (t кип. = 19°C), ядовитый, слабая кислота в растворе. Во фтороводороде присутствуют межмолекулярные водородные связи.</p>
+  </div>
+  <div class="dir-card blue">
+    <div class="dir-label">HCl, HBr, HI</div>
+    <p>Бесцветные газы с резким запахом, ядовитые, очень хорошо растворимы в воде. Водные растворы — сильные кислоты.</p>
+  </div>
+</div>
+
+<div class="card">
+  <table class="tbl">
+    <thead><tr><th>Свойство</th><th>HF → HCl → HBr → HI</th></tr></thead>
+    <tbody>
+      <tr><td>Длина связи H–Hal</td><td>растёт</td></tr>
+      <tr><td>Полярность связи H–Hal</td><td>уменьшается</td></tr>
+      <tr><td>Сила галогеноводородных кислот</td><td>растёт</td></tr>
+      <tr><td>Восстановительные свойства галогенид-ионов</td><td>усиливаются</td></tr>
+      <tr><td>Термическая устойчивость галогеноводородов</td><td>понижается</td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">Свойство 2</span> Способы получения галогеноводородов</div>
+    <h3>Три метода</h3>
+
+```
+<div class="card card-sm">
+  <div class="dir-label" style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#3b82f6;margin-bottom:8px">[1] Синтез из простых веществ</div>
+  <p style="font-size:14px;color:#374151;margin-bottom:8px">Фтор и хлор реагируют с водородом со взрывом. Реакция образования хлороводорода протекает при нагревании или на свету:</p>
+  <div class="formula" style="margin:0 0 10px">H₂ + Cl₂ = 2HCl</div>
+  <p style="font-size:14px;color:#374151;margin-bottom:8px">Иод и бром реагируют с водородом менее энергично и только при нагревании. Реакция синтеза иодоводорода обратима:</p>
+  <div class="formula" style="margin:0">H₂ + I₂ ⇌ 2HI</div>
+</div>
+
+<div class="card card-sm" style="margin-top:10px">
+  <div class="dir-label" style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#16a34a;margin-bottom:8px">[2] Сульфатный способ</div>
+  <p style="font-size:14px;color:#374151;margin-bottom:8px">При обработке кристаллических фторидов и хлоридов концентрированной серной кислотой выделяются газообразные галогеноводороды:</p>
+  <div class="formula" style="margin:0 0 10px">
+    CaF₂(тв.) + H₂SO₄(конц.) = 2HF↑ + CaSO₄↓<br>
+    NaCl(тв.) + H₂SO₄(конц.) = NaHSO₄ + HCl↑
+  </div>
+
+  <div class="callout callout-red" style="margin:10px 0">
+    <span class="ico">⚠️</span>
+    <div class="callout-body">
+      Этот способ <strong>не подходит</strong> для получения бромоводорода и иодоводорода. Бромид- и иодид-ионы проявляют более сильные восстановительные свойства, поэтому окисляются концентрированной серной кислотой (возможно образование кислых солей):
+    </div>
+  </div>
+  <div class="formula" style="margin:0 0 10px">
+    2NaBr + 2H₂SO₄(конц.) = Br₂ + SO₂ + Na₂SO₄ + 2H₂O<br>
+    8KI + 5H₂SO₄(конц.) = 4I₂ + H₂S + 4K₂SO₄ + 4H₂O
+  </div>
+  <p style="font-size:14px;color:#374151;margin-bottom:8px">Чтобы избежать окисления, можно заменить концентрированную серную кислоту на концентрированную фосфорную:</p>
+  <div class="formula" style="margin:0 0 10px">KI(тв.) + H₃PO₄(конц.) = HI↑ + KH₂PO₄</div>
+
+  <div class="callout callout-red" style="margin:10px 0">
+    <span class="ico">⚠️</span>
+    <div class="callout-body">Бромоводород и иодоводород <strong>тоже</strong> окисляются концентрированной серной кислотой:</div>
+  </div>
+  <div class="formula" style="margin:0">
+    2HBr + H₂SO₄(конц.) = Br₂ + SO₂ + 2H₂O<br>
+    8HI + H₂SO₄(конц.) = 4I₂ + H₂S + 4H₂O
+  </div>
+</div>
+
+<div class="card card-sm" style="margin-top:10px">
+  <div class="dir-label" style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#7c3aed;margin-bottom:8px">[3] Гидролиз бинарных соединений</div>
+  <div class="formula" style="margin:0">
+    PCl₅ + 4H₂O = H₃PO₄ + 5HCl<br>
+    SiCl₄ + 3H₂O = H₂SiO₃ + 4HCl
+  </div>
+</div>
+```
+
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">[1]</span> Общие кислотные свойства</div>
+    <h3>Реакции типичных кислот</h3>
+    <p style="font-size:14px;color:#374151;margin-bottom:10px">Галогеноводороды проявляют свойства типичных кислот. Они реагируют с металлами левее [H₂] в ряду активности, основными и амфотерными оксидами и гидроксидами, солями.</p>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">[2]</span> Восстановительные свойства за счёт атома галогена</div>
+    <h3>Cl⁻, Br⁻, I⁻ как восстановители</h3>
+    <p style="font-size:14px;color:#374151;margin-bottom:10px">Фтороводород и фториды <strong>не проявляют</strong> восстановительные свойства в реакциях, протекающих в растворе. Остальные галогеноводороды или их соли в соответствующих условиях реагируют с типичными окислителями с образованием простых веществ. Важно помнить, что хлорид-ион — слабый восстановитель. Для получения хлора проводят реакцию HCl(конц.) с окислителем за счёт атома металла в степени окисления ≥4 или кислородсодержащей солью хлора.</p>
+
+```
+<div class="callout callout-red">
+  <span class="ico">⚠️</span>
+  <div class="callout-body">
+    Иодидам меди (II) и железа (III) в таблице растворимости соответствует прочерк. Их нельзя получить по реакции обмена или соединения, так как происходит окисление иодид-иона до простого вещества. Металл при этом переходит в соседнюю более низкую степень окисления.
+  </div>
+</div>
+<div class="formula">
+  2CuO + 4HI = 2CuI + I₂ + 2H₂O<br>
+  Fe₂O₃ + 6HI = 2FeI₂ + I₂ + 3H₂O
+</div>
+
+<p style="font-size:14px;color:#374151;margin:10px 0">Аналогичная реакция протекает и при сливании растворов солей (допустимы обе записи):</p>
+<div class="formula">
+  2CuCl₂ + 4KI = 2CuI + I₂ + 4KCl<br>
+  2CuCl₂ + 2KI = 2CuCl + I₂ + 2KCl
+</div>
+
+<div class="callout callout-blue">
+  <span class="ico">💡</span>
+  <div class="callout-body">
+    Нитрат или сульфат меди (I) в продуктах подобных реакций не пишем. Хлорид, бромид и иодид меди (I) нерастворимы в воде. Поэтому признаком реакции, протекающей между растворами солей, будет выпадение осадка и жёлто-бурое окрашивание раствора.
+  </div>
+</div>
+```
+
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">[3]</span> Реакция плавиковой кислоты с SiO₂</div>
+    <h3>Травление стекла</h3>
+    <p style="font-size:14px;color:#374151;margin-bottom:10px">Эта реакция используется для получения матового стекла и для нанесения узоров на стеклянные поверхности. Допустимо писать оба уравнения.</p>
+    <div class="formula">
+      SiO₂ + 4HF = SiF₄ + 2H₂O<br>
+      SiO₂ + 6HF = H₂[SiF₆] + 2H₂O
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- SEC: Кислородсодержащие соединения хлора -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Раздел 4</div>
+    <div class="sec-title">Кислородсодержащие <em>соединения хлора</em></div>
+    <div class="sec-desc">Четыре кислоты хлора и их соли — сила кислот растёт с увеличением числа атомов кислорода.</div>
+  </div>
+
+  <div class="card" style="margin-bottom:10px">
+    <table class="tbl">
+      <thead><tr><th>Кислота</th><th>Название кислоты</th><th>Название соли</th></tr></thead>
+      <tbody>
+        <tr><td><code>HClO</code></td><td>хлорноватистая</td><td>гипохлорит</td></tr>
+        <tr><td><code>HClO₂</code></td><td>хлористая</td><td>хлорит</td></tr>
+        <tr><td><code>HClO₃</code></td><td>хлорноватая</td><td>хлорат</td></tr>
+        <tr><td><code>HClO₄</code></td><td>хлорная</td><td>перхлорат</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12.5px;color:#9ca3af;margin-top:10px;font-style:italic">Сила кислот увеличивается сверху вниз: HClO → HClO₂ → HClO₃ → HClO₄.</p>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">[1]</span> Термическое разложение хлоратов</div>
+    <h3>Без катализатора и с катализатором — разные продукты</h3>
+    <p style="font-size:14px;color:#374151;margin-bottom:10px">Хлораты щелочных металлов разлагаются на хлорид и перхлорат. Если реакционную смесь продолжить нагревать, то перхлорат разложится на KCl и O₂.</p>
+    <div class="dir-grid">
+      <div class="dir-card blue">
+        <div class="dir-label">Без катализатора</div>
+        <div class="formula" style="margin:0">4KClO₃ = KCl + 3KClO₄ <span class="cmt">(при t°)</span></div>
+      </div>
+      <div class="dir-card green">
+        <div class="dir-label">С катализатором MnO₂</div>
+        <div class="formula" style="margin:0">2KClO₃ = 2KCl + 3O₂ <span class="cmt">(при t°, кат. MnO₂)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-block">
+    <div class="prop-label"><span class="num">[2]</span> Участие в ОВР</div>
+    <h3>Сильные окислители за счёт атома хлора</h3>
+    <p style="font-size:14px;color:#374151;margin-bottom:10px">Кислородсодержащие соли и кислоты галогенов являются сильными окислителями (за счёт атома галогена). Если восстановителем является атом этого же галогена в степени окисления −1, то образуется простое вещество по схеме:</p>
+
+```
+<div class="callout callout-red">
+  <span class="ico">⚠️</span>
+  <div class="callout-body">
+    <div class="formula" style="margin:0 0 8px;background:transparent;border:none;padding:0">KClO₃ + 6HCl = KCl + 3Cl₂ + 3H₂O</div>
+    2Cl⁺⁵ + 10e = Cl₂⁰ &nbsp;|&nbsp; 1<br>
+    2Cl⁻ − 2e = Cl₂⁰ &nbsp;|&nbsp; 5
+  </div>
+</div>
+
+<div class="callout callout-purple">
+  <span class="ico">🎯</span>
+  <div class="callout-body">В остальных реакциях, которые могут встретиться на ЕГЭ, реализуется переход <strong>Cl⁺ⁿ → Cl⁻¹</strong>.</div>
+</div>
+
+<div class="formula">
+  5KClO₃ + 6P = 3P₂O₅ + 5KCl <span class="cmt">(при t°)</span><br>
+  3NaClO + 2Cr(OH)₃ + 4KOH = 2K₂CrO₄ + 3NaCl + 5H₂O
+</div>
+```
+
+  </div>
+
+  <hr class="div">
+
+  <!-- SEC: Качественные реакции -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Раздел 5</div>
+    <div class="sec-title">Качественные реакции <em>на соединения галогенов</em></div>
+  </div>
+
+  <div class="card">
+    <table class="tbl">
+      <thead><tr><th>Частица</th><th>Реагент</th><th>Признак реакции</th></tr></thead>
+      <tbody>
+        <tr><td><strong>I₂</strong></td><td>крахмал</td><td>🔵 Синее окрашивание</td></tr>
+        <tr><td><strong>F⁻</strong></td><td>Ca²⁺</td><td>⬜ Выпадение белого осадка</td></tr>
+        <tr><td><strong>Cl⁻</strong></td><td>Ag⁺ {AgNO₃}</td><td>⬜ Выпадение белого творожистого осадка</td></tr>
+        <tr><td><strong>Br⁻</strong></td><td>Ag⁺ {AgNO₃}</td><td>🟡 Бледно-желтый осадок</td></tr>
+        <tr><td></td><td>Cl₂</td><td>🟠 Появление оранжевой окраски раствора</td></tr>
+        <tr><td><strong>I⁻</strong></td><td>Ag⁺ {AgNO₃}</td><td>🟡 Выпадение желтого осадка</td></tr>
+        <tr><td></td><td>Pb²⁺ {Pb(NO₃)₂}</td><td>🟡 Желтый осадок</td></tr>
+        <tr><td></td><td>Cu²⁺ {CuCl₂}</td><td>🟤 Желто-бурое окрашивание раствора, выпадение осадка</td></tr>
+        <tr><td></td><td>Fe³⁺ {FeCl₃}</td><td>🟤 Желто-бурое окрашивание раствора</td></tr>
+        <tr><td></td><td>Cl₂</td><td>🟤 Появление желто-бурой окраски раствора и бурого осадка. В избытке хлора окраска постепенно исчезает</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="div">
+
+  <!-- SEC: Применение -->
+
+  <div class="sec-header">
+    <div class="sec-eyebrow">Раздел 6</div>
+    <div class="sec-title">Применение веществ</div>
+  </div>
+
+  <div class="card">
+    <ul class="bl">
+      <li><strong>Хлор</strong> — водоочистка, отбеливание, синтез органических растворителей (CCl₄, CHCl₃ и т.д.)</li>
+      <li><strong>Хлорид натрия</strong> — пищевая промышленность, производство хлора, соляной кислоты и гидроксида натрия</li>
+      <li><strong>Гипохлориты натрия, калия, кальция</strong> — компоненты отбеливателей</li>
+      <li><strong>Иод</strong> — в медицине в виде растворов</li>
+    </ul>
+  </div>
+
+</div>
+</div>
+<!-- ══════════════════════════════════════════
+     ЗАДАНИЯ
+════════════════════════════════════════════ -->
+<div id="panel-tasks" class="panel">
+<div class="page">
+
+  <div class="tasks-intro">
+    <div class="sec-eyebrow">Практика</div>
+    <div class="sec-title">Задания <em>от простого к сложному</em></div>
+    <div class="sec-desc">Запиши уравнения в тетрадь. Все задания из учебника по теме 12.2.</div>
+  </div>
+
+  <!-- З1 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">01</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-hard">сложное</span>
+        <span class="badge badge-topic">получение галогенов</span>
+      </div>
+      <div class="task-title">Допишите уравнения реакций получения галогенов, расставьте коэффициенты.</div>
+      <div style="display:flex;flex-direction:column;gap:7px;margin-top:10px">
+        <div class="eq-item">А)&nbsp; __ KMnO₄ + __ HCl(конц.) = <span class="blank" style="min-width:160px"></span></div>
+        <div class="eq-item">Б)&nbsp; __ K₂Cr₂O₇ + __ HBr(конц.) = <span class="blank" style="min-width:160px"></span></div>
+        <div class="eq-item">В)&nbsp; __ MnO₂ + __ KBr + __ H₂SO₄ = <span class="blank" style="min-width:140px"></span></div>
+        <div class="eq-item">Г)&nbsp; __ KMnO₄ + __ KI + __ H₂O = <span class="blank" style="min-width:140px"></span></div>
+        <div class="eq-item">Д)&nbsp; __ K₂Cr₂O₇ + __ NaBr + __ H₂SO₄ = <span class="blank" style="min-width:140px"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З2 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">02</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-easy">лёгкое</span>
+        <span class="badge badge-topic">галогены + неметаллы</span>
+      </div>
+      <div class="task-title">Допишите уравнения реакций, протекающих между галогенами и неметаллами.</div>
+      <div class="eq-grid">
+        <div class="eq-item">H₂ + F₂ = <span class="blank"></span></div>
+        <div class="eq-item">P + Cl₂(изб.) = <span class="blank"></span></div>
+        <div class="eq-item">H₂ + Cl₂ = <span class="blank"></span></div>
+        <div class="eq-item">P + Cl₂(нед.) = <span class="blank"></span></div>
+        <div class="eq-item">H₂ + Br₂ = <span class="blank"></span></div>
+        <div class="eq-item">P + Br₂(изб.) = <span class="blank"></span></div>
+        <div class="eq-item">H₂ + I₂ = <span class="blank"></span></div>
+        <div class="eq-item">P + Br₂(нед.) = <span class="blank"></span></div>
+        <div class="eq-item">Si + Cl₂ = <span class="blank"></span></div>
+        <div class="eq-item">Si + F₂ = <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З3 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">03</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-easy">лёгкое</span>
+        <span class="badge badge-topic">галогены + металлы</span>
+      </div>
+      <div class="task-title">Допишите уравнения реакций, протекающих между галогенами и металлами.</div>
+      <div class="eq-grid">
+        <div class="eq-item">Na + Cl₂ = <span class="blank"></span></div>
+        <div class="eq-item">Al + I₂ = <span class="blank"></span></div>
+        <div class="eq-item">Al + Cl₂ = <span class="blank"></span></div>
+        <div class="eq-item">Ca + Br₂ = <span class="blank"></span></div>
+        <div class="eq-item">Cu + Cl₂ = <span class="blank"></span></div>
+        <div class="eq-item">Li + I₂ = <span class="blank"></span></div>
+        <div class="eq-item">Fe + Cl₂ = <span class="blank"></span></div>
+        <div class="eq-item">Mg + I₂ = <span class="blank"></span></div>
+        <div class="eq-item">Zn + Br₂ = <span class="blank"></span></div>
+        <div class="eq-item">Al + Br₂ = <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З4 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">04</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-mid">среднее</span>
+        <span class="badge badge-topic">галогены + щёлочи</span>
+      </div>
+      <div class="task-title">Допишите уравнения реакций, протекающих между галогенами и растворами щелочей.</div>
+      <div class="eq-grid">
+        <div class="eq-item">NaOH + Br₂(0°C) = <span class="blank"></span></div>
+        <div class="eq-item">NaOH + Br₂(t°) = <span class="blank"></span></div>
+        <div class="eq-item">Ca(OH)₂ + Cl₂(0°C) = <span class="blank"></span></div>
+        <div class="eq-item">Sr(OH)₂ + Cl₂(t°) = <span class="blank"></span></div>
+        <div class="eq-item">Ba(OH)₂ + Br₂(0°C) = <span class="blank"></span></div>
+        <div class="eq-item">NaOH + I₂(t°) = <span class="blank"></span></div>
+        <div class="eq-item">LiOH + Cl₂(0°C) = <span class="blank"></span></div>
+        <div class="eq-item">Ca(OH)₂ + Br₂(t°) = <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З5 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">05</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-mid">среднее</span>
+        <span class="badge badge-topic">реакции замещения</span>
+      </div>
+      <div class="task-title">Допишите уравнения <strong>осуществимых</strong> реакций замещения.</div>
+      <div class="eq-grid">
+        <div class="eq-item">NaF + Cl₂ = <span class="blank"></span></div>
+        <div class="eq-item">CaF₂ + Br₂ = <span class="blank"></span></div>
+        <div class="eq-item">CaBr₂ + Cl₂ = <span class="blank"></span></div>
+        <div class="eq-item">MgBr₂ + Cl₂ = <span class="blank"></span></div>
+        <div class="eq-item">HBr + Cl₂ = <span class="blank"></span></div>
+        <div class="eq-item">HBr + I₂ = <span class="blank"></span></div>
+        <div class="eq-item">HF + I₂ = <span class="blank"></span></div>
+        <div class="eq-item">HCl + S = <span class="blank"></span></div>
+        <div class="eq-item">KI + Br₂ = <span class="blank"></span></div>
+        <div class="eq-item">HI + Cl₂ = <span class="blank"></span></div>
+        <div class="eq-item">H₂S + Br₂ = <span class="blank"></span></div>
+        <div class="eq-item">CaI₂ + Cl₂ = <span class="blank"></span></div>
+      </div>
+      <div class="callout callout-yellow" style="margin-top:10px">
+        <span class="ico">💡</span>
+        <div class="callout-body">Не все пары осуществимы — проверь ряд активности F₂ → Cl₂ → Br₂ → I₂ перед тем как писать уравнение!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З6 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">06</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-hard">сложное</span>
+        <span class="badge badge-ege">ЕГЭ</span>
+        <span class="badge badge-topic">ОВР с Cl₂/Br₂</span>
+      </div>
+      <div class="task-title">С помощью таблицы переходов восстановителя закончите уравнения ОВР.</div>
+      <div style="display:flex;flex-direction:column;gap:7px;margin-top:10px">
+        <div class="eq-item">А)&nbsp; __ K₂SO₃ + __ Cl₂ + __ H₂O = <span class="blank" style="min-width:160px"></span></div>
+        <div class="eq-item">Б)&nbsp; __ Na₂SO₃ + __ Br₂ + __ KOH = <span class="blank" style="min-width:160px"></span></div>
+        <div class="eq-item">В)&nbsp; __ FeSO₄ + __ Cl₂ + __ H₂SO₄ = <span class="blank" style="min-width:160px"></span></div>
+        <div class="eq-item">Г)&nbsp; __ CrCl₃ + __ Cl₂ + __ KOH = <span class="blank" style="min-width:160px"></span></div>
+        <div class="eq-item">Д)&nbsp; __ Cr(OH)₃ + __ Br₂ + __ NaOH = <span class="blank" style="min-width:160px"></span></div>
+        <div class="eq-item">Е)&nbsp; __ K₃[Cr(OH)₆] + __ Cl₂ + __ KOH = <span class="blank" style="min-width:140px"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З7 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">07</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-mid">среднее</span>
+        <span class="badge badge-topic">галогениды + кислоты</span>
+      </div>
+      <div class="task-title">Закончите уравнения реакций галогенидов с кислотами.</div>
+      <div class="eq-grid">
+        <div class="eq-item">NaF + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">MgCl₂ + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">BaCl₂ + H₂SO₄(р-р) = <span class="blank"></span></div>
+        <div class="eq-item">KBr + H₃PO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">NaF + HNO₃(р-р) = <span class="blank"></span></div>
+        <div class="eq-item">KBr + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">KCl + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">NaI + H₂SO₄(конц.) = <span class="blank"></span></div>
+        <div class="eq-item">AgF + HCl(р-р) = <span class="blank"></span></div>
+        <div class="eq-item">MgI₂ + H₂SO₄(конц.) = <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З8 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">08</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-easy">лёгкое</span>
+        <span class="badge badge-topic">кислотные свойства HHal</span>
+      </div>
+      <div class="task-title">Допишите уравнения реакций, описывающие кислотные свойства галогеноводородов.</div>
+      <div class="eq-grid">
+        <div class="eq-item">Fe + HCl = <span class="blank"></span></div>
+        <div class="eq-item">CaCO₃ + HBr = <span class="blank"></span></div>
+        <div class="eq-item">Al + HBr = <span class="blank"></span></div>
+        <div class="eq-item">AgNO₃ + HCl = <span class="blank"></span></div>
+        <div class="eq-item">Fe + HBr = <span class="blank"></span></div>
+        <div class="eq-item">ZnS + HCl = <span class="blank"></span></div>
+        <div class="eq-item">CuO + HCl = <span class="blank"></span></div>
+        <div class="eq-item">KHCO₃ + HI = <span class="blank"></span></div>
+        <div class="eq-item">MgO + HI = <span class="blank"></span></div>
+        <div class="eq-item">Na[Al(OH)₄] + HBr(изб.) = <span class="blank"></span></div>
+        <div class="eq-item">KOH + HF = <span class="blank"></span></div>
+        <div class="eq-item">K₂[Zn(OH)₄] + HCl(нед.) = <span class="blank"></span></div>
+        <div class="eq-item">Cu(OH)₂ + HBr = <span class="blank"></span></div>
+        <div class="eq-item">NaFeO₂ + HCl(изб.) = <span class="blank"></span></div>
+        <div class="eq-item">Al(OH)₃ + HI = <span class="blank"></span></div>
+        <div class="eq-item">Ca[Zn(OH)₄] + HBr(нед.) = <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- З9 -->
+
+  <div class="task-card">
+    <div class="task-num-badge">09</div>
+    <div class="task-content">
+      <div class="task-badges">
+        <span class="badge badge-hard">сложное</span>
+        <span class="badge badge-ege">ЕГЭ</span>
+        <span class="badge badge-topic">ОВР с иодидами</span>
+      </div>
+      <div class="task-title">Закончите ОВР с участием иодоводорода и иодидов.</div>
+      <div class="eq-grid">
+        <div class="eq-item">Fe(OH)₃ + HI = <span class="blank"></span></div>
+        <div class="eq-item">Fe₂O₃ + KI + H₂SO₄ = <span class="blank"></span></div>
+        <div class="eq-item">FeCl₃ + HI = <span class="blank"></span></div>
+        <div class="eq-item">Cu(OH)₂ + HI = <span class="blank"></span></div>
+        <div class="eq-item">Fe₃O₄ + HI = <span class="blank"></span></div>
+        <div class="eq-item">Cu(NO₃)₂ + NaI = <span class="blank"></span></div>
+        <div class="eq-item">KFeO₂ + HI = <span class="blank"></span></div>
+        <div class="eq-item">CuSO₄ + KI = <span class="blank"></span></div>
+        <div class="eq-item">Fe₂(SO₄)₃ + NaI = <span class="blank"></span></div>
+        <div class="eq-item">CuBr₂ + KI = <span class="blank"></span></div>
+        <div class="eq-item">FeBr₃ + KI = <span class="blank"></span></div>
+        <div class="eq-item">CuO + KI + H₂SO₄ = <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+<!-- ══════════════════════════════════════════
+     ШПАРГАЛКА
+════════════════════════════════════════════ -->
+<div id="panel-cheat" class="panel">
+<div class="page">
+
+  <div class="tasks-intro">
+    <div class="sec-eyebrow">Шпаргалка</div>
+    <div class="sec-title">Всё самое важное <em>на одной странице</em></div>
+    <div class="sec-desc">Сохрани для повторения перед ЕГЭ.</div>
+  </div>
+
+  <!-- Тренды по группе -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Таблица 1</span> Тренд F → Cl → Br → I</div>
+    <div class="cheat-card">
+      <h3>Что меняется вниз по группе</h3>
+      <div class="cheat-row"><span class="cheat-key">Окислительная способность</span><span class="cheat-val">уменьшается (F₂ — самый сильный окислитель)</span></div>
+      <div class="cheat-row"><span class="cheat-key">Восстановительные св-ва иона</span><span class="cheat-val">усиливаются (I⁻ — самый сильный восстановитель)</span></div>
+      <div class="cheat-row"><span class="cheat-key">Длина связи H–Hal</span><span class="cheat-val">растёт</span></div>
+      <div class="cheat-row"><span class="cheat-key">Сила кислоты HHal</span><span class="cheat-val">растёт (HF слабая, HI — самая сильная)</span></div>
+      <div class="cheat-row"><span class="cheat-key">Термическая устойчивость HHal</span><span class="cheat-val">понижается</span></div>
+    </div>
+  </div>
+
+  <!-- Качественные реакции -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Таблица 2</span> Качественные реакции на галогены</div>
+    <div class="cheat-card">
+      <h3>Как распознать?</h3>
+      <div class="cheat-row"><span class="cheat-key">I₂</span><span class="cheat-val">+ крахмал → синее окрашивание</span></div>
+      <div class="cheat-row"><span class="cheat-key">F⁻</span><span class="cheat-val">+ Ca²⁺ → белый осадок</span></div>
+      <div class="cheat-row"><span class="cheat-key">Cl⁻</span><span class="cheat-val">+ Ag⁺ → белый творожистый осадок</span></div>
+      <div class="cheat-row"><span class="cheat-key">Br⁻</span><span class="cheat-val">+ Ag⁺ → бледно-желтый осадок</span></div>
+      <div class="cheat-row"><span class="cheat-key">I⁻</span><span class="cheat-val">+ Ag⁺ → желтый осадок; + Pb²⁺ → желтый осадок</span></div>
+    </div>
+  </div>
+
+  <!-- Реагенты для получения галогенов -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Таблица 3</span> Получение Cl₂, Br₂, I₂ в лаборатории</div>
+    <div class="cheat-card">
+      <h3>Какие окислители подходят</h3>
+      <div class="cheat-row"><span class="cheat-key">Для Cl₂ из HCl(конц.)</span><span class="cheat-val">KMnO₄, K₂Cr₂O₇, MnO₂</span></div>
+      <div class="cheat-row"><span class="cheat-key">Для Br₂, I₂</span><span class="cheat-val">те же + конц. H₂SO₄, конц. HNO₃</span></div>
+      <div class="cheat-row"><span class="cheat-key">HF и фториды</span><span class="cheat-val">в эти реакции не вступают</span></div>
+    </div>
+  </div>
+
+  <!-- Реакции с металлами: выбор СО -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Правило</span> Какую степень окисления металла писать</div>
+    <div class="cheat-card">
+      <h3>F₂, Cl₂, Br₂ vs I₂</h3>
+      <div class="cheat-row"><span class="cheat-key">F₂, Cl₂, Br₂ + металл</span><span class="cheat-val">выбираем более ВЫСОКУЮ СО металла</span></div>
+      <div class="cheat-row"><span class="cheat-key">I₂ + металл</span><span class="cheat-val">выбираем более НИЗКУЮ СО металла</span></div>
+    </div>
+    <div class="callout callout-purple" style="margin-top:8px">
+      <span class="ico">💡</span>
+      <div class="callout-body">Пример: Fe + Cl₂(изб.) → FeCl₃ (Fe⁺³), но Fe + I₂ → FeI₂ (Fe⁺²).</div>
+    </div>
+  </div>
+
+  <!-- Щёлочи: холодный/горячий -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Таблица 4</span> Галогены + щёлочи</div>
+    <div class="cheat-card">
+      <h3>Холодный vs горячий раствор</h3>
+      <div class="cheat-row"><span class="cheat-key">Cl₂, Br₂ + холодная щёлочь (~0°C)</span><span class="cheat-val">→ хлорид/бромид + гипохлорит/гипобромид (СО +1)</span></div>
+      <div class="cheat-row"><span class="cheat-key">Cl₂, Br₂ + горячая щёлочь</span><span class="cheat-val">→ хлорид/бромид + хлорат/бромат (СО +5)</span></div>
+      <div class="cheat-row"><span class="cheat-key">I₂ + щёлочь</span><span class="cheat-val">ВСЕГДА по схеме +5 (KIO₃), независимо от температуры</span></div>
+    </div>
+  </div>
+
+  <!-- Ловушки -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Ловушки ЕГЭ</span> Типичные ошибки</div>
+    <div class="mistake-card">
+      <div class="mistake-bad">❌ CuI₂ и FeI₃ существуют как обычные соли</div>
+      <div class="mistake-good">✓ Нет! Cu²⁺ и Fe³⁺ окисляют I⁻ до I₂. Образуются CuI (Cu⁺) и FeI₂ (Fe²⁺) + выделяется I₂.</div>
+    </div>
+    <div class="mistake-card">
+      <div class="mistake-bad">❌ Бромоводород и иодоводород можно получить сульфатным способом (NaBr/NaI + H₂SO₄ конц.)</div>
+      <div class="mistake-good">✓ Нет! Br⁻ и I⁻ окисляются конц. H₂SO₄. Используй конц. H₃PO₄ или другой метод.</div>
+    </div>
+    <div class="mistake-card">
+      <div class="mistake-bad">❌ Иод реагирует с металлами так же легко, как хлор</div>
+      <div class="mistake-good">✓ Нет! Даже с активными металлами — только при нагревании (с Mg, Al — при катализе водой).</div>
+    </div>
+    <div class="mistake-card">
+      <div class="mistake-bad">❌ NaBr + I₂ или CaBr₂ + S — реакции идут</div>
+      <div class="mistake-good">✓ Нет! I₂ слабее Br₂ как окислитель — вытеснения не происходит. Проверяй ряд активности.</div>
+    </div>
+    <div class="mistake-card">
+      <div class="mistake-bad">❌ Высшая СО фтора = +7, как у остальных галогенов</div>
+      <div class="mistake-good">✓ Нет! У фтора нет d-орбиталей и положительных степеней окисления — высшая валентность I, СО только −1 и 0.</div>
+    </div>
+  </div>
+
+  <!-- Алгоритм -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Алгоритм</span> Как решать ОВР с галогенами</div>
+    <div class="cheat-card">
+      <h3>5 шагов</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">Определи степень окисления галогена в реагенте и реальный диапазон СО (для Cl, Br, I: −1, 0, +1, +3, +5, +7; для F: только −1, 0).</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">Если восстановитель — тот же галоген в СО −1, продукт — простое вещество Hal₂ (например, KClO₃ + HCl → Cl₂).</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">В остальных случаях на ЕГЭ обычно реализуется переход Cl⁺ⁿ → Cl⁻¹ (высшая СО восстанавливается до низшей).</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text">Составь электронный баланс, расставь коэффициенты.</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-text">Проверь сумму зарядов и атомов в левой и правой частях.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Применение -->
+
+  <div class="cheat-section">
+    <div class="prop-label" style="margin-bottom:10px"><span class="num">Применение</span> Где встречается в задачах</div>
+    <div class="cheat-card">
+      <h3>Вещества и их применение</h3>
+      <div class="cheat-row"><span class="cheat-key">Хлор</span><span class="cheat-val">Водоочистка, отбеливание, синтез CCl₄, CHCl₃</span></div>
+      <div class="cheat-row"><span class="cheat-key">Хлорид натрия</span><span class="cheat-val">Пищевая промышленность, производство Cl₂, HCl, NaOH</span></div>
+      <div class="cheat-row"><span class="cheat-key">Гипохлориты</span><span class="cheat-val">Компоненты отбеливателей</span></div>
+      <div class="cheat-row"><span class="cheat-key">Иод</span><span class="cheat-val">Медицина (растворы)</span></div>
+      <div class="cheat-row"><span class="cheat-key">Плавиковая кислота</span><span class="cheat-val">Матирование и травление стекла</span></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>⚗️ Химия · ЕГЭ · 10 класс · Тема 12.2 — Галогены</footer>
+
+<script>
+  function show(name, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
